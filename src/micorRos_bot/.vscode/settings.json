@@ -1,0 +1,15 @@
+{
+    "cmake.sourceDirectory": "/home/majd/Desktop/ros2_ws/src/micorRos_bot/.pio/libdeps/esp32doit-devkit-v1/micro_ros_platformio/ci/extra_packages/my_custom_message",
+    "python.autoComplete.extraPaths": [
+        "/home/majd/Desktop/ros2_ws/install/my_robot_localization/local/lib/python3.10/dist-packages",
+        "/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/majd/Desktop/ros2_ws/install/my_robot_localization/local/lib/python3.10/dist-packages",
+        "/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

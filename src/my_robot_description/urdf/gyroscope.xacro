@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+    <!-- gyroscope_link -->
+    <link name="gyroscope_frame">
+        <visual>
+            <geometry>
+                <box size="${gyroscope_length} ${gyroscope_width} ${gyroscope_height}"/>
+            </geometry>
+            <material name="red"/>
+            <origin xyz="0.0 0.0 ${gyroscope_height/2}" rpy="0.0 0.0 0.0"/>          
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${gyroscope_length} ${gyroscope_width} ${gyroscope_height}"/>
+            </geometry>
+            <origin xyz="0.0 0.0 ${gyroscope_height/2}" rpy="0.0 0.0 0.0"/>                   
+        </collision>
+        <xacro:box_inertia m="0.05" l="${gyroscope_length}" w="${gyroscope_width}" h="${gyroscope_height}"
+                                xyz="0.0 0.0 ${gyroscope_height/2}" rpy="0.0 0.0 0.0" />             
+    </link>
+
+
+
+    <!-- body_gyroscope_joint -->
+    <joint name="body_gyroscope_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="gyroscope_frame"/>
+        <origin xyz="${-body_radius + gyroscope_length} 0 ${body_gyroscope_z_distance}" rpy= "0 0 0"/>
+    </joint> 
+
+
+
+    <gazebo reference="gyroscope_frame">
+        <material>Gazebo/Red</material>
+
+        <sensor name="gyroscope" type="imu">
+            <!-- ensure the sensor is active (required) -->
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+
+            <plugin name="gyroscope_plugin" filename="libgazebo_ros_imu_sensor.so">
+                <ros>
+                    <!-- publish to /imu/data -->
+                    <namespace>/imu</namespace>
+                    <remapping>~/out:=data</remapping>
+                </ros>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+</robot>

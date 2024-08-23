@@ -1,0 +1,1 @@
+/home/majd/Desktop/ros2_ws/build/my_robot_localization/ament_cmake_python/my_robot_localization/my_robot_localization.egg-info/top_level.txt

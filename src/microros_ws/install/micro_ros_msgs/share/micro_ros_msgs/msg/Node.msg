@@ -1,0 +1,1 @@
+/home/majd/Desktop/microros_ws/src/uros/micro_ros_msgs/msg/Node.msg

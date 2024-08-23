@@ -1,0 +1,37 @@
+[0.005s] Invoking command in '/home/majd/Desktop/ros2_ws/build/micro_ros_agent': AMENT_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:/home/majd/Desktop/ros2_ws/install/rplidar_ros:/home/majd/Desktop/ros2_ws/install/my_robot_localization:/home/majd/Desktop/ros2_ws/install/my_robot_description:/opt/ros/humble LD_LIBRARY_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/majd/Desktop/ros2_ws/src/microros_ws/src/uros/micro-ROS-Agent/micro_ros_agent -DCMAKE_INSTALL_PREFIX=/home/majd/Desktop/ros2_ws/install/micro_ros_agent
+[0.035s] -- The C compiler identification is GNU 11.4.0
+[0.039s] -- Detecting C compiler ABI info
+[0.093s] -- Detecting C compiler ABI info - done
+[0.097s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.097s] -- Detecting C compile features
+[0.097s] -- Detecting C compile features - done
+[0.124s] -- The CXX compiler identification is GNU 11.4.0
+[0.128s] -- Detecting CXX compiler ABI info
+[0.176s] -- Detecting CXX compiler ABI info - done
+[0.180s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.180s] -- Detecting CXX compile features
+[0.180s] -- Detecting CXX compile features - done
+[0.200s] -- Configuring done
+[0.202s] -- Generating done
+[0.202s] -- Build files have been written to: /home/majd/Desktop/ros2_ws/build/micro_ros_agent
+[0.204s] Invoked command in '/home/majd/Desktop/ros2_ws/build/micro_ros_agent' returned '0': AMENT_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:/home/majd/Desktop/ros2_ws/install/rplidar_ros:/home/majd/Desktop/ros2_ws/install/my_robot_localization:/home/majd/Desktop/ros2_ws/install/my_robot_description:/opt/ros/humble LD_LIBRARY_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/majd/Desktop/ros2_ws/src/microros_ws/src/uros/micro-ROS-Agent/micro_ros_agent -DCMAKE_INSTALL_PREFIX=/home/majd/Desktop/ros2_ws/install/micro_ros_agent
+[0.205s] Invoking command in '/home/majd/Desktop/ros2_ws/build/micro_ros_agent': AMENT_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:/home/majd/Desktop/ros2_ws/install/rplidar_ros:/home/majd/Desktop/ros2_ws/install/my_robot_localization:/home/majd/Desktop/ros2_ws/install/my_robot_description:/opt/ros/humble LD_LIBRARY_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/majd/Desktop/ros2_ws/build/micro_ros_agent -- -j16 -l16
+[0.229s] [  6%] [34m[1mCreating directories for 'xrceagent'[0m
+[0.279s] [ 12%] [34m[1mPerforming download step (git clone) for 'xrceagent'[0m
+[0.288s] Cloning into 'xrceagent'...
+[150.125s] fatal: unable to access 'https://github.com/eProsima/Micro-XRCE-DDS-Agent.git/': Failed to connect to github.com port 443 after 149826 ms: Connection timed out
+[150.135s] Cloning into 'xrceagent'...
+[386.172s] fatal: unable to access 'https://github.com/eProsima/Micro-XRCE-DDS-Agent.git/': gnutls_handshake() failed: Error in the pull function.
+[386.177s] Cloning into 'xrceagent'...
+[419.953s] fatal: unable to access 'https://github.com/eProsima/Micro-XRCE-DDS-Agent.git/': GnuTLS recv error (-110): The TLS connection was non-properly terminated.
+[419.954s] [31mCMake Error at /home/majd/Desktop/ros2_ws/build/micro_ros_agent/agent/tmp/xrceagent-gitclone.cmake:31 (message):
+[419.954s]   Failed to clone repository:
+[419.954s]   'https://github.com/eProsima/Micro-XRCE-DDS-Agent.git'
+[419.954s] 
+[419.954s] [0m
+[419.954s] -- Had to git clone more than once:
+[419.955s]           3 times.
+[419.955s] gmake[2]: *** [CMakeFiles/xrceagent.dir/build.make:99: agent/src/xrceagent-stamp/xrceagent-download] Error 1
+[419.955s] gmake[1]: *** [CMakeFiles/Makefile2:85: CMakeFiles/xrceagent.dir/all] Error 2
+[419.955s] gmake: *** [Makefile:91: all] Error 2
+[419.957s] Invoked command in '/home/majd/Desktop/ros2_ws/build/micro_ros_agent' returned '2': AMENT_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs:/home/majd/Desktop/ros2_ws/install/rplidar_ros:/home/majd/Desktop/ros2_ws/install/my_robot_localization:/home/majd/Desktop/ros2_ws/install/my_robot_description:/opt/ros/humble LD_LIBRARY_PATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/majd/Desktop/ros2_ws/install/micro_ros_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/majd/Desktop/ros2_ws/build/micro_ros_agent -- -j16 -l16
