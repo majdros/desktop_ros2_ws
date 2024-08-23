@@ -1,1 +1,1 @@
-Node[] nodes
+/home/majd/Desktop/ros2_ws/src/microros_ws/src/uros/micro_ros_msgs/msg/Graph.msg

@@ -1,0 +1,5 @@
+[0.013s] Invoking command in '/home/majd/Desktop/ros2_ws/build/rplidar_ros': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/majd/Desktop/ros2_ws/build/rplidar_ros -- -j16 -l16
+[0.042s] [  5%] Built target rplidar_client
+[0.046s] [ 52%] Built target rplidar_composition
+[0.048s] [100%] Built target rplidar_node
+[0.059s] Invoked command in '/home/majd/Desktop/ros2_ws/build/rplidar_ros' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/majd/Desktop/ros2_ws/build/rplidar_ros -- -j16 -l16

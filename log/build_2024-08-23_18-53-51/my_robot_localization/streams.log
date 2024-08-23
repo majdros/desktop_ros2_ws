@@ -1,0 +1,9 @@
+[0.012s] Invoking command in '/home/majd/Desktop/ros2_ws/build/my_robot_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/majd/Desktop/ros2_ws/build/my_robot_localization -- -j16 -l16
+[0.040s] Built target ament_cmake_python_symlink_my_robot_localization
+[0.179s] running egg_info
+[0.180s] writing my_robot_localization.egg-info/PKG-INFO
+[0.180s] writing dependency_links to my_robot_localization.egg-info/dependency_links.txt
+[0.180s] writing top-level names to my_robot_localization.egg-info/top_level.txt
+[0.181s] reading manifest file 'my_robot_localization.egg-info/SOURCES.txt'
+[0.182s] writing manifest file 'my_robot_localization.egg-info/SOURCES.txt'
+[0.197s] Built target ament_cmake_python_build_my_robot_localization_egg

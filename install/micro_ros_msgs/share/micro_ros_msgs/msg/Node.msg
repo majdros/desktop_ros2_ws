@@ -1,3 +1,1 @@
-string<=256 node_namespace
-string<=256 node_name
-Entity[] entities
+/home/majd/Desktop/ros2_ws/src/microros_ws/src/uros/micro_ros_msgs/msg/Node.msg
