@@ -1,8 +1,0 @@
-[0.000000] (-) TimerEvent: {}
-[0.000207] (-) JobUnselected: {'identifier': 'micro_ros_agent'}
-[0.000247] (-) JobUnselected: {'identifier': 'micro_ros_msgs'}
-[0.000263] (-) JobUnselected: {'identifier': 'micro_ros_setup'}
-[0.000300] (-) JobUnselected: {'identifier': 'my_robot_description'}
-[0.000331] (-) JobUnselected: {'identifier': 'my_robot_localization'}
-[0.000368] (-) JobUnselected: {'identifier': 'rplidar_ros'}
-[0.000386] (-) EventReactorShutdown: {}
