@@ -3,7 +3,7 @@
 
 
 
-    <xacro:property name="wheel_y_offset" value="0.05807"/>
+    <xacro:property name="wheel_y_offset" value="0.075"/>
     <xacro:property name="wheel_z_offset" value="0.02"/>
     <xacro:property name="wheel_radius" value="0.0325"/>
     <xacro:property name="wheel_length" value="0.025"/>
