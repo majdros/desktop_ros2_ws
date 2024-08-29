@@ -21,6 +21,9 @@ def generate_launch_description():
     view_rplidar_c1_launch_path = os.path.join(get_package_share_path('rplidar_ros'),
                                                 'launch', 'view_rplidar_c1_launch.py')
     
+    joystick_launch_path = os.path.join(get_package_share_path('my_robot_description'),
+                                                'launch', 'joystick.launch.py')
+    
     # Declare the launch argument
     use_ros2_control_arg = DeclareLaunchArgument(
         'use_ros2_control',
@@ -92,5 +95,9 @@ def generate_launch_description():
         # ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(view_rplidar_c1_launch_path)
-        )
+        ),
+        
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(joystick_launch_path)
+        # )
     ])
