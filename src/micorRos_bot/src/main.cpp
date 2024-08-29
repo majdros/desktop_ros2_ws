@@ -18,17 +18,17 @@
 
 //pin declaration
 //Left wheel
-int8_t L_FORW = 26;
-int8_t L_BACK = 27;
+int8_t L_FORW = 27;
+int8_t L_BACK = 26;
 int8_t L_enablePin = 25;
-int8_t L_encoderPin1 = 18;  //Encoder Output of pin1 must connected with intreput pin of Esp32.
-int8_t L_encoderPin2 = 21;
+int8_t L_encoderPin1 = 21;  //Encoder Output of pin1 must connected with intreput pin of Esp32.
+int8_t L_encoderPin2 = 18;
 //right wheel
-int8_t R_FORW = 33;
-int8_t R_BACK = 32;
+int8_t R_FORW = 32;
+int8_t R_BACK = 33;
 int8_t R_enablePin = 5;
-int8_t R_encoderPin1 = 23;  //Encoder Output of pin1 must connected with intreput pin of Esp32.
-int8_t R_encoderPin2 = 15;
+int8_t R_encoderPin1 = 15;  //Encoder Output of pin1 must connected with intreput pin of Esp32.
+int8_t R_encoderPin2 = 23;
 
 // funktionen declaration
 void updateEncoderL();
