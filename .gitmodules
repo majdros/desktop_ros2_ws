@@ -1,4 +1,6 @@
-[submodule "rplidar_ros"]
-    path = src/rplidar_ros
-    url = https://github.com/Slamtec/rplidar_ros/tree/dev-ros2
-
+[submodule "src/ros2_mpu6050_driver"]
+	path = src/ros2_mpu6050_driver
+	url = https://github.com/hiwad-aziz/ros2_mpu6050_driver.git
+[submodule "src/rplidar_ros"]
+	path = src/rplidar_ros
+	url = https://github.com/Slamtec/rplidar_ros
