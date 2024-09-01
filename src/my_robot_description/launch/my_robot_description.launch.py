@@ -18,8 +18,8 @@ def generate_launch_description():
     rviz_config_path = os.path.join(get_package_share_path('my_robot_description'),
                                     'config', 'my_robot.rviz')
     
-    view_rplidar_c1_launch_path = os.path.join(get_package_share_path('rplidar_ros'),
-                                                'launch', 'view_rplidar_c1_launch.py')
+    rplidar_c1_launch_path = os.path.join(get_package_share_path('my_robot_description'),
+                                        'launch', 'rplidar.launch.py')
     
     joystick_launch_path = os.path.join(get_package_share_path('my_robot_description'),
                                                 'launch', 'joystick.launch.py')
@@ -94,7 +94,7 @@ def generate_launch_description():
         #     output='screen'
         # ),
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(view_rplidar_c1_launch_path)
+            PythonLaunchDescriptionSource(rplidar_c1_launch_path)
         ),
         
         # IncludeLaunchDescription(
