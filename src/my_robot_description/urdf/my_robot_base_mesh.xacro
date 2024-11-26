@@ -17,10 +17,10 @@
     <xacro:property name="body_link_inertia_z_offset" value="0.0925"/>
     <xacro:property name="lidar_radius" value="0.0278"/>
     <xacro:property name="lidar_length" value="0.0413"/>
-    <xacro:property name="gyroscope_length" value="0.015"/>
-    <xacro:property name="gyroscope_width" value="0.02"/>
-    <xacro:property name="gyroscope_height" value="0.002"/>
-    <xacro:property name="body_gyroscope_z_distance" value="${body_length - 0.046}"/>
+    <xacro:property name="imu_length" value="0.015"/>
+    <xacro:property name="imu_width" value="0.02"/>
+    <xacro:property name="imu_height" value="0.002"/>
+    <xacro:property name="body_imu_z_distance" value="${body_length - 0.046}"/>
 
 
 

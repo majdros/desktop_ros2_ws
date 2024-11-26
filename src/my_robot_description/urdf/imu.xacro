@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+    <!-- imu_link -->
+    <link name="bno055">
+        <visual>
+            <geometry>
+                <box size="${imu_length} ${imu_width} ${imu_height}"/>
+            </geometry>
+            <material name="red"/>
+            <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 ${pi/2}"/>          
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${imu_length} ${imu_width} ${imu_height}"/>
+            </geometry>
+            <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 ${pi/2}"/>                   
+        </collision>
+        <xacro:box_inertia m="0.05" l="${imu_length}" w="${imu_width}" h="${imu_height}"
+                                xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 0.0" />             
+    </link>
+
+
+
+    <!-- body_imu_joint -->
+    <joint name="body_imu_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="bno055"/>
+        <origin xyz="${-body_radius + imu_length} 0 ${body_imu_z_distance}" rpy= "0 0 0"/>
+    </joint> 
+
+
+
+    <gazebo reference="bno055">
+        <material>Gazebo/Red</material>
+
+        <sensor name="bno055" type="imu">
+            <!-- ensure the sensor is active (required) -->
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <topic>imu</topic>
+            <plugin name="bno055_plugin" filename="libgazebo_ros_imu_sensor.so">
+                <ros>
+                    <!-- publish to /imu/data -->
+                    <namespace>/imu</namespace>
+                    <remapping>~/out:=/imu/data</remapping>
+                </ros>
+            </plugin>
+            <imu>
+                <angular_velocity>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>2e-4</stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>2e-4</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>2e-4</stddev>
+                        </noise>
+                    </z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x>
+                        <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>1.7e-2</stddev>
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>1.7e-2</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>1.7e-2</stddev>
+                        </noise>
+                    </z>
+                </linear_acceleration>
+            </imu>
+        </sensor>
+    </gazebo>
+
+</robot>

@@ -8,6 +8,7 @@ Panels:
         - /Status1
         - /TF1
         - /TF1/Frames1
+        - /Imu1
         - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 746
@@ -68,6 +69,11 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        bno055:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         body_link:
           Alpha: 1
           Show Axes: false
@@ -78,11 +84,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
         front_caster_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        gyroscope_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -116,19 +117,51 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        bno055:
+          Value: true
+        body_link:
+          Value: true
+        footprint_link:
+          Value: true
+        front_caster_wheel_link:
+          Value: true
+        laser:
+          Value: true
+        left_wheel_link:
+          Value: true
+        odom:
+          Value: true
+        rear_caster_wheel_link:
+          Value: true
+        right_wheel_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        odom:
+          footprint_link:
+            body_link:
+              bno055:
+                {}
+              front_caster_wheel_link:
+                {}
+              laser:
+                {}
+              left_wheel_link:
+                {}
+              rear_caster_wheel_link:
+                {}
+              right_wheel_link:
+                {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Acceleration properties:
         Acc. vector alpha: 1
         Acc. vector color: 255; 0; 0
@@ -146,7 +179,7 @@ Visualization Manager:
         y_scale: 1
         z_scale: 1
       Class: rviz_imu_plugin/Imu
-      Enabled: false
+      Enabled: true
       Name: Imu
       Topic:
         Depth: 5
@@ -154,8 +187,8 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /imu/data
-      Value: false
+        Value: /bno055/imu
+      Value: true
       fixed_frame_orientation: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -172,7 +205,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 56
+      Max Intensity: 52
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
@@ -237,16 +270,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 6.3995513916015625
+      Distance: 0.7283748388290405
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.8167303800582886
-        Y: 0.3458193838596344
-        Z: 2.451066493988037
+        X: 0.2621167302131653
+        Y: 0.26791849732398987
+        Z: 2.134462594985962
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -273,5 +306,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 1920
-  Y: 0
+  X: 420
+  Y: 167
