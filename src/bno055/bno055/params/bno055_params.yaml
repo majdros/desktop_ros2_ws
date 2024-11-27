@@ -43,10 +43,18 @@ bno055:
     mag_factor: 16000000.0
     gyr_factor: 900.0
     grav_factor: 100.0
+    # Fürs Kalibrieren der offset-Werte kann das Repo. Adafruit_CircuitPython_BNO055 (Adafruit_CircuitPython_BNO055/examples/bno055_webgl_demo/server.py oder bno055_calibration.py) verwendet werden.
+    # https://robofoundry.medium.com/lessons-learned-while-working-with-imu-sensor-ros2-and-raspberry-pi-a4fec18a7c7
+    # Die Werte können dann in die entsprechenden Parameter eingelesen (ros2 service call /bno055/calibration_request example_interfaces/srv/Trigger) und unten eingetragen werden.
+    # https://github.com/flynneva/bno055
     set_offsets: true # set to true to use offsets below
-    offset_acc: [0xFFF4, 0x0020, 0xFFDA]
-    offset_mag: [0xFFA6, 0x015E, 0xFE04]
-    offset_gyr: [0x0001, 0x0000, 0x0000]
+    offset_acc: [0xFFFC, 0x0020, 0xFFDA]
+    offset_mag: [0xFFA8, 0x0152, 0xFE10]
+    offset_gyr: [0x0001, 0xFFFF, 0x0000]
+
+    # offset_acc: [0x0000, 0x0000, 0x0000]
+    # offset_mag: [0x0000, 0x0000, 0x0000]
+    # offset_gyr: [0x0000, 0x0000, 0x0000]
     ## Sensor standard deviation [x,y,z]
     ## Used to calculate covariance matrices
     ## defaults are used if parameters below are not provided
