@@ -233,11 +233,11 @@ void setup() {
   // create node
   RCCHECK(rclc_node_init_default(&node, "micro_ros_esp32_node", "", &support));
 
-  // create subscriber for cmd_vel topic
+  // create subscriber for /diff_cont/cmd_vel_unstamped topic
   RCCHECK(rclc_subscription_init_default(
-    &subscriber, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "cmd_vel"));
+    &subscriber, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "/diff_cont/cmd_vel_unstamped"));
   //create a odometry publisher
-  RCCHECK(rclc_publisher_init_default(&odom_publisher, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry), "odom/unfiltered"));
+  RCCHECK(rclc_publisher_init_default(&odom_publisher, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry), "/wheel_odom"));
 
   //timer function for controlling the motor base. At every samplingT time
   //MotorControll_callback function is called
