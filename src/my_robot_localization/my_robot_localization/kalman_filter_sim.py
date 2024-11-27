@@ -11,11 +11,11 @@ class KalmanFilter(Node):
         super().__init__("kalman_filter")
 
         # self.odom_sub_ = self.create_subscription(Odometry, "/wheel_odom", self.odomCallback, 10)     # echter Sensor (Encoder)
-        self.odom_sub_ = self.create_subscription(Odometry, "noisy_odometry/odom_noisy", self.odomCallback, 10)   # plugin
+        self.odom_sub_ = self.create_subscription(Odometry, "noisy_odometry/odom_noisy", self.odomCallback, 10)   # from noisy_odometry_publisher.py
 
-        self.imu_sub_ = self.create_subscription(Imu, "imu/data", self.imuCallback, 10)   # plugin
+        self.imu_sub_ = self.create_subscription(Imu, "imu/data", self.imuCallback, 10)   # Gazebo-plugin
         # self.imu_sub_ = self.create_subscription(Imu, "/bno055/imu", self.imuCallback, 10)  # echter Sensor (IMU)
-        self.odom_pub_ = self.create_publisher(Odometry, "noisy_odometry/odom_kalman", 10)
+        self.odom_pub_ = self.create_publisher(Odometry, "/odometry/filtered", 10)
 
         self.mean_ = 0.0
         self.variance_ = 1000.0
