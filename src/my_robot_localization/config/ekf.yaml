@@ -1,30 +1,54 @@
+# source: https://github.com/cra-ros-pkg/robot_localization/blob/ros2/params/ekf.yaml
 ekf_filter_node:
   ros__parameters:
     frequency: 30.0
+    sensor_timeout: 0.1
     two_d_mode: true
+    transform_time_offset: 0.0
+    transform_timeout: 0.0
+    print_diagnostics: true
     publish_tf: true
-    map_fram: map
+    debug: true
+
+    map_frame: map
     odom_frame: odom
-    base_link_frame: footprint_link_ekf
+    base_link_frame: body_link
     world_frame: odom 
 
-    odom0: noisy_odometry/odom_noisy
-            odom0_config: [false,  false,  false,
-                      false, false, false,
-                      true, false, false,
-                      false, false, false,
-                      false, false, false]
-
+    odom0: wheel_odom
+    odom0_config: [true,  true,  true,
+                    false, false, false,
+                    true, true, true,
+                    false, false, true,
+                    false, false, false]
+    #        [x_pos   , y_pos    , z_pos,
+    #         roll    , pitch    , yaw,
+    #         x_vel   , y_vel    , z_vel,
+    #         roll_vel, pitch_vel, yaw_vel,
+    #         x_accel , y_accel  , z_accel]
+    odom0_queue_size: 10
+    odom0_nodelay: false
     odom0_differential: false
+    odom0_relative: false
 
-    imu0: imu_ekf
+    imu0: bno055/imu
     imu0_config: [false, false, false,
-                  false,  false,  true,
+                  true,  true,  true,
                   false, false, false,
-                  false,  false,  true,
-                  true,  false,  false]
-
-    imu0_differential: true
+                  true,  true,  true,
+                  true,  true,  true]
+    imu0_queue_size: 10
+    imu0_nodelay: false
+    imu0_differential: false
+    imu0_relative: true
+    imu0_remove_gravitational_acceleration: true
+    imu0_pose_use_child_frame: false
+    imu0_linear_acceleration_rejection_threshold: 0.0
+    imu0_angular_velocity_rejection_threshold: 0.0
+    imu0_orientation_rejection_threshold: 0.0
+    imu0_normalize_quaternion: true
+    
+    use_control: false
 
     process_noise_covariance: [0.05, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.05, 0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
@@ -42,4 +66,18 @@ ekf_filter_node:
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.01, 0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.015]
                                   
-    initial_estimate_covariance: [1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9, 1e-9]
+    initial_estimate_covariance: [1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,   0.0,     0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    1e-9,    0.0,     0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     1e-9,    0.0,     0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     1e-9,    0.0,    0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     1e-9,   0.0,    0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    1e-9,   0.0,
+                                      0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,     0.0,    0.0,    1e-9]
