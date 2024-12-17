@@ -4,7 +4,7 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 import os
 from ament_index_python.packages import get_package_share_path, get_package_share_directory
-from launch.actions import ExecuteProcess, DeclareLaunchArgument, IncludeLaunchDescription 
+from launch.actions import ExecuteProcess, DeclareLaunchArgument, IncludeLaunchDescription, TimerAction 
 from launch.conditions import IfCondition
 import xacro
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -24,6 +24,9 @@ def generate_launch_description():
     joystick_launch_path = os.path.join(get_package_share_path('my_robot_description'),
                                                 'launch', 'joystick.launch.py')
     
+    bno055_launch_path = os.path.join(get_package_share_path('bno055'),
+                                        'launch', 'bno055.launch.py')
+    
     # Declare the launch argument
     use_ros2_control_arg = DeclareLaunchArgument(
         'use_ros2_control',
@@ -42,7 +45,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{'robot_description': robot_description,
-                    'use_sim_time': True, 'queue_size': 200}]
+                    'use_sim_time': False, 'queue_size': 200}]
     )
 
     rviz2_node = Node(
@@ -58,6 +61,11 @@ def generate_launch_description():
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
                     launch_arguments={'extra_gazebo_args': '--ros-args --params-file' + gazebo_params_file}.items()
+    )
+
+    joint_state_publisher_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
     )
 
     spawn_entity_node = Node(
@@ -79,25 +87,41 @@ def generate_launch_description():
         executable='spawner',
         arguments=["joint_broad"],
     )
+    
+    # Gazebo ros Bridge
+    gazebo_ros_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=["/imu@sensor_msgs/msg/Imu[gz.sensor_msgs.IMU]"],
+        remappings=[("/imu", "/imu/data")]
+    )
 
 
     return LaunchDescription([
         robot_state_publisher_node,
         gazebo,
         use_ros2_control_arg,
+        joint_state_publisher_node,
         rviz2_node,
         spawn_entity_node,
-        diff_drive_spawner,
-        joint_broad_spawner,
+        # gazebo_ros_bridge,
+        TimerAction(
+            period=5.0,
+            actions=[diff_drive_spawner, joint_broad_spawner]
+        ),
         # ExecuteProcess(
         #     cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'],
         #     output='screen'
         # ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(rplidar_c1_launch_path)
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(rplidar_c1_launch_path)
+        # ),
         
         # IncludeLaunchDescription(
         #     PythonLaunchDescriptionSource(joystick_launch_path)
-        # )
+        # ),
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(bno055_launch_path)
+        )
     ])

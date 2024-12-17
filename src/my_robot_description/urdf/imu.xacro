@@ -9,7 +9,7 @@
             <geometry>
                 <box size="${imu_length} ${imu_width} ${imu_height}"/>
             </geometry>
-            <material name="red"/>
+            <material name="green"/>
             <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 ${pi/2}"/>          
         </visual>
         <collision>
@@ -24,11 +24,11 @@
 
 
 
-    <!-- body_imu_joint -->
-    <joint name="body_imu_joint" type="fixed">
-        <parent link="body_link"/>
+    <!-- base_imu_joint -->
+    <joint name="base_imu_joint" type="fixed">
+        <parent link="base_link"/>
         <child link="bno055"/>
-        <origin xyz="${-body_radius + imu_length} 0 ${body_imu_z_distance}" rpy= "0 0 0"/>
+        <origin xyz="0 0 ${base_imu_z_distance + 0.0345}" rpy= "0 0 0"/>
     </joint> 
 
 
@@ -48,6 +48,7 @@
                     <namespace>/imu</namespace>
                     <remapping>~/out:=/imu/data</remapping>
                 </ros>
+                <frame_id>bno055</frame_id> 
             </plugin>
             <imu>
                 <angular_velocity>

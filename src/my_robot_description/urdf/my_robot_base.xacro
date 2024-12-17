@@ -7,7 +7,7 @@
     <xacro:property name="wheel_z_offset" value="0.0225"/>
     <xacro:property name="wheel_radius" value="0.0325"/>
     <xacro:property name="wheel_length" value="0.025"/>
-    <xacro:property name="robot_center_to_body_link_z_distance" value="0.1375"/>
+    <xacro:property name="robot_center_to_base_link_z_distance" value="0.1375"/>
     <xacro:property name="body_length" value="0.1855"/>
     <xacro:property name="body_radius" value="0.07"/>
     <xacro:property name="body_width" value="0.1"/>
@@ -15,18 +15,18 @@
     <xacro:property name="caster_wheel_length" value="0.013"/>
     <xacro:property name="body_caster_wheel_link_distance" value="0.06"/>
     <xacro:property name="body_caster_wheel_Achse_distance" value="0.0025"/>
-    <xacro:property name="body_link_inertia_z_offset" value="0.0925"/>
+    <xacro:property name="base_link_inertia_z_offset" value="0.0925"/>
     <xacro:property name="lidar_radius" value="0.0278"/>
     <xacro:property name="lidar_length" value="0.0413"/>
 
 
-    <!-- footprint_link -->
-    <link name="footprint_link" />
+    <!-- base_footprint -->
+    <link name="base_footprint" />
 
 
 
-    <!-- body_link -->
-    <link name="body_link">
+    <!-- base_link -->
+    <link name="base_link">
         <visual>
             <geometry>
                 <box size="${body_radius * 2} ${body_radius * 2} ${body_length}"/>
@@ -34,7 +34,7 @@
             </geometry>
             <material name="grey"/>
             <origin xyz="0.0 0.0 ${wheel_z_offset + (body_length / 2) - 0.02}" rpy="0.0 0.0 0.0"/>          
-            <!-- <origin xyz="0.0 0.0 ${robot_center_to_body_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>           -->
+            <!-- <origin xyz="0.0 0.0 ${robot_center_to_base_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>           -->
         </visual>
 
         <collision>
@@ -43,27 +43,27 @@
                 <!-- <box size="${body_radius * 2} ${(body_radius * 2) - wheel_length} ${body_length}"/> -->
             </geometry>
             <origin xyz="0.0 0.0 ${wheel_z_offset + (body_length / 2) - 0.02}" rpy="0.0 0.0 0.0"/>                   
-            <!-- <origin xyz="0.0 0.0 ${robot_center_to_body_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>                    -->
+            <!-- <origin xyz="0.0 0.0 ${robot_center_to_base_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>                    -->
         </collision>
         <!-- <collision>
             <geometry>
                 <mesh filename="package://my_robot/meshes_description/my_robot.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0.0 0.0 ${robot_center_to_body_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>                   
+            <origin xyz="0.0 0.0 ${robot_center_to_base_link_z_distance}" rpy="${pi/2} 0.0 0.0"/>                   
         </collision> -->
         <xacro:box_inertia m="10.0" l="${body_length}" w="${body_radius * 2}" h="${wheel_x_offset * 2}"
                                 xyz="0.0 0.0 ${wheel_z_offset + (body_length / 2) - 0.02}" rpy="0.0 0.0 0.0" /> 
 
         <!-- <xacro:cylinder_inertia m="1.5" r="${body_radius}" h="${body_length}"
-                        xyz="0.0 0.0 ${body_link_inertia_z_offset}" rpy="0.0 0.0 0.0" />             -->
+                        xyz="0.0 0.0 ${base_link_inertia_z_offset}" rpy="0.0 0.0 0.0" />             -->
     </link>
 
 
 
     <!-- footprint_body_joint -->
     <joint name="footprint_body_joint" type="fixed">
-        <parent link="footprint_link"/>
-        <child link="body_link"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
         <origin xyz="0 0 ${caster_wheel_radius - body_caster_wheel_Achse_distance}" rpy= "0 0 0"/>
     </joint>        
 
@@ -97,7 +97,7 @@
 
     <!-- body_left_wheel_joint -->
     <joint name="body_left_wheel_joint" type="continuous">
-        <parent link="body_link"/>
+        <parent link="base_link"/>
         <child link="left_wheel_link"/>
         <origin xyz="0.0 ${(wheel_x_offset + (wheel_length/2))} ${wheel_z_offset}" rpy= "${pi/2} 0.0 0.0"/>
         <axis xyz="0 0 -1"/>
@@ -107,7 +107,7 @@
 
     <!-- body_right_wheel_joint -->
     <joint name="body_right_wheel_joint" type="continuous">
-        <parent link="body_link"/>
+        <parent link="base_link"/>
         <child link="right_wheel_link"/>
         <origin xyz="0.0 ${-(wheel_x_offset + (wheel_length/2))} ${wheel_z_offset}" rpy= "${pi/2} 0.0 0.0"/>
         <axis xyz="0 0 -1"/>
@@ -168,7 +168,7 @@
 
     <!--body_front_caster_wheel_joint-->
     <joint name="body_front_caster_wheel_joint" type="fixed">
-        <parent link="body_link"/>
+        <parent link="base_link"/>
         <child link="front_caster_wheel_link"/>
         <origin xyz="${-body_caster_wheel_link_distance} 0.0 ${-(body_caster_wheel_Achse_distance + 0.001)}" rpy="0.0 ${pi/2} 0.0"/>
     </joint>  
@@ -177,7 +177,7 @@
 
     <!--body_rear_caster_wheel_joint-->
     <joint name="body_rear_caster_wheel_joint" type="fixed">
-        <parent link="body_link"/>
+        <parent link="base_link"/>
         <child link="rear_caster_wheel_link"/>
         <origin xyz="${body_caster_wheel_link_distance} 0.0 ${-(body_caster_wheel_Achse_distance + 0.001)}" rpy="0.0 ${pi/2} 0.0"/>
     </joint> 

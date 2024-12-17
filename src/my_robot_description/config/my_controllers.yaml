@@ -3,23 +3,23 @@ controller_manager:
 
   ros__parameters:
     update_rate: 30
-    use_sim_time: true
+    use_sim_time: false
 
     diff_cont:
       type: diff_drive_controller/DiffDriveController
 
-    joint_broad:
+    joint_broad:   # read the motor encoder positions (provided by the hardware interface) and publish them to the /joint_states topic for robot state publisher to generate the wheel transforms.
       type: joint_state_broadcaster/JointStateBroadcaster
 
 diff_cont:
   ros__parameters:
     publish_rate: 50.0
 
-    base_frame_id: footprint_link
+    base_frame_id: base_footprint
 
     left_wheel_names: ['body_left_wheel_joint']
     right_wheel_names: ['body_right_wheel_joint']
-    wheel_separation: 0.127
+    wheel_separation: 0.155
     wheel_radius: 0.0325
 
     use_stamped_vel: false
