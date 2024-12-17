@@ -39,7 +39,7 @@ void publishData();
 struct timespec getTime();
 
 //parameters of the robot
-float wheels_y_distance_ = 0.15;
+float wheels_y_distance_ = 0.155;
 float wheel_radius = 0.0325;
 float wheel_circumference_ = 2 * 3.14 * wheel_radius;
 //encoder value per revolution of left wheel and right wheel
