@@ -13,26 +13,17 @@ class NoisyOdometryPublisher(Node):
     def __init__(self):
         super().__init__('noisy_odometry_publisher')
         
-        # Robot-spezifische Parameter aus URDF
-        self.wheel_radius = 0.0325  # wheel_radius aus URDF
-        self.wheel_separation = 0.15  # 2 * wheel_y_offset aus URDF
+        self.wheel_radius = 0.0325  
+        self.wheel_separation = 0.155  
         
-        # Publisher für verrauschte Odometriedaten
-        self.noisy_odom_pub = self.create_publisher(
-            Odometry,
-            'noisy_odometry/odom_noisy',
-            10
-        )
+        self.get_logger().info(f"using wheel radius:  {self.wheel_radius}")
+        self.get_logger().info(f"using wheel separation:  {self.wheel_separation}")
+
+        self.cmd_vel_sub = self.create_subscription(Twist,'diff_cont/odom',self.cmd_vel_callback,10)
+
+        self.noisy_odom_pub = self.create_publisher(Odometry,'noisy_odometry/odom_noisy',10)
         
-        # Subscriber für cmd_vel (falls vorhanden)
-        self.cmd_vel_sub = self.create_subscription(
-            Twist,
-            'diff_cont/cmd_vel_unstamped',
-            self.cmd_vel_callback,
-            10
-        )
         
-        # Timer für regelmäßige Updates
         self.update_rate = 100.0  # Hz
         self.create_timer(1.0/self.update_rate, self.timer_callback)
         
@@ -109,7 +100,7 @@ class NoisyOdometryPublisher(Node):
         odom = Odometry()
         odom.header.stamp = self.get_clock().now().to_msg()
         odom.header.frame_id = 'odom'
-        odom.child_frame_id = 'body_link'
+        odom.child_frame_id = 'base_link'
         
         # Setze Position
         odom.pose.pose.position.x = self.x

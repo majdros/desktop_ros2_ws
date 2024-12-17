@@ -11,19 +11,20 @@ imu_pub = None
 def imuCallback(imu):
     global imu_pub
 
-    imu.header.frame_id = "footprint_link_ekf"
+    imu.header.frame_id = "base_footprint_ekf"
     imu_pub.publish(imu)
+
 
 
 def main():
     global imu_pub
 
     rclpy.init()
-    node = Node('imu_republisher_node')
+    node = Node("imu_republisher_node")
     time.sleep(1)
 
-    imu_pub = node.create_publisher(Imu, "imu_ekf", 10)
-    imu_sub = node.create_subscription(Imu, "imu/data", imuCallback, 10)
+    imu_pub = node.create_publisher(Imu, "bno055_ekf", 10)
+    imu_sub = node.create_subscription(Imu, "bno055/imu", imuCallback, 10)
     rclpy.spin(node)
 
     node.destroy.node()
