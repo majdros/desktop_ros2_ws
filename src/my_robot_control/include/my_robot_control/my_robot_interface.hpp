@@ -37,9 +37,11 @@ public:
     hardware_interface::return_type read(const rclcpp::Time &, const rclcpp::Duration &) override;
     hardware_interface::return_type write(const rclcpp::Time &, const rclcpp::Duration &) override;
 
-
+private:
     LibSerial::SerialPort esp32_;
     std::string port_;
+
+    // Store the command for the simulated robot
     std::vector<double> velocity_commands_;
     std::vector<double> position_states_;
     std::vector<double> velocity_states_;
