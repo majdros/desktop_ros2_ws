@@ -23,14 +23,14 @@ def generate_launch_description():
         executable='teleop_node',
         name='teleop_node',
         parameters=[joy_params],
-        remappings=[('/cmd_vel', '/diff_cont/cmd_vel_unstamped')]
+        remappings=[('/cmd_vel', '/cmd_vel')]
     )
 
     twist_stamper= Node(
         package='twist_stamper',
         executable='twist_stamper',
-        remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
-                    ('/cmd_vel_out','/diff_cont/cmd_vel')]
+        remappings=[('/cmd_vel_in','/cmd_vel_in'),
+                    ('/cmd_vel_out','/cmd_vel_out')]
     )
     return LaunchDescription([
         joy_node,

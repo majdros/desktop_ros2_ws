@@ -7,16 +7,17 @@
     <link name="bno055">
         <visual>
             <geometry>
-                <box size="${imu_length} ${imu_width} ${imu_height}"/>
+                <mesh filename="package://my_robot_description/models/meshes/adafruit_bno055_stemma_qt_1.stl" scale="0.001 0.001 0.001"/>
+                <!-- <box size="${imu_length} ${imu_width} ${imu_height}"/> -->
             </geometry>
-            <material name="green"/>
-            <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 ${pi/2}"/>          
+            <material name="warmesRot"/>
+            <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 0.0"/>          
         </visual>
         <collision>
             <geometry>
-                <box size="${imu_length} ${imu_width} ${imu_height}"/>
+                <box size="${imu_width} ${imu_length} ${imu_height * 3}"/>
             </geometry>
-            <origin xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 ${pi/2}"/>                   
+            <origin xyz="0.0 0.0 ${imu_height * 2}" rpy="0.0 0.0 ${pi/2}"/>                   
         </collision>
         <xacro:box_inertia m="0.05" l="${imu_length}" w="${imu_width}" h="${imu_height}"
                                 xyz="0.0 0.0 ${imu_height/2}" rpy="0.0 0.0 0.0" />             
@@ -28,23 +29,21 @@
     <joint name="base_imu_joint" type="fixed">
         <parent link="base_link"/>
         <child link="bno055"/>
-        <origin xyz="0 0 ${base_imu_z_distance + 0.0345}" rpy= "0 0 0"/>
+        <origin xyz="0 0 ${base_imu_z_distance + 0.0335}" rpy= "0 0 0.0"/>
     </joint> 
 
 
 
-    <gazebo reference="bno055">
+    <!-- <gazebo reference="bno055">
         <material>Gazebo/Red</material>
 
         <sensor name="bno055" type="imu">
-            <!-- ensure the sensor is active (required) -->
             <always_on>true</always_on>
             <update_rate>100</update_rate>
             <visualize>true</visualize>
             <topic>imu</topic>
             <plugin name="bno055_plugin" filename="libgazebo_ros_imu_sensor.so">
                 <ros>
-                    <!-- publish to /imu/data -->
                     <namespace>/imu</namespace>
                     <remapping>~/out:=/imu/data</remapping>
                 </ros>
@@ -93,6 +92,6 @@
                 </linear_acceleration>
             </imu>
         </sensor>
-    </gazebo>
+    </gazebo> -->
 
 </robot>

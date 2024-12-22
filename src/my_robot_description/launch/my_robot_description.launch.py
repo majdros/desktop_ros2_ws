@@ -68,54 +68,21 @@ def generate_launch_description():
         executable='joint_state_publisher_gui',
     )
 
-    spawn_entity_node = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='urdf_spawner',
-        output='screen',
-        arguments=["-topic", "robot_description", "-entity", "my_robot_description"]
-    )
-
-    diff_drive_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=["diff_cont"],
-    )
-
-    joint_broad_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=["joint_broad"],
-    )
-    
-    # Gazebo ros Bridge
-    gazebo_ros_bridge = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=["/imu@sensor_msgs/msg/Imu[gz.sensor_msgs.IMU]"],
-        remappings=[("/imu", "/imu/data")]
-    )
 
 
     return LaunchDescription([
         robot_state_publisher_node,
-        gazebo,
         use_ros2_control_arg,
         joint_state_publisher_node,
         rviz2_node,
-        spawn_entity_node,
-        # gazebo_ros_bridge,
-        TimerAction(
-            period=5.0,
-            actions=[diff_drive_spawner, joint_broad_spawner]
-        ),
+
         # ExecuteProcess(
         #     cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'],
         #     output='screen'
         # ),
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(rplidar_c1_launch_path)
-        # ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(rplidar_c1_launch_path)
+        ),
         
         # IncludeLaunchDescription(
         #     PythonLaunchDescriptionSource(joystick_launch_path)

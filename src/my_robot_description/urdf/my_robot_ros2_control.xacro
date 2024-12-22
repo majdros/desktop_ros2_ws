@@ -49,7 +49,7 @@
             <param name="enc_counts_per_rev">960</param>
         </hardware>
 
-        <joint name="body_left_wheel_joint">
+        <joint name="base_left_wheel_joint">
             <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
@@ -59,7 +59,7 @@
             <state_interface name="position"/>          
         </joint>
 
-        <joint name="body_right_wheel_joint">
+        <joint name="base_right_wheel_joint">
             <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
@@ -82,7 +82,7 @@
     <transmission name="left_wheel_link">
         <plugin>transmission_interface/SimpleTransmission</plugin>
         <actuator name="left_wheel_motor" role="actuator_left"/>
-        <joint name="body_left_wheel_joint" role="joint_left">
+        <joint name="base_left_wheel_joint" role="joint_left">
             <mechanical_reduction>2.0</mechanical_reduction>
         </joint>
     </transmission> -->
@@ -92,9 +92,10 @@
             <robot_param>robot_description</robot_param>
             <robot_param_node>robot_state_publisher</robot_param_node>
             <parameters>$(find my_robot_description)/config/my_controllers.yaml</parameters>
-            <publish_tf>flase</publish_tf>
+            <publish_tf>false</publish_tf>
             <robot_base_frame>base_footprint</robot_base_frame>
         </plugin>
     </gazebo>
 
 </robot>
+

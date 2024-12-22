@@ -7,12 +7,14 @@
     <xacro:include filename="common_properties.xacro" />
     <!-- <xacro:include filename="my_robot_base.xacro" /> -->
     <xacro:include filename="my_robot_base_mesh.xacro" />
+    <!-- <xacro:include filename="my_robot_base_mesh.urdf" /> -->
     <xacro:include filename="lidar.xacro" />
     <xacro:include filename="imu.xacro" />
-    <!-- <xacro:include filename="my_robot_gazebo_control.xacro" /> -->
     <!-- <xacro:include filename="my_robot_ros2_control.xacro" />   -->
 
 
+
+    <!-- <xacro:include filename="my_robot_gazebo_control.xacro" /> -->
     <!-- <xacro:if value="$(arg use_ros2_control)">
         <xacro:include filename="my_robot_ros2_control.xacro" />  
     </xacro:if>

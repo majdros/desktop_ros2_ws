@@ -25,9 +25,26 @@
         <color rgba="0.0 0.1 0.0 1"/>
     </material>
 
+    <material name="grünlichesGrau">
+        <color rgba="0.6 0.7 0.6 1"/>
+    </material>
+
+<material name="warmesRot">
+    <color rgba="0.8 0.1 0.1 1"/>
+</material>
+
+<material name="grauBlau">
+    <color rgba="0.4 0.5 0.6 1"/>
+</material>
+
+<material name="pastelligesZitronengelb">
+    <color rgba="1.0 1.0 0.6 1"/>
+</material>
+
     <gazebo reference="base_link">
         <material>Gazebo/DarkGrey</material>
     </gazebo>
+
 
     <gazebo reference="right_wheel_link">
         <material>Gazebo/Orange</material>

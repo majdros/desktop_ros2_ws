@@ -7,16 +7,19 @@
     <link name="laser">
         <visual>
             <geometry>
-                <cylinder radius="${lidar_radius}" length="${lidar_length}"/>
+                <mesh filename="package://my_robot_description/models/meshes/c1m1_appearance_v2_20230926_3d_.stl" scale="0.001 0.001 0.001"/>
+                <!-- <cylinder radius="${lidar_radius}" length="${lidar_length}"/> -->
             </geometry>
-            <material name="red"/>
-            <origin xyz="0.0 0.0 ${lidar_length/2}" rpy="0.0 0.0 0.0"/>          
+            <material name="pastelligesZitronengelb"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>          
+            <!-- <origin xyz="0.0 0.0 ${lidar_length/2}" rpy="0.0 0.0 0.0"/>           -->
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="${lidar_radius}" length="${lidar_length}"/>
+                <cylinder radius="${lidar_radius + 0.007}" length="${lidar_length}"/>
             </geometry>
             <origin xyz="0.0 0.0 ${lidar_length/2}" rpy="0.0 0.0 0.0"/>                   
+            <!-- <origin xyz="0.0 0.0 ${lidar_length/2}" rpy="0.0 0.0 0.0"/>                    -->
         </collision>
         <xacro:cylinder_inertia m="0.1" r="${lidar_radius}" h="${lidar_length - 0.002}"
                                 xyz="0.0 0.0 ${lidar_length/2}" rpy="0.0 0.0 0.0" />             

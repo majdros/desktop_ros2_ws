@@ -1,0 +1,292 @@
+<?xml version="1.0" ?>
+<sdf version='1.6'>
+  <model name='my_robot'>
+    <link name='base_footprint'>
+      <inertial>
+        <pose>0 0 0.074736 0 -0 0</pose>
+        <mass>1500.15</mass>
+        <inertia>
+          <ixx>7.41805</ixx>
+          <ixy>0</ixy>
+          <ixz>-1.38778e-17</ixz>
+          <iyy>8.59417</iyy>
+          <iyz>0</iyz>
+          <izz>4.48189</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_footprint_fixed_joint_lump__base_link_collision'>
+        <pose>0 0 0.10525 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.1855</length>
+            <radius>0.07</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__front_caster_wheel_link_collision_1'>
+        <pose>0.0485 0 0.01267 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0125</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__bno055_collision_2'>
+        <pose>0 0 0.1885 0 -0 1.5708</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.025 0.0045</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__laser_collision_3'>
+        <pose>0 0 0.21615 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.0413</length>
+            <radius>0.0348</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_collision_4'>
+        <pose>-0.0485 0 0.01267 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0125</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_footprint_fixed_joint_lump__base_link_visual'>
+        <pose>0 0 0.15 1.5708 -0 1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/my_robot_base.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.6 0.7 0.6 1</ambient>
+          <diffuse>0.6 0.7 0.6 1</diffuse>
+          <specular>0.2 0.3 0.3 1</specular>
+          <emissive>0.0 0.0 0.0 1</emissive>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__front_caster_wheel_link_visual_1'>
+        <pose>0.0485 0.0065 0.01267 0 0 -1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/caster_wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/FlatBlack</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__bno055_visual_2'>
+        <pose>0 0 0.18625 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/adafruit_bno055_stemma_qt_1.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.8 0.1 0.1 1</ambient>
+          <diffuse>0.8 0.1 0.1 1</diffuse>
+          <specular>0.3 0.1 0.1 1</specular>
+          <emissive>0.1 0.0 0.0 1</emissive> 
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__laser_visual_3'>
+        <pose>0 0 0.1955 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/c1m1_appearance_v2_20230926_3d_.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1.0 1.0 0.6 1</ambient>
+          <diffuse>1.0 1.0 0.6 1</diffuse>
+          <specular>0.2 0.2 0.1 1</specular>
+          <emissive>0.1 0.1 0.0 1</emissive>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_visual_4'>
+        <pose>-0.0485 0.0065 0.01267 0 0 -1.5708</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/caster_wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/FlatBlack</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <m1 value='10.0'/>
+      <m2 value='10.0'/>
+      <m1 value='10.0'/>
+      <m2 value='10.0'/>
+    </link>
+    <joint name='base_left_wheel_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0 0.0775 0.033 1.5708 0 -0</pose>
+      <parent>base_footprint</parent>
+      <child>left_wheel_link</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_wheel_link'>
+      <pose relative_to='base_left_wheel_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>500</mass>
+        <inertia>
+          <ixx>0.162167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.162167</iyy>
+          <iyz>0</iyz>
+          <izz>0.27225</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wheel_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.033</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='left_wheel_link_visual'>
+        <pose>0 0 -0.0125 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.4 0.5 0.6 1</ambient>
+          <diffuse>0.4 0.5 0.6 1</diffuse>
+          <specular>0.2 0.3 0.4 1</specular>
+          <emissive>0.0 0.0 0.0 1</emissive>
+        </material>
+      </visual>
+      <m1 value='10.0'/>
+      <m2 value='10.0'/>
+    </link>
+    <joint name='base_right_wheel_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0 -0.0775 0.033 -1.5708 0 0</pose>
+      <parent>base_footprint</parent>
+      <child>right_wheel_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='right_wheel_link'>
+      <pose relative_to='base_right_wheel_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>500</mass>
+        <inertia>
+          <ixx>0.162167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.162167</iyy>
+          <iyz>0</iyz>
+          <izz>0.27225</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_wheel_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.033</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='right_wheel_link_visual'>
+        <pose>0 0 -0.0125 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/wheel.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.4 0.5 0.6 1</ambient>
+          <diffuse>0.4 0.5 0.6 1</diffuse>
+          <specular>0.2 0.3 0.4 1</specular>
+          <emissive>0.0 0.0 0.0 1</emissive>
+        </material>
+      </visual>
+      <m1 value='10.0'/>
+      <m2 value='10.0'/>
+    </link>
+  </model>
+</sdf>
