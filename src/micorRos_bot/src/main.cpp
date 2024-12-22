@@ -15,6 +15,7 @@
 #include <odometry.h>
 #include <nav_msgs/msg/odometry.h>
 #include <geometry_msgs/msg/vector3.h>
+#include <sensor_msgs/msg/joint_state.h>
 
 //pin declaration
 //Left wheel
@@ -55,6 +56,9 @@ const int freq = 20000;      // freq 20 kHz
 const int pwmChannelL = 0;
 const int pwmChannelR = 1;
 const int resolution = 8;    //8-Bit resolutin (0-255)
+// NEU: Joint Names als String-Arrays
+const char* left_wheel_joint_name = "base_left_wheel_joint";
+const char* right_wheel_joint_name = "base_right_wheel_joint";
 
 rcl_subscription_t subscriber;
 geometry_msgs__msg__Twist msg;
@@ -68,6 +72,9 @@ std_msgs__msg__Int32 encodervalue_r;
 nav_msgs__msg__Odometry odom_msg;
 rcl_timer_t timer;
 rcl_timer_t ControlTimer;
+// NEU: Globale Variablen für Joint States
+rcl_publisher_t joint_states_publisher;
+sensor_msgs__msg__JointState joint_states_msg;
 unsigned long long time_offset = 0;
 unsigned long prev_cmd_time = 0;
 unsigned long prev_odom_update = 0;
@@ -99,6 +106,10 @@ public:
   float error;
   float previousError = 0;
   int tick;
+  // NEU: Funktion zur Berechnung der Radposition in Radianten
+  double getWheelPosition() {
+      return (2.0 * M_PI * (double)EncoderCount.data) / (double)tick;
+  }
 
   MotorController(int8_t ForwardPin, int8_t BackwardPin, int8_t EnablePin, int8_t EncoderA, int8_t EncoderB, int tickPerRevolution) {
     this->Forward = ForwardPin;
@@ -233,9 +244,9 @@ void setup() {
   // create node
   RCCHECK(rclc_node_init_default(&node, "micro_ros_esp32_node", "", &support));
 
-  // create subscriber for /diff_cont/cmd_vel_unstamped topic
+  // create subscriber for /cmd_vel topic
   RCCHECK(rclc_subscription_init_default(
-    &subscriber, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "/diff_cont/cmd_vel_unstamped"));
+    &subscriber, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "/cmd_vel"));
   //create a odometry publisher
   RCCHECK(rclc_publisher_init_default(&odom_publisher, &node, ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry), "/wheel_odom"));
 
@@ -252,6 +263,38 @@ void setup() {
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &msg, &subscription_callback, ON_NEW_DATA));
   // RCCHECK(rclc_executor_add_timer(&executor, &timer));
   RCCHECK(rclc_executor_add_timer(&executor, &ControlTimer));
+  // NEU: Joint States Publisher initialisieren
+  RCCHECK(rclc_publisher_init_default(&joint_states_publisher,&node,ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, JointState),"/joint_states"));
+
+  // NEU: Joint States Message initialisieren
+  joint_states_msg.header.frame_id.data = (char*)"base_link";
+  joint_states_msg.header.frame_id.size = strlen("base_link");
+  joint_states_msg.header.frame_id.capacity = strlen("base_link");
+
+  // NEU: Arrays für Joint States allokieren
+  joint_states_msg.name.capacity = 2;
+  joint_states_msg.name.size = 2;
+  joint_states_msg.name.data = (rosidl_runtime_c__String*)malloc(
+      joint_states_msg.name.capacity * sizeof(rosidl_runtime_c__String));
+
+  joint_states_msg.position.capacity = 2;
+  joint_states_msg.position.size = 2;
+  joint_states_msg.position.data = (double*)malloc(
+      joint_states_msg.position.capacity * sizeof(double));
+
+  joint_states_msg.velocity.capacity = 2;
+  joint_states_msg.velocity.size = 2;
+  joint_states_msg.velocity.data = (double*)malloc(
+      joint_states_msg.velocity.capacity * sizeof(double));
+
+  // NEU: Joint Names setzen
+  joint_states_msg.name.data[0].data = (char*)left_wheel_joint_name;
+  joint_states_msg.name.data[0].size = strlen(left_wheel_joint_name);
+  joint_states_msg.name.data[0].capacity = strlen(left_wheel_joint_name);
+  
+  joint_states_msg.name.data[1].data = (char*)right_wheel_joint_name;
+  joint_states_msg.name.data[1].size = strlen(right_wheel_joint_name);
+  joint_states_msg.name.data[1].capacity = strlen(right_wheel_joint_name);
 }
 
 void loop() {
@@ -319,6 +362,21 @@ void MotorControll_callback(rcl_timer_t* timer, int64_t last_call_time) {
     linear_y,
     angular_z);
   publishData();
+  // NEU: Joint States Message aktualisieren
+  struct timespec time_stamp = getTime();
+  joint_states_msg.header.stamp.sec = time_stamp.tv_sec;
+  joint_states_msg.header.stamp.nanosec = time_stamp.tv_nsec;
+
+  // NEU: Positionen der Räder in Radianten berechnen und setzen
+  joint_states_msg.position.data[0] = leftWheel.getWheelPosition();
+  joint_states_msg.position.data[1] = rightWheel.getWheelPosition();
+
+  // NEU: Geschwindigkeiten der Räder in Radianten/Sekunde berechnen und setzen
+  joint_states_msg.velocity.data[0] = (currentRpmL * 2.0 * M_PI) / 60.0;  // Umrechnung von RPM in rad/s
+  joint_states_msg.velocity.data[1] = (currentRpmR * 2.0 * M_PI) / 60.0;  // Umrechnung von RPM in rad/s
+
+  // NEU: Joint States publizieren
+  RCSOFTCHECK(rcl_publish(&joint_states_publisher, &joint_states_msg, NULL));
 }
 
 //interrupt function for left wheel encoder.
