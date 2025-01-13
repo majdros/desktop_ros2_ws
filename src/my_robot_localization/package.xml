@@ -3,7 +3,7 @@
 <package format="3">
   <name>my_robot_localization</name>
   <version>0.0.0</version>
-  <description>Trobot_localization Package description</description>
+  <description>robot_localization Package description</description>
   <maintainer email="majd.fa.shahrour@outlook.com">Majd Shahrour</maintainer>
   <license>Apache 2.0</license>
 

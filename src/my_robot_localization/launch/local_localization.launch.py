@@ -6,13 +6,20 @@ import os
 
 def generate_launch_description():
 
-    static_transform_publisher = Node(
+    # static_transform_publisher_imu_link_to_footprint = Node(
+    #     package="tf2_ros",
+    #     executable="static_transform_publisher",
+    #     arguments=["--x", "-0.05", "--y", "0","--z", "0.152", # Values from Urdf between imu-link (bno055) und #footprint-link#
+    #                 "--qx", "0", "--qy", "0", "--qz", "0", "--qw", "1",
+    #                 "--frame-id", "base_footprint_ekf", ######
+    #                 "--child-frame-id", "bno055_ekf"],
+    # )
+
+    static_transform_publisher_odom_to_base_link = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
-        arguments=["--x", "-0.05", "--y", "0","--z", "0.152", # Values from Urdf between imu-link (bno055) und #footprint-link#
-                    "--qx", "0", "--qy", "0", "--qz", "0", "--qw", "1",
-                    "--frame-id", "base_footprint_ekf", ######
-                    "--child-frame-id", "bno055_ekf"],
+        # arguments=["0", "0", "0.0125", "0", "0", "0", "base_footprint", "base_link"]
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "odom", "base_footprint"]
     )
 
     robot_localizaiton = Node(
@@ -24,15 +31,16 @@ def generate_launch_description():
         # remappings=[("odometry/filtered", "odometry/local")],
     )
 
-    imu_republisher = Node(
-        package="my_robot_localization",
-        executable="imu_republisher.py",
-        name="imu_republisher",
-    )
+    # imu_republisher = Node(
+    #     package="my_robot_localization",
+    #     executable="imu_republisher.py",
+    #     name="imu_republisher",
+    # )
 
 
     return LaunchDescription([
-        # static_transform_publisher,
+        # static_transform_publisher_odom_to_base_link,
         robot_localizaiton,
+        # static_transform_publisher_imu_link_to_footprint,
         # imu_republisher
     ])
