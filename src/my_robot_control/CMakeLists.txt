@@ -5,6 +5,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -16,7 +17,7 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(SERIAL libserial)
 
-
+# Install Python modules
 ament_python_install_package(${PROJECT_NAME})
 
 add_library(${PROJECT_NAME} SHARED 
@@ -39,6 +40,8 @@ ament_target_dependencies(${PROJECT_NAME}
 
 pluginlib_export_plugin_description_file(hardware_interface my_robot_interface.xml)
 
+
+# Create Cpp executable
 # add_executable(simple_serial_receiver src/simple_serial_receiver.cpp)
 # ament_target_dependencies(simple_serial_receiver rclcpp std_msgs)
 # target_include_directories(simple_serial_receiver PUBLIC
@@ -58,22 +61,15 @@ install(
   DESTINATION lib
 )
 
-install(
-  DIRECTORY include
-  DESTINATION include
-)
 
 install(
-  DIRECTORY launch
+  DIRECTORY launch include config urdf src my_robot_control
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(
-  DIRECTORY config
-  DESTINATION share/${PROJECT_NAME}
-)
 
-# Installation der Python-Skripte
+
+# Install Python executables
 # install(PROGRAMS
 #   ${PROJECT_NAME}/simple_serial_transmitter.py
 #   ${PROJECT_NAME}/simple_serial_receiver.py
@@ -90,6 +86,7 @@ install(
 #   DESTINATION lib/${PROJECT_NAME}
 # )
 
+# Include Cpp "include" directory
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )

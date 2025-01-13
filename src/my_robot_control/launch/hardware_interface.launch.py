@@ -11,8 +11,6 @@ def generate_launch_description():
 
     urdf_path = os.path.join(get_package_share_path('my_robot_description'),'urdf', 'my_robot.urdf.xacro')
 
-    my_controllers_yaml_path = os.path.join(get_package_share_path('my_robot_description'), 'config', 'my_controllers.yaml')
-
     robot_description = ParameterValue(
         Command(['xacro ', urdf_path]),
         value_type=str
@@ -25,11 +23,22 @@ def generate_launch_description():
                     'use_sim_time': False, 'queue_size': 200}]
     )
 
+
+
+    control_urdf_path = os.path.join(get_package_share_path('my_robot_control'),'urdf', 'my_robot_control.urdf.xacro')
+
+    my_controllers_yaml_path = os.path.join(get_package_share_path('my_robot_control'), 'config', 'my_controllers.yaml')
+
+    robot_control = ParameterValue(
+        Command(['xacro ', control_urdf_path]),
+        value_type=str
+    )
+
     controller_manager = Node(
         package='controller_manager',
         executable='ros2_control_node',
         parameters=[
-            {'robot_description' : robot_description,
+            {'robot_description' : robot_control,
             'use_sim_time':False},
             my_controllers_yaml_path,
         ]
@@ -47,7 +56,7 @@ def generate_launch_description():
         executable='joint_state_publisher_gui',
     )
     return LaunchDescription([
-        robot_state_publisher_node,
+        # robot_state_publisher_node,
         controller_manager,
         # hardware_interface_node,
         # joint_state_publisher_node
