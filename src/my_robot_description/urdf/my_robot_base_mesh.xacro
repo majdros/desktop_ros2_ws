@@ -22,7 +22,7 @@
     <xacro:property name="imu_height" value="0.0015"/>
     <xacro:property name="base_imu_z_distance" value="${body_length - 0.046}"/>
 
-
+    <xacro:property name= "meshes_file_direction" value="package://my_robot_description/models/meshes"/>
 
     <!-- base_footprint -->
     <link name="base_footprint" />
@@ -33,7 +33,7 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/models/meshes/my_robot_base.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="${meshes_file_direction}/my_robot_base.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="grünlichesGrau"/>
             <origin xyz="0.0 0.0 ${robot_center_to_base_link_z_distance}" rpy="${pi/2} 0.0 ${pi/2}"/>          
@@ -44,7 +44,7 @@
             </geometry>
             <origin xyz="0.0 0.0 ${body_length / 2}" rpy="0.0 0.0 0.0"/>                   
         </collision>
-        <xacro:box_inertia m="1000.0" l="${body_length}" w="${body_radius * 2}" h="${body_radius * 2}"
+        <xacro:box_inertia m="2.0" l="${body_length}" w="${body_radius * 2}" h="${body_radius * 2}"
                                 xyz="0.0 0.0 ${wheel_z_offset + (body_length / 2) - 0.02}" rpy="0.0 0.0 0.0" />             
     </link>
 
@@ -64,7 +64,7 @@
         <link name="${prefix}_wheel_link">
             <visual>
                 <geometry>
-                <mesh filename="package://my_robot_description/models/meshes/wheel.stl" scale="0.001 0.001 0.001"/>                    
+                <mesh filename="${meshes_file_direction}/wheel.stl" scale="0.001 0.001 0.001"/>                    
                 </geometry>
                 <material name="grauBlau"/>
                 <origin xyz="0.0 0.0 ${-wheel_length/2}" rpy="${pi/2}  0.0 0.0"/>         
@@ -75,7 +75,7 @@
                 </geometry>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>               
             </collision>
-            <xacro:cylinder_inertia m="500.0" r="${wheel_radius}" h="${wheel_length}"
+            <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_length}"
                                     xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />     
         </link>  
     </xacro:macro>
@@ -110,7 +110,7 @@
         <link name="${prefix}_caster_wheel_link">
             <visual>
                 <geometry>
-                    <mesh filename="package://my_robot_description/models/meshes/caster_wheel.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="${meshes_file_direction}/caster_wheel.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="black"/>
                 <origin xyz="0.0 ${caster_wheel_length/2} 0.0" rpy="0.0 0.0 ${-pi/2}"/>
@@ -122,7 +122,7 @@
                 <material name="black"/>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>               
             </collision>
-            <xacro:cylinder_inertia m="250.0" r="${caster_wheel_radius}" h="${caster_wheel_length}"
+            <xacro:cylinder_inertia m="0.250" r="${caster_wheel_radius}" h="${caster_wheel_length}"
                                     xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />       
         </link>  
     </xacro:macro>
@@ -167,5 +167,13 @@
         <origin xyz="0 0 0.1" rpy="0 0 0"/>
     </joint> -->
 
-
+    <!-- <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+    <ros>
+        <robotNamespace>/my_robot</robotNamespace>
+        <jointName>base_left_wheel_joint, base_right_wheel_joint</jointName>
+        <remapping>joint_states:=/joint_states</remapping>
+        <updateRate>100.0</updateRate>
+        <alwaysOn>true</alwaysOn>
+    </ros>
+    </plugin> -->
 </robot>

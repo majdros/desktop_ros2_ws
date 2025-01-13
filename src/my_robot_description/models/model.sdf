@@ -288,5 +288,35 @@
       <m1 value='10.0'/>
       <m2 value='10.0'/>
     </link>
+
+
+  <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">     #####(funktionert aber die Richtung ist nicht korrekt)#####
+    <ros>
+      <namespace>/my_robot</namespace>
+      <remapping>cmd_vel:=/cmd_vel</remapping>
+    </ros>
+    <robotNamespace>/my_robot</robotNamespace>
+    <left_joint>base_left_wheel_joint</left_joint>
+    <right_joint>base_right_wheel_joint</right_joint>
+    <wheel_separation>0.155</wheel_separation>
+    <wheel_diameter>0.066</wheel_diameter>
+    <update_rate>100.0</update_rate>
+
+  </plugin>
+
+<!-- https://www.youtube.com/watch?v=IjFcr5r0nMs&t=561s -->
+
+  <!-- <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">    #####(Gazebo → ROS)#####
+      <namespace>/my_robot</namespace>
+      <joint_name>base_left_wheel_joint</joint_name>
+      <joint_name>base_right_wheel_joint</joint_name>
+      <remapping>joint_states:=/joint_states</remapping>
+      <joint_state_source>sensor</joint_state_source>
+      <update_rate>100.0</update_rate>
+      <alwaysOn>true</alwaysOn>
+  </plugin> -->
+
+
+
   </model>
 </sdf>

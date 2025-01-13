@@ -1,5 +1,4 @@
-#source: https://articulatedrobotics.xyz/tutorials/mobile-robot/applications/teleop/
-#source: https://index.ros.org/p/joy/
+#source: https://github.com/ros2/teleop_twist_joy/tree/humble
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -23,17 +22,11 @@ def generate_launch_description():
         executable='teleop_node',
         name='teleop_node',
         parameters=[joy_params],
-        remappings=[('/cmd_vel', '/cmd_vel')]
+        remappings=[('/cmd_vel', '/cmd_vel_stamped')]
     )
 
-    twist_stamper= Node(
-        package='twist_stamper',
-        executable='twist_stamper',
-        remappings=[('/cmd_vel_in','/cmd_vel_in'),
-                    ('/cmd_vel_out','/cmd_vel_out')]
-    )
+
     return LaunchDescription([
         joy_node,
         teleop_node,
-        #twist_stamper
     ])
