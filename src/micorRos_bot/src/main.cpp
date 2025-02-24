@@ -57,9 +57,9 @@ int tickPerRevolution_RW = 960;
 int threshold = 0;
 
 //pid constants of left wheel
-float kp_l = 7.5, ki_l = 5.5, kd_l = 0.01;
+float kp_l = 6.0, ki_l = 5.5, kd_l = 0.0;
 //pid constants of right wheel
-float kp_r = 7.5, ki_r = 5.5, kd_r = 0.01;
+float kp_r = 6.0, ki_r = 5.5, kd_r = 0.0;
 
 //pwm parameters setup
 const int freq = 20000;      // freq 20 kHz
@@ -263,27 +263,27 @@ public:
 MotorController leftWheel(L_FORW, L_BACK, L_enablePin, L_encoderPin1, L_encoderPin2, tickPerRevolution_LW, startDeadbandL, stopDeadbandL);
 MotorController rightWheel(R_FORW, R_BACK, R_enablePin, R_encoderPin1, R_encoderPin2, tickPerRevolution_RW, startDeadbandR, stopDeadbandR);
 
-#define LED_PIN 2
+// #define LED_PIN 2
 #define RCCHECK(fn) \
   { \
     rcl_ret_t temp_rc = fn; \
-    if ((temp_rc != RCL_RET_OK)) { error_loop(); } \
+    if ((temp_rc != RCL_RET_OK)) { /*error_loop();*/ } \
   }
 
 #define RCSOFTCHECK(fn) \
   { \
     rcl_ret_t temp_rc = fn; \
-    if ((temp_rc != RCL_RET_OK)) { error_loop(); } \
+    if ((temp_rc != RCL_RET_OK)) { /*error_loop();*/ } \
   }
 
 
 
-void error_loop() {
-  while (1) {
-    digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-    delay(100);
-  }
-}
+// void error_loop() {
+//   while (1) {
+//     digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+//     delay(100);
+//   }
+// }
 
 void setup() {
 
@@ -305,8 +305,8 @@ void setup() {
   ledcAttachPin(rightWheel.Enable, pwmChannelR);
 
   set_microros_transports();
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, HIGH);
+  // pinMode(LED_PIN, OUTPUT);
+  // digitalWrite(LED_PIN, HIGH);
 
   delay(1000);
 
@@ -330,7 +330,7 @@ void setup() {
   //MotorControll_callback function is called
   //Here I had set SamplingT=10 Which means at every 10 milliseconds MotorControll_callback function is called
 
-  const unsigned int samplingT = 10;      // edit from 20 to 10
+  const unsigned int samplingT = 20;
   RCCHECK(rclc_timer_init_default(
     &ControlTimer, &support, RCL_MS_TO_NS(samplingT), MotorControll_callback));
 
@@ -383,8 +383,8 @@ void cmd_vel_stamped_callback(const void* msgin) {
 
 //function which controlles the motor
 void MotorControll_callback(rcl_timer_t* timer, int64_t last_call_time) {
-  unsigned long currentTime = millis();
-  prev_cmd_time = currentTime;
+  // unsigned long currentTime = millis();
+  // prev_cmd_time = currentTime;
 
   float linearVelocity;
   float angularVelocity;
@@ -400,7 +400,7 @@ void MotorControll_callback(rcl_timer_t* timer, int64_t last_call_time) {
   //pid controlled is used for generating the pwm signal
   float actuating_signal_LW = leftWheel.pid(vL, currentRpmL);
   float actuating_signal_RW = rightWheel.pid(vR, currentRpmR);
-  if (currentTime - prev_cmd_time > 1000 || (vL == 0 && vR == 0)) {
+  if (vL == 0 && vR == 0) {
     leftWheel.stop();
     rightWheel.stop();
     actuating_signal_LW = 0;
