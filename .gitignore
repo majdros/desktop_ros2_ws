@@ -3,3 +3,7 @@ install/
 log/
 .vscode/
 test.py
+.colcon/
+__pycache__/
+main_alt.cpp
+my_robot_control/
