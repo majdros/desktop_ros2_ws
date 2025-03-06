@@ -13,18 +13,18 @@ This package implements real-time hand gesture recognition to control a robot us
 
 ## Velocity Command Flexibility
 
-Dieses Projekt unterstützt zwei Formate für Geschwindigkeitsbefehle:
+This project supports two formats for speed commands::
 
 1. **Standard Twist Messages** (`geometry_msgs/Twist`)
    - Topic: `/cmd_vel`
-   - Verwendet für direkte Robotersteuerung ohne Zeitstempel
-   - Ausgegeben vom `gesture_control_node`
+   - Used for robot control without time stamping
+   - Issued by `gesture_control_node`
 
 2. **Timestamped Twist Messages** (`geometry_msgs/TwistStamped`)
    - Topic: `/cmd_vel_stamped`
-   - Beinhaltet zusätzliche Zeitstempel-Informationen für präzisere Bewegungssteuerung
-   - Ausgegeben vom `twist_stamper_node`
-   - Erforderlich für die Integration mit dem MicroROS-Bot
+   - Includes additional timestamp information for more precise motion control
+   - Issued by `twist_stamper_node`
+   - Required for integration with the MicroROS-Bot
 
 The choice between these formats depends on the configuration and requirements of the controlled robot. The MicroROS-Bot uses TwistStamped messages by default for more precise timing control and synchronization.
 
