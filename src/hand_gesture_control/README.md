@@ -83,8 +83,8 @@ hand_gesture_control/
 ├── msg/
 │   ├── HandLandmark.msg
 │   └── HandLandmarks.msg
-└── launch/
-    └── gesture_control.launch.py
+├──  launch/
+│    └── gesture_control.launch.py
 └── images/
     └── rosgraph.png
 ```
