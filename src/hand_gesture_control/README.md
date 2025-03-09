@@ -10,6 +10,41 @@ This package implements real-time hand gesture recognition to control a robot us
 - MediaPipe for hand landmark detection
 - ROS2 for robot control integration
 - Custom message types for hand landmark data
+- Gesture mapping:
+   ```
+   0 fingers: Forward   (linear.x = 1.1, angular.z  = 0.0)
+   1 finger: Forward    (linear.x = 1.1, angular.z  = 0.0)
+   2 fingers: backward  (linear.x = -1.1, angular.z = 0.0)
+   3 fingers: Left      (linear.x = 0.0, angular.z  = 1.7)
+   4 fingers: Right     (linear.x = 0.0, angular.z  = -1.7)
+   5 fingers: Stop      (linear.x = 0.0, angular.z  = 0.0)
+   ```
+## Usage
+
+1. Launch:
+```bash
+# Launch with default settings
+ros2 launch hand_gesture_control hand_gesture_control.launch.py
+
+# Launch without Visualization and twist_stamper 
+ros2 launch hand_gesture_control hand_gesture_control.launch.py draw_enabled:=false use_twist_stamper:=false
+```
+
+2. Available Launch Parameters:
+
+| Parameter                | Description                                      | Default Value     |
+|--------------------------|--------------------------------------------------|-------------------|
+| `use_twist_stamper`      | Enables/disables the twist_stamper node         | `true`            |
+| `twist_stamper_frame_id` | Frame ID for TwistStamped messages              | `''` (empty string) |
+| `draw_enabled`           | Enables/disables hand tracking visualization    | `true`            |
+
+3. Run individual nodes:
+```bash
+ros2 run hand_gesture_control camera_node
+ros2 run hand_gesture_control hand_tracking_node
+ros2 run hand_gesture_control gesture_control_node
+ros2 run hand_gesture_control twist_stamper_node
+```
 
 ## Velocity Command Flexibility
 
@@ -28,7 +63,7 @@ This project supports two formats for speed commands::
 
 The choice between these formats depends on the configuration and requirements of the controlled robot. The MicroROS-Bot uses TwistStamped messages by default for more precise timing control and synchronization.
 
-To switch between formats, enable or disable the `twist_stamper_node` in the launch file or adjust the subscriber configuration of your robot accordingly.
+You can disable the `twist_stamper_node` using the `use_twist_stamper` launch argument
 
 
 ## Package Structure
@@ -50,8 +85,18 @@ hand_gesture_control/
 │   └── HandLandmarks.msg
 └── launch/
     └── gesture_control.launch.py
+└── images/
+    └── rosgraph.png
 ```
 ## Components
+
+### Topics
+![ROS2 Topic Graph](images/rosgraph.png)
+
+- `/image_raw` (sensor_msgs/Image)
+- `/hand_landmarks` (hand_gesture_control/HandLandmarks)
+- `/cmd_vel` (geometry_msgs/Twist)
+- `/cmd_vel_stamped` (geometry_msgs/TwistStamped)
 
 ### Nodes
 
@@ -76,21 +121,13 @@ hand_gesture_control/
    - Subscribes to `/hand_landmarks`
    - Converts hand gestures to robot commands
    - Publishes Twist messages to `/cmd_vel`
-   - Gesture mapping:
-     ```
-     0 fingers: Forward   (linear.x = 1.1, angular.z  = 0.0)
-     1 finger: Forward    (linear.x = 1.1, angular.z  = 0.0)
-     2 fingers: backward  (linear.x = -1.1, angular.z = 0.0)
-     3 fingers: Left      (linear.x = 0.0, angular.z  = 1.7)
-     4 fingers: Right     (linear.x = 0.0, angular.z  = -1.7)
-     5 fingers: Stop      (linear.x = 0.0, angular.z  = 0.0)
-     ```
+   - Generates the `Gesture mapping`
 
 4. **twist_stamper_node**
    - Converts Twist to TwistStamped messages
    - Publishes TwistStamped messages to `/cmd_vel_stamped`
    - Parameters:
-     - `frame_id` (string, default: ''): Frame ID for TwistStamped messages
+     - `twist_stamper_frame_id` (string, default: ''): Frame ID for TwistStamped messages
 
 ### Custom Messages
 
@@ -105,31 +142,3 @@ int32 y       # y coordinate in pixels
 ```
 HandLandmark[] landmarks  # Array of hand landmarks
 ```
-
-## Usage
-
-1. Launch the complete system:
-```bash
-ros2 launch hand_gesture_control gesture_control.launch.py
-```
-
-2. Run individual nodes:
-```bash
-ros2 run hand_gesture_control camera_node
-ros2 run hand_gesture_control hand_tracking_node
-ros2 run hand_gesture_control gesture_control_node
-ros2 run hand_gesture_control twist_stamper_node
-```
-
-
-## Topics
-
-### Subscribed Topics
-- `/image_raw` (sensor_msgs/Image)
-- `/hand_landmarks` (hand_gesture_control/HandLandmarks)
-- `/cmd_vel` (geometry_msgs/Twist)
-
-### Published Topics
-- `/hand_landmarks` (hand_gesture_control/HandLandmarks)
-- `/cmd_vel` (geometry_msgs/Twist)
-- `/cmd_vel_stamped` (geometry_msgs/TwistStamped)
