@@ -46,8 +46,9 @@ class HandTrackingNode(Node):
         self.image_sub = self.create_subscription(Image, '/image_raw', self.image_callback, 10)
         self.image_sub
         self.pTime = 0
-        self.draw_enabled = True        # To show cv2.VideoCapture
-
+        self.declare_parameter('draw_enabled', True)        # To show cv2.VideoCapture
+        self.draw_enabled = self.get_parameter('draw_enabled')._value
+        self.get_logger().info(f'Visualization enabled: {self.draw_enabled}')
 
     def image_callback(self, img):
         try:

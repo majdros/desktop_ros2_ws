@@ -54,7 +54,6 @@ class HandDetector():
         Args:
             frame: Eingabebild
             handNum: Index der zu trackenden Hand
-            draw: Wenn True, werden Punkte 4 und 8 markiert
         Returns:
             Liste der Landmarken-Koordinaten [[id, x, y], ...]
         """

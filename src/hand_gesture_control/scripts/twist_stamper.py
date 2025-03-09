@@ -13,19 +13,20 @@ class TwistStamperNode(Node):
         self.twist_sub = self.create_subscription(Twist, '/cmd_vel', self.twist_callback, 10)
         self.twist_sub      # avoid unused variable warning
 
-        self.declare_parameter('frame_id', '')
-        self.frame_id = str(self.get_parameter('frame_id').value)
+        self.declare_parameter('twist_stamper_frame_id', '')
+        self.twist_stamper_frame_id = str(self.get_parameter('twist_stamper_frame_id').value)
+        self.get_logger().info(f'twist_stamper_frame_id: {self.twist_stamper_frame_id}')
 
     def twist_callback(self, twist_msg):
         try:
             output_msg = TwistStamped()
             output_msg.header = Header()
             output_msg.header.stamp = self.get_clock().now().to_msg()
-            output_msg.header.frame_id = self.frame_id
+            output_msg.header.frame_id = self.twist_stamper_frame_id
             output_msg.twist = twist_msg
             self.stamped_twist_pub.publish(output_msg)
         except Exception as e:
-            self.get_logger().error('fError in image_callback: {str(e)}')
+            self.get_logger().error(f'fError in image_callback: {str(e)}')
 
 
 

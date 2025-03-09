@@ -14,7 +14,7 @@ class ImagePublisher(Node):
         self.bridge = CvBridge()
         self.cap = cv.VideoCapture(0, cv.CAP_V4L2)
 
-        timer_period = 0.066  # 30 FPS
+        timer_period = 0.033  # 30 FPS
         self.timer = self.create_timer(timer_period, self.publish_raw_image)
 
         if not self.cap.isOpened():
