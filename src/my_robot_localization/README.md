@@ -99,7 +99,9 @@ The filter employs standard Kalman Filter equations:
 
 - Prediction: 
 
-$$\hat{x}_{k|k-1} = A \cdot \hat{x}_{k-1|k-1} + B \cdot u_{k-1|k-1}$$
+<p align="center">
+<code>x̂<sub>k|k-1</sub> = A·x̂<sub>k-1|k-1</sub> + B·u<sub>k-1|k-1</sub></code>
+</p>
 
 - Uncertainty Propagation:
 
@@ -115,7 +117,10 @@ $$K_k = P_{k|k-1} \cdot H^T \cdot (H \cdot P_{k|k-1} \cdot H^T + R)^{-1}$$
 
 - Update:
 
-$$\hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k \cdot y_k$$
+<p align="center">
+<code>x̂<sub>k|k</sub> = x̂<sub>k|k-1</sub> + K<sub>k</sub>·y<sub>k</sub></code>
+</p>
+
 
 - Uncertainty Update:
 
