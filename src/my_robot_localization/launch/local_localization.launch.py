@@ -25,11 +25,11 @@ def generate_launch_description():
     robot_localizaiton = Node(
         package="robot_localization",
         executable="ekf_node",
-        name="ekf_filter_node",
+        name="ekf_node",
         output="screen",
         parameters=[os.path.join(get_package_share_directory("my_robot_localization"), "config", "ekf.yaml")],
-        # remappings=[("odometry/filtered", "odometry/local")],
     )
+        # remappings=[("odometry/filtered", "odometry/local")],
 
     # imu_republisher = Node(
     #     package="my_robot_localization",

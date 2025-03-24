@@ -4,6 +4,8 @@ log/
 .vscode/
 test.py
 .colcon/
+src/my_robot_localization/doc/
+src/my_robot_localization/images/
+src/my_robot_localization/bag_files/
 __pycache__/
 main_alt.cpp
-my_robot_control/

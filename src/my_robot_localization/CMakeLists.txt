@@ -20,11 +20,10 @@ ament_python_install_package(${PROJECT_NAME})
 
 # Installation der Python-Skripte
 install(PROGRAMS
-  ${PROJECT_NAME}/kalman_filter_real.py
-  ${PROJECT_NAME}/kalman_filter_sim.py
-  ${PROJECT_NAME}/noisy_odometry_publisher.py
-  ${PROJECT_NAME}/imu_republisher.py
-  ${PROJECT_NAME}/odometry_motion_model.py
+  ${PROJECT_NAME}/kalman_filter.py
+  ${PROJECT_NAME}/velocity_comparison_node.py
+  ${PROJECT_NAME}/innovation_evaluator.py
+  
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -38,6 +37,7 @@ install(
 install(DIRECTORY
   launch 
   config
+  bag_files
   DESTINATION share/${PROJECT_NAME}
 )
 

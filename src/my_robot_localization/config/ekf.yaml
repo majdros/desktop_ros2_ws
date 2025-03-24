@@ -1,52 +1,48 @@
 # source: https://github.com/cra-ros-pkg/robot_localization/blob/ros2/params/ekf.yaml
-ekf_filter_node:
+ekf_node:
   ros__parameters:
-    frequency: 50.0
+    frequency: 75.0
     sensor_timeout: 0.1
-    two_d_mode: true      #If this parameter is set to true, no 3D information will be used in your state estimate.
+    #If true, no 3D information in the state estimate.
+    two_d_mode: true      
     transform_time_offset: 0.0
     transform_timeout: 0.0
     print_diagnostics: false
     publish_tf: true
     debug: false
     tf_cache_time: 50.0
-    
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
     world_frame: odom 
 
-
-
     # Odom Configuration
     odom0: wheel_odom
-    odom0_config: [true,  true,  false,   # x_pos   , y_pos    , z_pos,
+    odom0_config: [true,  true,  false,    # x_pos   , y_pos    , z_pos,
                     false, false, true,    # roll    , pitch    , yaw,
-                    true, false, false,      # x_vel   , y_vel    , z_vel,
+                    true, false, false,    # x_vel   , y_vel    , z_vel,
                     false, false, true,    # roll_vel, pitch_vel, yaw_vel,
-                    false, false, false]    # x_accel , y_accel  , z_accel]
+                    false, false, false]   # x_accel , y_accel  , z_accel]
     odom0_queue_size: 50
     odom0_nodelay: false
     odom0_differential: true
     odom0_relative: false
-    # odom0_pose_rejection_threshold: 0.175  # Reject unrealistic poses
-    # odom0_twist_rejection_threshold: 2.5 # Reject unrealistic twists
-
+    odom0_twist_rejection_threshold: 0.5    # Reject unrealistic twists
 
     # IMU Configuration
     imu0: bno055/imu
     imu0_config: [false, false, false,
-                  true,  true,  true,
+                  false,  false,  true,
                   false, false, false,
-                  true,  true,  true,
-                  true,  true,  true]
+                  false,  false,  true,
+                  true,  false,  false]
     imu0_queue_size: 50
     imu0_nodelay: false
     imu0_differential: false
     imu0_relative: true
     imu0_remove_gravitational_acceleration: true
     imu0_pose_use_child_frame: false
-    imu0_linear_acceleration_rejection_threshold: 0.0
+    imu0_linear_acceleration_rejection_threshold: 0.025
     imu0_angular_velocity_rejection_threshold: 0.0
     imu0_orientation_rejection_threshold: 0.0
     imu0_normalize_quaternion: true
@@ -54,7 +50,7 @@ ekf_filter_node:
 
 
     use_control: false
-
+    stamped_control: true
     process_noise_covariance: [0.05, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.05, 0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.06, 0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
