@@ -96,19 +96,30 @@ This package provides comparison tools for different localization methods:
      - Innovation publishing for monitoring filter performance
 
 The filter employs standard Kalman Filter equations:
-- Prediction: 
-  $$\hat{x}_{k|k-1} = A \cdot \hat{x}_{k-1|k-1} + B \cdot u_{k-1|k-1}$$
-- Uncertainty Propagation:
-  $$P_{k|k-1} = A \cdot P_{k-1|k-1} \cdot A^T + Q$$
-- Innovation:
-  $$y_k = z_k - H \cdot \hat{x}_{k|k-1}$$
-- Kalman Gain:
-  $$K_k = P_{k|k-1} \cdot H^T \cdot (H \cdot P_{k|k-1} \cdot H^T + R)^{-1}$$
-- Update:
-  $$\hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k \cdot y_k$$
-- Uncertainty Update: 
-  $$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
 
+- Prediction: 
+
+$$\hat{x}_{k|k-1} = A \cdot \hat{x}_{k-1|k-1} + B \cdot u_{k-1|k-1}$$
+
+- Uncertainty Propagation:
+
+$$P_{k|k-1} = A \cdot P_{k-1|k-1} \cdot A^T + Q$$
+
+- Innovation:
+
+$$y_k = z_k - H \cdot \hat{x}_{k|k-1}$$
+
+- Kalman Gain:
+
+$$K_k = P_{k|k-1} \cdot H^T \cdot (H \cdot P_{k|k-1} \cdot H^T + R)^{-1}$$
+
+- Update:
+
+$$\hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k \cdot y_k$$
+
+- Uncertainty Update:
+
+$$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
 
 ![Pipeline of Kalman Filter](figures/Pipeline_Kalman_Filter.png)
 
