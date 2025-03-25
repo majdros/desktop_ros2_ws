@@ -34,6 +34,7 @@ ros2 launch my_robot_control my_robot_control.launch.py twist_stamper_frame_id:=
 |--------------------------|--------------------------------------------------|-------------------|
 | `use_teleop_keyboard`      | Enables/disables keyboard control         | `true`            |
 | `use_teleop_joy` | Enables/disables joystick control              | `false` |
+| `use_twist_stamper`      | Enables/disables the twist_stamper node         | `true`            |
 | `twist_stamper_frame_id`           | 	Frame ID for TwistStamped message   | `base_link`            |
 
 

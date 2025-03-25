@@ -22,6 +22,11 @@ def generate_launch_description():
         description= 'Enable teleop_twist_joy if true'
     )
 
+    use_twist_stamper = DeclareLaunchArgument(
+        'use_twist_stamper', 
+        default_value= 'true', 
+        description= 'Disables twist_stamper if false')    
+
     twist_stamper_frame_id = DeclareLaunchArgument(
         'twist_stamper_frame_id', 
         default_value= 'base_link',
@@ -67,6 +72,7 @@ def generate_launch_description():
         executable = 'twist_stamper',
         remappings= [('/cmd_vel_in', '/cmd_vel_out'),
                     ('/cmd_vel_out', '/cmd_vel_stamped')],
+        condition = IfCondition(LaunchConfiguration('use_twist_stamper')),
         parameters=[{
             'twist_stamper_frame_id': LaunchConfiguration('twist_stamper_frame_id')
         }]
@@ -76,6 +82,7 @@ def generate_launch_description():
     return LaunchDescription([
         use_teleop_keyboard,
         use_teleop_joy,
+        use_twist_stamper,
         twist_stamper_frame_id,
 
         joy_node,
