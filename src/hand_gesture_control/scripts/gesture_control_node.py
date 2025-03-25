@@ -9,7 +9,7 @@ class GestureControlNode(Node):
     def __init__(self):
         super().__init__('gesture_control_node')
         
-        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel_gesture', 10)
 
         self.landmark_sub = self.create_subscription(HandLandmarks, '/hand_landmarks', self.landmark_callback, 10)
         self.landmark_sub

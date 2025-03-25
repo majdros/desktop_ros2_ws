@@ -10,7 +10,7 @@ class TwistStamperNode(Node):
         super().__init__('twist_stamper_node')
 
         self.stamped_twist_pub = self.create_publisher(TwistStamped, '/cmd_vel_stamped', 10)
-        self.twist_sub = self.create_subscription(Twist, '/cmd_vel', self.twist_callback, 10)
+        self.twist_sub = self.create_subscription(Twist, '/cmd_vel_gesture', self.twist_callback, 10)
         self.twist_sub      # avoid unused variable warning
 
         self.declare_parameter('twist_stamper_frame_id', '')

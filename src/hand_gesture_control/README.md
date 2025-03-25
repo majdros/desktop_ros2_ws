@@ -19,14 +19,26 @@ This package implements real-time hand gesture recognition to control a robot us
    4 fingers: Right     (linear.x = 0.0, angular.z  = -1.7)
    5 fingers: Stop      (linear.x = 0.0, angular.z  = 0.0)
    ```
+
+<p align="center">
+  <img src="images/Demo.gif" alt="Demo showing hand gesture recognition and robot response (Note: The apparent delay is not a system latency but due to the merging of two separate video recordings that are not perfectly time-synchronized)">
+
+  <em>Demo: Hand gesture control in action (the apparent delay is due to video editing, not actual system latency)</em>
+</p>
+
+
+
 ## Usage
 
 1. Launch:
-```bash
-# Launch with default settings
-ros2 launch hand_gesture_control hand_gesture_control.launch.py
 
-# Launch without Visualization and twist_stamper 
+-  Launch with default settings
+```bash
+ros2 launch hand_gesture_control hand_gesture_control.launch.py
+```
+
+- Launch without Visualization and twist_stamper 
+```bash
 ros2 launch hand_gesture_control hand_gesture_control.launch.py draw_enabled:=false use_twist_stamper:=false
 ```
 
@@ -51,7 +63,7 @@ ros2 run hand_gesture_control twist_stamper_node
 This project supports two formats for speed commands::
 
 1. **Standard Twist Messages** (`geometry_msgs/Twist`)
-   - Topic: `/cmd_vel`
+   - Topic: `/cmd_vel_gesture`
    - Used for robot control without time stamping
    - Issued by `gesture_control_node`
 
@@ -90,12 +102,14 @@ hand_gesture_control/
 ```
 ## Components
 
-### Topics
 ![ROS2 Topic Graph](images/rosgraph.png)
+
+### Topics
+
 
 - `/image_raw` (sensor_msgs/Image)
 - `/hand_landmarks` (hand_gesture_control/HandLandmarks)
-- `/cmd_vel` (geometry_msgs/Twist)
+- `/cmd_vel_gesture` (geometry_msgs/Twist)
 - `/cmd_vel_stamped` (geometry_msgs/TwistStamped)
 
 ### Nodes
@@ -120,8 +134,8 @@ hand_gesture_control/
 3. **gesture_control_node**
    - Subscribes to `/hand_landmarks`
    - Converts hand gestures to robot commands
-   - Publishes Twist messages to `/cmd_vel`
-   - Generates the `Gesture mapping`
+   - Publishes Twist messages to `/cmd_vel_gesture`
+   - Provides the `Gesture mapping`
 
 4. **twist_stamper_node**
    - Converts Twist to TwistStamped messages
