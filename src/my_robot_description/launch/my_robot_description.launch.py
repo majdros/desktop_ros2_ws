@@ -1,24 +1,23 @@
+import os
 from launch import LaunchDescription
 from launch_ros.parameter_descriptions import ParameterValue
-from launch.substitutions import Command, LaunchConfiguration
+from launch.substitutions import Command
 from launch_ros.actions import Node
-import os
 from ament_index_python.packages import get_package_share_path, get_package_share_directory
-from launch.actions import ExecuteProcess, DeclareLaunchArgument, IncludeLaunchDescription 
+from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
 def generate_launch_description():
-    
+
     urdf_path = os.path.join(get_package_share_path('my_robot_description'),
                             'urdf', 'my_robot.urdf.xacro')
     
     rviz_config_path = os.path.join(get_package_share_path('my_robot_description'),
-                                    'config', 'my_robot.rviz')
+                                    'config', 'my_robot_description.rviz')
     
-    joystick_launch_path = os.path.join(get_package_share_path('my_robot_description'),
-                                                'launch', 'joystick.launch.py')
-    
+
+
     bno055_launch_path = os.path.join(get_package_share_path('bno055'),
                                         'launch', 'bno055.launch.py')
 
@@ -27,15 +26,6 @@ def generate_launch_description():
                                 'models', 'model.sdf')
 
 
-
-    # Declare the launch argument
-    use_ros2_control_arg = DeclareLaunchArgument(
-        'use_ros2_control',
-        default_value='true',
-        description='Use ros2_control if true'
-    )
-    
-    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     robot_description = ParameterValue(
         Command(['xacro ', urdf_path]),
@@ -80,12 +70,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    twist_stamper= Node(
-    package='twist_stamper',
-    executable='twist_unstamper',
-    remappings=[('/cmd_vel_in','/cmd_vel_stamped'),
-                ('/cmd_vel_out','/cmd_vel_unstamped')]
-    )
+
 
     static_transform_publisher_base_footprint_to_laser = Node(
         package="tf2_ros",
@@ -104,18 +89,12 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_state_publisher_node,
-        # use_ros2_control_arg,
-
         rviz2_node,
-        twist_stamper,
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(bno055_launch_path)
         ),
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(joystick_launch_path)
-        # )
 
         # start_gazebo_server_cmd,
         # start_gazebo_client_cmd,

@@ -1,0 +1,75 @@
+# my_robot_description
+
+A ROS2 package containing the description (URDF/Xacro), visualization, and simulation components for a custom robot platform.
+
+
+## Overview
+
+This package provides:
+
+- Robot model description using URDF/Xacro
+- Launch files for visualization in RViz
+- Launch files for simulation in Gazebo
+- Sensor integration (lidar, IMU)
+
+![My Robot Model](images/my_robot.png "My Robot")
+
+## Usage
+  1. Launch
+```bash
+ros2 launch my_robot_description my_robot_description.launch.py
+```
+
+## Package Structure
+
+```yaml
+└── 📁my_robot_description
+    └── 📁config
+        └── gazebo_params.yaml
+        └── my_robot_description.rviz
+        └── my_robot.rviz
+    └── 📁images
+        └── frames.png
+        └── gz-ros-connection.png
+        └── my_robot_comp.png
+        └── my_robot.png
+    └── 📁launch
+        └── my_robot_description.launch.py
+    └── 📁models
+        └── 📁meshes
+            └── adafruit_bno055_stemma_qt_1.stl
+            └── c1m1_appearance_v2_20230926_3d_.stl
+            └── caster_wheel.stl
+            └── circo-base-scaled.stl
+            └── my_robot_base.stl
+            └── wheel.stl
+        └── model.config
+        └── model.sdf
+    └── 📁urdf
+        └── common_properties.xacro
+        └── imu.xacro
+        └── lidar.xacro
+        └── my_robot_base_mesh.urdf
+        └── my_robot_base_mesh.xacro    # Main robot description
+        └── my_robot_base.xacro         # robot description without meshes
+        └── my_robot.urdf.xacro
+    └── CMakeLists.txt
+    └── package.xml
+    └── README.md
+    └── technische_zeichnung.pdf        # Technical construction details of the robot
+```
+
+
+## Dependencies
+
+This package relies on:
+
+- [robot_state_publisher](https://github.com/ros/robot_state_publisher)
+- [joint_state_publisher](https://github.com/ros/joint_state_publisher)
+- [xacro](http://wiki.ros.org/xacro)
+- [gazebo_ros](https://github.com/ros-simulation/gazebo_ros_pkgs)
+- [bno055](https://github.com/flynneva/bno055) for IMU sensor integration
+
+
+
+
