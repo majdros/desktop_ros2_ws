@@ -28,7 +28,7 @@ ros2 launch my_robot_control my_robot_control.launch.py use_teleop_joy:=true
 # Launch with custom frame_id for TwistStamped messages
 ros2 launch my_robot_control my_robot_control.launch.py twist_stamper_frame_id:=...
 ```
-3. **Available Launch Parameters:**
+4. **Available Launch Parameters:**
 
 | Parameter                | Description                                      | Default Value     |
 |--------------------------|--------------------------------------------------|-------------------|
@@ -50,19 +50,28 @@ Priority levels and timeouts can be configured in `config/twist_mux.yaml`.
 ![ROS2 Topic Graph](images/rosgraph.png)
 
 ## Package Structure
-my_robot_control/
-├── CMakeLists.txt
-├── package.xml
-├── setup.py
-├── README.md
-├── images/
-│   ├── rosgraph.py
-├── launch/
-│   ├── my_robot_control.launch.py
-│   └── teleop_twist_keyboard.launch.py
-└── config/
-    ├── joystick.yaml
-    └── twist_mux.yaml
+
+```yaml
+└── 📁my_robot_control
+    └── 📁config
+        └── joystick.yaml
+        └── teleop_twist_keyboard.yaml
+        └── twist_mux.yaml
+    └── 📁images
+        └── rosgraph.png
+    └── 📁launch
+        └── my_robot_control.launch.py
+        └── teleop_twist_keyboard.launch.py
+    └── 📁my_robot_control
+        └── __init__.py
+    └── 📁resource
+        └── my_robot_control
+    └── 📁test
+    └── package.xml
+    └── README.md
+    └── setup.cfg
+    └── setup.py
+```
 
 ## Components
 
