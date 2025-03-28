@@ -135,24 +135,35 @@ Visualization Manager:
           Value: false
         laser:
           Value: false
+        left_wheel_link:
+          Value: true
+        odom:
+          Value: true
         rear_caster_wheel_link:
           Value: false
+        right_wheel_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        base_footprint:
-          base_link:
-            bno055:
-              {}
-            front_caster_wheel_link:
-              {}
-            laser:
-              {}
-            rear_caster_wheel_link:
-              {}
+        odom:
+          base_footprint:
+            base_link:
+              bno055:
+                {}
+              front_caster_wheel_link:
+                {}
+              laser:
+                {}
+              left_wheel_link:
+                {}
+              rear_caster_wheel_link:
+                {}
+              right_wheel_link:
+                {}
       Update Interval: 0
       Value: true
     - Acceleration properties:
@@ -172,7 +183,7 @@ Visualization Manager:
         y_scale: 1
         z_scale: 1
       Class: rviz_imu_plugin/Imu
-      Enabled: true
+      Enabled: false
       Name: Imu
       Topic:
         Depth: 5
@@ -181,7 +192,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /bno055/imu
-      Value: true
+      Value: false
       fixed_frame_orientation: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -254,12 +265,12 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /wheel_odom
+        Value: /odometry/filtered
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_link
+    Fixed Frame: odom
     Frame Rate: 100
   Name: root
   Tools:

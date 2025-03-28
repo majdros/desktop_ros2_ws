@@ -16,9 +16,21 @@ This package provides:
 
 ## Usage
   1. Launch
+
+- Launch mit default setting
 ```bash
 ros2 launch my_robot_description my_robot_description.launch.py
 ```
+- Launch with Gazebo simulation
+```bash
+ros2 launch my_robot_description my_robot_description.launch.py use_gazebo:=true
+```
+
+  2. Available Launch Parameters
+
+| Parameter                | Description                                      | Default Value     |
+|--------------------------|--------------------------------------------------|-------------------|
+| `use_gazebo`             | Enables/disables  Gazebo simulation              | `false`           |
 
 ## Package Structure
 

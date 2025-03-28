@@ -290,10 +290,11 @@
     </link>
 
 
-  <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">     #####(funktionert aber die Richtung ist nicht korrekt)#####
+  <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so"> 
     <ros>
       <namespace>/my_robot</namespace>
-      <remapping>cmd_vel:=/cmd_vel</remapping>
+      <remapping>cmd_vel:=/cmd_vel_out</remapping>
+      <remapping>odom:=/odom</remapping>
     </ros>
     <robotNamespace>/my_robot</robotNamespace>
     <left_joint>base_left_wheel_joint</left_joint>
@@ -301,7 +302,7 @@
     <wheel_separation>0.155</wheel_separation>
     <wheel_diameter>0.066</wheel_diameter>
     <update_rate>100.0</update_rate>
-
+    <max_velocity>1.0</max_velocity>
   </plugin>
 
 <!-- https://www.youtube.com/watch?v=IjFcr5r0nMs&t=561s -->
