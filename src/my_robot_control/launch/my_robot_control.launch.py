@@ -15,12 +15,14 @@ def generate_launch_description():
         default_value= 'true',
         description= 'Disables teleop_twist_keyboard if false'
     )
+    use_teleop_keyboard_config = LaunchConfiguration('use_teleop_keyboard')
 
     use_teleop_joy = DeclareLaunchArgument(
         'use_teleop_joy',
         default_value= 'false',
         description= 'Enable teleop_twist_joy if true'
     )
+    use_teleop_joy_config = LaunchConfiguration('use_teleop_joy')
 
     use_twist_stamper = DeclareLaunchArgument(
         'use_twist_stamper', 
@@ -47,7 +49,7 @@ def generate_launch_description():
         package='joy',
         executable='joy_node',
         parameters=[joy_params],
-        condition = IfCondition(LaunchConfiguration('use_teleop_joy')),
+        condition = IfCondition(use_teleop_joy_config),
     )
 
     teleop_node= Node(
@@ -55,7 +57,7 @@ def generate_launch_description():
         executable='teleop_node',
         name='teleop_twist_joy',
         parameters=[joy_params],
-        condition = IfCondition(LaunchConfiguration('use_teleop_joy')),
+        condition = IfCondition(use_teleop_joy_config),
         remappings=[('/cmd_vel', '/cmd_vel_joy')]
     )
 
@@ -82,7 +84,9 @@ def generate_launch_description():
     safety_stop_node = Node(
         package='my_robot_control',
         executable='safety_stop_node',
-        name='safety_stop_node'
+        name='safety_stop_node',
+        parameters=[{'use_teleop_joy': use_teleop_joy_config,
+                    'use_teleop_keyboard': use_teleop_keyboard_config}]
     )
 
 

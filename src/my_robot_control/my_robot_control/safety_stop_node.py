@@ -11,18 +11,24 @@ class SafetyStopNode(Node):
     def __init__(self):
         super().__init__('safety_stop_node')
 
-        self.emergency_stop_publisher = self.create_publisher(Bool, '/emergency_stop', 10)
-        self.create_subscription(Joy, 'joy', self.joy_callback, 10)
-
         self.emergency_stop_active = False
         self.last_emergency_stop_state = None
 
+        self.emergency_stop_publisher = self.create_publisher(Bool, '/emergency_stop', 10)
+
+        self.declare_parameter('use_teleop_joy', None)
+        self.use_teleop_joy = self.get_parameter('use_teleop_joy').get_parameter_value().bool_value
+        if self.use_teleop_joy:
+            self.create_subscription(Joy, 'joy', self.joy_callback, 10)
+
+        self.declare_parameter('use_teleop_keyboard', None)
+        self.use_teleop_keyboard = self.get_parameter('use_teleop_keyboard').get_parameter_value().bool_value
+        if self.use_teleop_keyboard:
+            self.listener = keyboard.Listener(on_press=self.on_press)
+            self.listener.start()
+
         self.timer_period = 0.5
         self.timer = self.create_timer(self.timer_period, self.publish_emergency_stop_state)
-
-        self.listener = keyboard.Listener(on_press=self.on_press)
-        self.listener.start()
-
 
 
     def publish_emergency_stop_state(self):
@@ -74,8 +80,10 @@ class SafetyStopNode(Node):
 
 
     def display_message(self):
-        self.get_logger().info("🚨 Press 'space' to activate the emergency stop, or 'insert' to reset it. 🚨")
-
+        if self.use_teleop_keyboard:
+            self.get_logger().info("🚨 Press 'space' to activate the emergency stop, or 'insert' to reset it. 🚨")
+        if self.use_teleop_joy:
+            self.get_logger().info("🚨 Press 'Button 0 (BACK)' to activate the emergency stop, or 'Button 7 (START)' to reset it. 🚨")
 
 
 def main(args=None):
