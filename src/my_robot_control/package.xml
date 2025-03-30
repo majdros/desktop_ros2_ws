@@ -17,6 +17,11 @@
   <depend>teleop_twist_keyboard</depend>
   <depend>twist_mux</depend>
   <depend>twist_stamper</depend>
+  <depend>pynput</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  
+  <!-- <depend>my_robot_interfaces</depend> -->
 
   <!-- Test Dependencies -->
   <test_depend>ament_flake8</test_depend>

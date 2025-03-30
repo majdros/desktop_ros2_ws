@@ -14,6 +14,9 @@ setup(
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        ('lib/' + package_name,[
+            'my_robot_control/safety_stop_node.py'
+        ])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,6 +27,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'safety_stop_node = my_robot_control.safety_stop_node:main',
         ],
     },
 )

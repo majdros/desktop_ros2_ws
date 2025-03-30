@@ -79,6 +79,13 @@ def generate_launch_description():
     )
 
 
+    safety_stop_node = Node(
+        package='my_robot_control',
+        executable='safety_stop_node',
+        name='safety_stop_node'
+    )
+
+
     return LaunchDescription([
         use_teleop_keyboard,
         use_teleop_joy,
@@ -89,6 +96,7 @@ def generate_launch_description():
         teleop_node,
         twist_mux,
         twist_stamper,
+        safety_stop_node,
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(

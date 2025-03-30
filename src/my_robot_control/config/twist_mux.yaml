@@ -26,4 +26,9 @@ twist_mux:
         timeout : 0.5
         priority: 40
 
-
+    locks:
+      emergency_stop:
+        name    : emergency_stop
+        topic   : emergency_stop
+        timeout : 0.0
+        priority: 255
