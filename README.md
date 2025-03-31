@@ -119,7 +119,8 @@ A ROS2 package for controlling the robot with various input methods and prioriti
 
 
 ### 6. [my_robot_navigation](src/my_robot_navigation/README.md)
-A ROS2 package for robot navigation using Nav2.
+A ROS2 package for robot navigation using Nav2. 
+This package is currently under development
 
 **Key Features:**
 - Integration with the Nav2 framework
@@ -136,5 +137,5 @@ A ROS2 package for robot navigation using Nav2.
 2. **Object Detection with YOLO**  
   Plan to integrate object detection capabilities using the YOLO (You Only Look Once) algorithm. This will enable the robot to identify and track objects in its environment.
 
-3. **Implementation and Evaluation of Indoor 2D SLAM Algorithms**
-  Plan to implement and evaluate various 2D SLAM algorithms for indoor environments to improve navigation capabilities.
+3. **Web-Based Teleoperation**
+  Develop a web-based interface for remote control and monitoring of the robot. This will include real-time video streaming from the robot's camera and the ability to control the robot's movement remotely.
