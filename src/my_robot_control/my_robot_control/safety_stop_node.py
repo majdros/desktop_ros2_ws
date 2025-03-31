@@ -16,16 +16,17 @@ class SafetyStopNode(Node):
 
         self.emergency_stop_publisher = self.create_publisher(Bool, '/emergency_stop', 10)
 
-        self.declare_parameter('use_teleop_joy', None)
+        self.declare_parameter('use_teleop_joy', False)
         self.use_teleop_joy = self.get_parameter('use_teleop_joy').get_parameter_value().bool_value
+
         if self.use_teleop_joy:
             self.create_subscription(Joy, 'joy', self.joy_callback, 10)
 
-        self.declare_parameter('use_teleop_keyboard', None)
+        self.declare_parameter('use_teleop_keyboard', True)
         self.use_teleop_keyboard = self.get_parameter('use_teleop_keyboard').get_parameter_value().bool_value
-        if self.use_teleop_keyboard:
-            self.listener = keyboard.Listener(on_press=self.on_press)
-            self.listener.start()
+        
+        self.listener = keyboard.Listener(on_press=self.on_press)
+        self.listener.start()
 
         self.timer_period = 0.5
         self.timer = self.create_timer(self.timer_period, self.publish_emergency_stop_state)
