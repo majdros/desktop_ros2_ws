@@ -111,9 +111,9 @@ A ROS2 package for controlling the robot with various input methods and prioriti
 </p>
 
 **Key Features:**
-- Robot control via keyboard and joystick
-- Integration with hand gesture control and navigation
-- Emergency stop functionality
+- Robot control via `keyboard` and `joystick`
+- Integration with `hand gesture control` and `navigation`
+- Emergency stop functionality via `keyboard` and `joystick`
 - Twist multiplexing for prioritizing control sources
 - Timestamped velocity commands
 
@@ -131,11 +131,11 @@ This package is currently under development
 
 ## Future Work
 
-1. **PCB Design for the Robot's Hardware**  
+1. [] **PCB Design for the Robot's Hardware**  
   Currently, the robot's hardware is based on a prototype wiring and 3D-printed frame. A PCB design (Printed Circuit Board) will simplify maintenance and optimize component integration.
 
-2. **Object Detection with YOLO**  
+2. [] **Object Detection with YOLO**  
   Plan to integrate object detection capabilities using the YOLO (You Only Look Once) algorithm. This will enable the robot to identify and track objects in its environment.
 
-3. **Web-Based Teleoperation**
+3. [] **Web-Based Teleoperation**
   Develop a web-based interface for remote control and monitoring of the robot. This will include real-time video streaming from the robot's camera and the ability to control the robot's movement remotely.
