@@ -3,11 +3,11 @@ import rclpy
 from rclpy.node import Node
 import cv2 as cv
 from cv_bridge import CvBridge 
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import CompressedImage
 import HandTrackingModule as htm
 from hand_gesture_control.msg import HandLandmark, HandLandmarks
 import time
-
+import numpy as np
 
 class HandTrackingNode(Node):
     """A ROS2 node for real-time hand tracking and landmark detection.
@@ -43,7 +43,7 @@ class HandTrackingNode(Node):
 
         self.landmark_pub = self.create_publisher(HandLandmarks, '/hand_landmarks', 10)
     
-        self.image_sub = self.create_subscription(Image, '/image_raw', self.image_callback, 10)
+        self.image_sub = self.create_subscription(CompressedImage, '/image_raw/compressed', self.image_callback, 10)
         self.image_sub
         self.pTime = 0
         self.declare_parameter('draw_enabled', True)        # To show cv2.VideoCapture
@@ -52,8 +52,9 @@ class HandTrackingNode(Node):
 
     def image_callback(self, img):
         try:
-            # Convert ROS Image to OpenCV format
-            frame_bgr = self.bridge.imgmsg_to_cv2(img, "bgr8")
+            # Decode the CompressedImage message to a raw OpenCV image
+            np_arr = np.frombuffer(img.data, np.uint8)          # Convert bytes to numpy array
+            frame_bgr = cv.imdecode(np_arr, cv.IMREAD_COLOR)    # Decode JPEG to BGR image
 
             frame_processed = self.hand_detector.findHands(frame_bgr,draw=self.draw_enabled)
             hands_landmarks = self.hand_detector.findPosition(frame_processed)

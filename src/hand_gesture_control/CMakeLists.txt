@@ -20,7 +20,6 @@ install(DIRECTORY
 )
 
 install(PROGRAMS
-    scripts/camera_node.py
     scripts/hand_tracking_node.py
     scripts/gesture_control_node.py
     scripts/twist_stamper.py

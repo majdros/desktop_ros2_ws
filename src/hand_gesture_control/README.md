@@ -11,6 +11,7 @@ This package implements real-time hand gesture recognition to control a robot us
 - ROS2 for robot control integration
 - Custom message types for hand landmark data
 - Gesture mapping:
+
    ```
    0 fingers: Forward   (linear.x = 1.1, angular.z  = 0.0)
    1 finger: Forward    (linear.x = 1.1, angular.z  = 0.0)
@@ -37,22 +38,21 @@ This package implements real-time hand gesture recognition to control a robot us
 ros2 launch hand_gesture_control hand_gesture_control.launch.py
 ```
 
-- Launch without Visualization and twist_stamper 
+- Launch without Visualization but with twist_stamper 
 ```bash
-ros2 launch hand_gesture_control hand_gesture_control.launch.py draw_enabled:=false use_twist_stamper:=false
+ros2 launch hand_gesture_control hand_gesture_control.launch.py draw_enabled:=false use_twist_stamper:=true
 ```
 
 2. Available Launch Parameters:
 
 | Parameter                | Description                                      | Default Value     |
 |--------------------------|--------------------------------------------------|-------------------|
-| `use_twist_stamper`      | Enables/disables the twist_stamper node         | `true`            |
+| `use_twist_stamper`      | Enables/disables the twist_stamper node         | `false`            |
 | `twist_stamper_frame_id` | Frame ID for TwistStamped messages              | `''` (empty string) |
 | `draw_enabled`           | Enables/disables hand tracking visualization    | `true`            |
 
 3. Run individual nodes:
 ```bash
-ros2 run hand_gesture_control camera_node
 ros2 run hand_gesture_control hand_tracking_node
 ros2 run hand_gesture_control gesture_control_node
 ros2 run hand_gesture_control twist_stamper_node
@@ -87,7 +87,6 @@ hand_gesture_control/
 ├── setup.py
 ├── README.md
 ├── scripts/
-│   ├── camera_node.py
 │   ├── hand_tracking_node.py
 │   ├── gesture_control_node.py
 │   ├── twist_stamper.py
@@ -106,22 +105,13 @@ hand_gesture_control/
 
 ### Topics
 
-
-- `/image_raw` (sensor_msgs/Image)
 - `/hand_landmarks` (hand_gesture_control/HandLandmarks)
 - `/cmd_vel_gesture` (geometry_msgs/Twist)
 - `/cmd_vel_stamped` (geometry_msgs/TwistStamped)
 
 ### Nodes
 
-1. **camera_node**
-   - Captures video feed from camera
-   - Publishes image data to `/image_raw` topic
-   - Parameters:
-     - `camera_index` (int, default: 0): Camera device index
-     - `frame_rate` (float, default: 30.0): Camera frame rate
-
-2. **hand_tracking_node**
+1. **hand_tracking_node**
    - Subscribes to `/image_raw`
    - Uses MediaPipe for hand landmark detection
    - Publishes hand landmarks to `/hand_landmarks`
@@ -131,13 +121,13 @@ hand_gesture_control/
      - `detection_confidence` (float, default: 0.9)
      - `tracking_confidence` (float, default: 0.9)
 
-3. **gesture_control_node**
+2. **gesture_control_node**
    - Subscribes to `/hand_landmarks`
    - Converts hand gestures to robot commands
    - Publishes Twist messages to `/cmd_vel_gesture`
    - Provides the `Gesture mapping`
 
-4. **twist_stamper_node**
+3. **twist_stamper_node**
    - Converts Twist to TwistStamped messages
    - Publishes TwistStamped messages to `/cmd_vel_stamped`
    - Parameters:

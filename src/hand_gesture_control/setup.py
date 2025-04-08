@@ -10,12 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('lib/' + package_name, [
-            'scripts/camera_node.py',
-            'scripts/hand_tracking_node.py',
-            'scripts/gesture_control_node.py',
-            'scripts/twist_stamper.py',
-            ])
+
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -26,7 +21,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'camera_node = scripts.camera_node:main',
             'hand_tracking_node = scripts.hand_tracking_node:main',
             'gesture_control_node = scripts.gesture_control_node:main',
             'twist_stamper_node = scripts.twist_stamper:main',
