@@ -10,7 +10,6 @@ This package provides:
 - Robot model description using URDF/Xacro
 - Launch files for visualization in RViz
 - Launch files for simulation in Gazebo
-- Sensor integration (lidar, IMU)
 
 ![My Robot Model](images/my_robot.png "My Robot")
 
@@ -80,7 +79,6 @@ This package relies on:
 - [joint_state_publisher](https://github.com/ros/joint_state_publisher)
 - [xacro](http://wiki.ros.org/xacro)
 - [gazebo_ros](https://github.com/ros-simulation/gazebo_ros_pkgs)
-- [bno055](https://github.com/flynneva/bno055) for IMU sensor integration
 
 
 

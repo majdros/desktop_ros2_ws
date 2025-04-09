@@ -150,6 +150,9 @@ $$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
         - When value is positive: Measurement is higher than prediction, possible underestimation
         - When value is negative: Measurement is lower than prediction, possible overestimation
 
+5. **bno055_node**
+    - The node is included from the custom ROS2-pkg `my_robot_sensors` and launched using the `bno055.launch.py`
+
 ### Topics
 
 **Inputs:**
@@ -166,6 +169,7 @@ $$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
 ## Dependencies
 This package relies on:
 - [robot_localization](https://github.com/cra-ros-pkg/robot_localization) for EKF implementation
+- [my_robot_sensors](https://github.com/majdros/desktop_ros2_ws/blob/main/src/my_robot_sensors/launch/bno055.launch.py) for IMU sensor integration
 - [nav_msgs](https://docs.ros.org/en/noetic/api/nav_msgs/html/index-msg.html) for odometry messages
 - [sensor_msgs](https://docs.ros2.org/latest/api/sensor_msgs/index-msg.html) for IMU data
 - [geometry_msgs](https://docs.ros2.org/latest/api/geometry_msgs/index-msg.html) for pose and transform data

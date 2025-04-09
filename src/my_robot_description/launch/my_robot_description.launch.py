@@ -18,9 +18,6 @@ def generate_launch_description():
     rviz_config_path = os.path.join(get_package_share_path('my_robot_description'),
                                     'config', 'my_robot_description.rviz')
 
-    bno055_launch_path = os.path.join(get_package_share_path('bno055'),
-                                        'launch', 'bno055.launch.py')
-
     robot_description = ParameterValue(
         Command(['xacro ', urdf_path]),
         value_type=str
@@ -103,11 +100,6 @@ def generate_launch_description():
         use_gazebo,
         robot_state_publisher_node,
         rviz2_node,
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(bno055_launch_path)
-        ),
-
 
         start_gazebo_server_cmd,
         start_gazebo_client_cmd,
