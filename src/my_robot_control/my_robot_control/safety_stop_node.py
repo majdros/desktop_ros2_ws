@@ -45,24 +45,27 @@ class SafetyStopNode(Node):
 
     def on_press(self, key):
         try:
-            if key == keyboard.Key.space:
+            if key == keyboard.Key.insert:
                 self.activate_emergency_stop()
-            elif key == keyboard.Key.insert:
+            elif key == keyboard.Key.delete:
                 self.release_emergency_stop()
         except AttributeError:
             pass  # Ignore special keys
 
 
     def joy_callback(self, msg):
-        # Use Button 0 (BACK) as the emergency stop button
-        if msg.buttons and msg.buttons[6] == 1:
-            if not self.emergency_stop_active:
-                self.activate_emergency_stop()
+        try:
+            # Use Button 0 (BACK) as the emergency stop button
+            if msg.buttons and msg.buttons[6] == 1:
+                if not self.emergency_stop_active:
+                    self.activate_emergency_stop()
 
-        # Use Button 7 (START) as the emergency release button
-        elif msg.buttons and msg.buttons[7] == 1:
-            if self.emergency_stop_active:
-                self.release_emergency_stop()
+            # Use Button 7 (START) as the emergency release button
+            elif msg.buttons and msg.buttons[7] == 1:
+                if self.emergency_stop_active:
+                    self.release_emergency_stop()
+        except Exception as e:
+            self.get_logger().error(f'Error in joy_callback: {str(e)}')
 
 
     def activate_emergency_stop(self):
@@ -82,7 +85,7 @@ class SafetyStopNode(Node):
 
     def display_message(self):
         if self.use_teleop_keyboard:
-            self.get_logger().info("🚨 Press 'space' to activate the emergency stop, or 'insert' to reset it. 🚨")
+            self.get_logger().info("🚨 Press 'insert' to activate the emergency stop, or 'delete' to reset it. 🚨")
         if self.use_teleop_joy:
             self.get_logger().info("🚨 Press 'Button 0 (BACK)' to activate the emergency stop, or 'Button 7 (START)' to reset it. 🚨")
 
@@ -95,7 +98,6 @@ def main(args=None):
     node.destroy_node()
 
     rclpy.shutdown()
-
 
 if __name__ == '__main__':
     main()

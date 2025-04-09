@@ -2,6 +2,12 @@ twist_mux:
   ros__parameters:
     topics:
 
+      Web-teleoperation:
+        name    : Web-teleoperation
+        topic   : cmd_vel_web
+        timeout : 0.5
+        priority: 150
+
       keybaord:
         name    : keyboard
         topic   : cmd_vel_key

@@ -8,6 +8,7 @@ This package provides:
 - Robot control via joystick using `teleop_twist_joy`
 - Emergency stop functionality via the `safety_stop_node`
 - Integration with control command from the custom ros2-pkg `hand_gesture_control`
+- Integration with control command from the custom ros2-pkg `web_based_control`
 - Integration with navigation command from `nav2`
 - Twist multiplexing to prioritize control sources from various inputs
 
@@ -44,8 +45,8 @@ The `safety_stop_node` provides an emergency stop feature to ensure safety durin
 
 ### Activation and Reset
 - **Keyboard**:
-  - Press `space` to activate the emergency stop.
-  - Press `insert` to reset the emergency stop.
+  - Press `insert` to activate the emergency stop.
+  - Press `delete` to reset the emergency stop.
 - **Joystick**:
   - Button 6 (BACK) activates the emergency stop.
   - Button 7 (START) resets the emergency stop.
@@ -59,6 +60,7 @@ When the emergency stop is activated:
 ## Twist Multiplexing
 The package uses `twist_mux` to prioritize control commands from different sources. The priority order is:
 1. emergency stop - `priority` : `255`
+1. Web teleoperation - `priority` : `150`
 2. Keyboard control - `priority` : `100`
 3. Joystick control - `priority` : `80`
 4. the custom ros2-package hand_gesture_control - `priority` : `60`
@@ -100,6 +102,7 @@ Priority levels and timeouts can be configured in `config/twist_mux.yaml`.
 `/cmd_vel_joy` (geometry_msgs/Twist)
 `/cmd_vel_key` (geometry_msgs/Twist)
 `/cmd_vel_nav` (geometry_msgs/Twist)
+`/cmd_vel_web` (geometry_msgs/Twist)
 `/cmd_vel_gesture` (geometry_msgs/Twist)
 `/cmd_vel_out` (geometry_msgs/Twist) - Output from twist_mux
 `/cmd_vel_stamped` (geometry_msgs/TwistStamped) - Timestamped output
