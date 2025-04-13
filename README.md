@@ -157,7 +157,7 @@ A package that enables robot control through hand gestures using OpenCV and Medi
 - Support for Twist and TwistStamped message formats
 
 
-### 8. [web_based_control](src/web_based_control/README.md)
+### 8. [web_based_control](https://github.com/majdros/web_based_control/blob/main/README.md)
 
 A React-based web dashboard for controlling and monitoring ROS2-enabled robots via a web interface with WebSocket integration.
 
@@ -168,7 +168,7 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
 > ```
 
 <p align="center">
-  <img src="src/web_based_control/public/images/rosgraph.png" alt="ROS2 Topic Graph">
+  <img src="(https://github.com/majdros/web_based_control/blob/main/public/images/rosgraph.png)" alt="ROS2 Topic Graph">
 </p>
 
 **Key Features:**
