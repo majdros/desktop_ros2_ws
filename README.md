@@ -168,7 +168,7 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
 > ```
 
 <p align="center">
-  <img src="(https://github.com/majdros/web_based_control/blob/main/public/images/rosgraph.png)" alt="ROS2 Topic Graph">
+  <img src="https://github.com/majdros/web_based_control/blob/main/public/images/rosgraph.png" alt="ROS2 Topic Graph">
 </p>
 
 **Key Features:**
