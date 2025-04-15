@@ -11,7 +11,12 @@ This package provides:
 - Launch files for visualization in RViz
 - Launch files for simulation in Gazebo
 
-![My Robot Model](images/my_robot.png "My Robot")
+<p align="center">
+<img src="images/my_robot.png">
+</p>
+<p align="center">
+<img src="images/frames.png">
+</p>
 
 ## Usage
   1. Launch
