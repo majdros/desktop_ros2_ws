@@ -64,6 +64,12 @@ A package that provides the description (URDF/Xacro), visualization, and simulat
 
 This package includes a technical drawing [technical drawing](src/my_robot_description/technische_zeichnung.pdf), that clearly and comprehensively illustrates the robot's geometry. This drawing provides a detailed overview of the robot's physical structure and supports the creation of URDF/Xacro files.
 
+<p align="center">
+<img src="src/my_robot_description/images/my_robot.png">
+</p>
+<p align="center">
+<img src="src/my_robot_description/images/frames.png">
+</p>
 
 
 ### 2. [MicroROS Bot Projekt](src/micorRos_bot/README.md)
