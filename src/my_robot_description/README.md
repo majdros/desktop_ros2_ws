@@ -91,6 +91,6 @@ This package relies on:
 
 
 ## ToDo
-[] Update Gazebo classic (EOF) to Ignition/Gazebo
+[] Update Gazebo classic (EOL) to Ignition/Gazebo
 
 
