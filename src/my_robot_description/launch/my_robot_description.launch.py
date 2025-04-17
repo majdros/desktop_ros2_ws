@@ -27,7 +27,7 @@ def generate_launch_description():
     robot_name_in_model = 'my_robot'
 
     sdf_model_path = os.path.join(get_package_share_directory('my_robot_description'),
-                                'models', 'model.sdf')
+                                'models', 'my_robot_model.sdf')
 
     use_gazebo = DeclareLaunchArgument(
         'use_gazebo',
@@ -40,6 +40,8 @@ def generate_launch_description():
     gazebo_params_file = os.path.join(
                     get_package_share_directory('my_robot_description'), 'config', 'gazebo_params.yaml')
 
+    gazebo_world_path = os.path.join(
+                    get_package_share_directory('my_robot_description'), 'config', 'gazebo.world')
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -57,7 +59,10 @@ def generate_launch_description():
     start_gazebo_server_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
             get_package_share_directory('gazebo_ros'), 'launch', 'gzserver.launch.py')),
-        launch_arguments={'extra_gazebo_args': '-s libgazebo_ros_init.so -s libgazebo_ros_factory.so --ros-args --params-file ' + gazebo_params_file}.items(),
+        launch_arguments={
+            'world': gazebo_world_path,
+            'extra_gazebo_args': '-s libgazebo_ros_init.so -s libgazebo_ros_factory.so --ros-args --params-file ' + gazebo_params_file
+            }.items(),
         condition=IfCondition(use_gazebo_config)
     )
 

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <xacro:property name="camera_length" value="0.025"/>
+    <xacro:property name="camera_width" value="0.025"/>
+    <xacro:property name="camera_height" value="0.01"/>
+    <xacro:property name="base_camera_z_distance" value="${body_length - 0.039}"/>
+    <xacro:property name="camera_x_offset" value="0.07"/>
+
+
+    <!-- camera_link -->
+    <link name="camera">
+        <visual>
+            <geometry>
+                <mesh filename="package://my_robot_description/models/meshes/cam_v2_1_v1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="warmesRot"/>
+            <origin xyz="0.0 0.0 ${camera_height/2}" rpy="${pi/2} 0.0 0.0"/>          
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${camera_length} ${camera_width} ${camera_height}"/>
+            </geometry>
+            <origin xyz="0.0 0.0 ${camera_height/2}" rpy="0.0 ${pi/2} 0.0"/>                   
+        </collision>
+        <xacro:box_inertia m="0.05" l="${camera_length}" w="${camera_width}" h="${camera_height}"
+                                xyz="0.0 0.0 ${camera_height/2}" rpy="0.0 0.0 ${pi/2}" />             
+    </link>
+
+
+    <!-- base_camera_joint -->
+    <joint name="base_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="camera"/>
+        <origin xyz="${camera_x_offset} 0 ${base_camera_z_distance}" rpy= "0 0 0.0"/>
+    </joint> 
+
+
+
+    <!-- Source: https://www.ros.org/reps/rep-0103.html#suffix-frames -->
+
+    <!-- camera_optical_link -->
+    <link name="camera_optical"></link>
+
+
+    <!-- camera_optical_joint -->
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera"/>
+        <child link="camera_optical"/>
+        <origin xyz="0 0 0" rpy= "${-pi/2} 0.0 ${-pi/2}"/>
+    </joint> 
+
+
+    <!-- source: https://classic.gazebosim.org/tutorials?tut=ros_gzplugins -->
+    <gazebo reference="camera">
+        <material>Gazebo/Red</material>
+    
+        <sensor name="camera" type="camera">
+            <pose> 0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>30</update_rate>
+            <camera>
+                <horizontal_fov>1.0856</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>3.0</far>
+                </clip>
+            </camera>
+
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <imageTopicName>image_raw/compressed</imageTopicName>
+                <frame_name>camera_optical</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>    
+
+</robot>

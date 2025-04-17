@@ -44,6 +44,7 @@ ros2 launch my_robot_description my_robot_description.launch.py use_gazebo:=true
         └── gazebo_params.yaml
         └── my_robot_description.rviz
         └── my_robot.rviz
+        └── gazebo.world
     └── 📁images
         └── frames.png
         └── gz-ros-connection.png
@@ -59,12 +60,15 @@ ros2 launch my_robot_description my_robot_description.launch.py use_gazebo:=true
             └── circo-base-scaled.stl
             └── my_robot_base.stl
             └── wheel.stl
+            └── cam_v2_1_v1.stl
         └── model.config
-        └── model.sdf
+        └── my_robot_model.sdf            
+
     └── 📁urdf
         └── common_properties.xacro
         └── imu.xacro
         └── lidar.xacro
+        └── camera.xacro
         └── my_robot_base_mesh.urdf
         └── my_robot_base_mesh.xacro    # Main robot description
         └── my_robot_base.xacro         # robot description without meshes
@@ -86,5 +90,7 @@ This package relies on:
 - [gazebo_ros](https://github.com/ros-simulation/gazebo_ros_pkgs)
 
 
+## ToDo
+[] Update Gazebo classic (EOF) to Ignition/Gazebo
 
 

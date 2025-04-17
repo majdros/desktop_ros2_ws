@@ -1,17 +1,16 @@
-<?xml version="1.0" ?>
-<sdf version='1.6'>
+<sdf version='1.7'>
   <model name='my_robot'>
     <link name='base_footprint'>
       <inertial>
-        <pose>0 0 0.074736 0 -0 0</pose>
-        <mass>1500.15</mass>
+        <pose>2e-06 0 0.074739 0 -0 0</pose>
+        <mass>1500.2</mass>
         <inertia>
-          <ixx>7.41805</ixx>
-          <ixy>0</ixy>
-          <ixz>-1.38778e-17</ixz>
-          <iyy>8.59417</iyy>
+          <ixx>7.41845</ixx>
+          <ixy>-6.19668e-22</ixy>
+          <ixz>-0.000312412</ixz>
+          <iyy>8.59482</iyy>
           <iyz>0</iyz>
-          <izz>4.48189</izz>
+          <izz>4.48214</izz>
         </inertia>
       </inertial>
       <collision name='base_footprint_fixed_joint_lump__base_link_collision'>
@@ -31,7 +30,23 @@
           </friction>
         </surface>
       </collision>
-      <collision name='base_footprint_fixed_joint_lump__front_caster_wheel_link_collision_1'>
+      <collision name='base_footprint_fixed_joint_lump__camera_collision_1'>
+        <pose>0.07 0 0.164 1.5708 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.025 0.025 0.01</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='base_footprint_fixed_joint_lump__front_caster_wheel_link_collision_2'>
         <pose>0.0485 0 0.01267 0 -0 0</pose>
         <geometry>
           <sphere>
@@ -47,7 +62,7 @@
           </friction>
         </surface>
       </collision>
-      <collision name='base_footprint_fixed_joint_lump__bno055_collision_2'>
+      <collision name='base_footprint_fixed_joint_lump__bno055_collision_3'>
         <pose>0 0 0.1885 0 -0 1.5708</pose>
         <geometry>
           <box>
@@ -55,7 +70,7 @@
           </box>
         </geometry>
       </collision>
-      <collision name='base_footprint_fixed_joint_lump__laser_collision_3'>
+      <collision name='base_footprint_fixed_joint_lump__laser_collision_4'>
         <pose>0 0 0.21615 0 -0 0</pose>
         <geometry>
           <cylinder>
@@ -64,7 +79,7 @@
           </cylinder>
         </geometry>
       </collision>
-      <collision name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_collision_4'>
+      <collision name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_collision_5'>
         <pose>-0.0485 0 0.01267 0 -0 0</pose>
         <geometry>
           <sphere>
@@ -89,13 +104,28 @@
           </mesh>
         </geometry>
         <material>
-          <ambient>0.6 0.7 0.6 1</ambient>
-          <diffuse>0.6 0.7 0.6 1</diffuse>
-          <specular>0.2 0.3 0.3 1</specular>
-          <emissive>0.0 0.0 0.0 1</emissive>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
         </material>
       </visual>
-      <visual name='base_footprint_fixed_joint_lump__front_caster_wheel_link_visual_1'>
+      <visual name='base_footprint_fixed_joint_lump__camera_visual_1'>
+        <pose>0.07 0 0.164 1.5708 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://meshes/cam_v2_1_v1.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__front_caster_wheel_link_visual_2'>
         <pose>0.0485 0.0065 0.01267 0 0 -1.5708</pose>
         <geometry>
           <mesh>
@@ -110,7 +140,7 @@
           </script>
         </material>
       </visual>
-      <visual name='base_footprint_fixed_joint_lump__bno055_visual_2'>
+      <visual name='base_footprint_fixed_joint_lump__bno055_visual_3'>
         <pose>0 0 0.18625 0 -0 0</pose>
         <geometry>
           <mesh>
@@ -118,14 +148,8 @@
             <uri>model://meshes/adafruit_bno055_stemma_qt_1.stl</uri>
           </mesh>
         </geometry>
-        <material>
-          <ambient>0.8 0.1 0.1 1</ambient>
-          <diffuse>0.8 0.1 0.1 1</diffuse>
-          <specular>0.3 0.1 0.1 1</specular>
-          <emissive>0.1 0.0 0.0 1</emissive> 
-        </material>
       </visual>
-      <visual name='base_footprint_fixed_joint_lump__laser_visual_3'>
+      <visual name='base_footprint_fixed_joint_lump__laser_visual_4'>
         <pose>0 0 0.1955 0 -0 0</pose>
         <geometry>
           <mesh>
@@ -133,14 +157,8 @@
             <uri>model://meshes/c1m1_appearance_v2_20230926_3d_.stl</uri>
           </mesh>
         </geometry>
-        <material>
-          <ambient>1.0 1.0 0.6 1</ambient>
-          <diffuse>1.0 1.0 0.6 1</diffuse>
-          <specular>0.2 0.2 0.1 1</specular>
-          <emissive>0.1 0.1 0.0 1</emissive>
-        </material>
       </visual>
-      <visual name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_visual_4'>
+      <visual name='base_footprint_fixed_joint_lump__rear_caster_wheel_link_visual_5'>
         <pose>-0.0485 0.0065 0.01267 0 0 -1.5708</pose>
         <geometry>
           <mesh>
@@ -155,13 +173,35 @@
           </script>
         </material>
       </visual>
+      <sensor name='camera' type='camera'>
+        <visualize>1</visualize>
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.0856</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>3</far>
+          </clip>
+        </camera>
+        <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
+          <alwaysOn>1</alwaysOn>
+          <imageTopicName>image_raw/compressed</imageTopicName>
+          <frame_name>camera_optical</frame_name>
+        </plugin>
+        <pose>0.07 0 0.159 0 -0 0</pose>
+      </sensor>
       <m1 value='10.0'/>
       <m2 value='10.0'/>
       <m1 value='10.0'/>
       <m2 value='10.0'/>
     </link>
     <joint name='base_left_wheel_joint' type='revolute'>
-      <pose relative_to='base_footprint'>0 0.0775 0.033 1.5708 0 -0</pose>
+      <pose relative_to='base_footprint'>0 0.0775 0.033 1.5708 0 0</pose>
       <parent>base_footprint</parent>
       <child>left_wheel_link</child>
       <axis>
@@ -215,10 +255,10 @@
           </mesh>
         </geometry>
         <material>
-          <ambient>0.4 0.5 0.6 1</ambient>
-          <diffuse>0.4 0.5 0.6 1</diffuse>
-          <specular>0.2 0.3 0.4 1</specular>
-          <emissive>0.0 0.0 0.0 1</emissive>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
         </material>
       </visual>
       <m1 value='10.0'/>
@@ -279,43 +319,42 @@
           </mesh>
         </geometry>
         <material>
-          <ambient>0.4 0.5 0.6 1</ambient>
-          <diffuse>0.4 0.5 0.6 1</diffuse>
-          <specular>0.2 0.3 0.4 1</specular>
-          <emissive>0.0 0.0 0.0 1</emissive>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
         </material>
       </visual>
       <m1 value='10.0'/>
       <m2 value='10.0'/>
     </link>
 
-
-  <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so"> 
-    <ros>
-      <namespace>/my_robot</namespace>
-      <remapping>cmd_vel:=/cmd_vel_out</remapping>
-      <remapping>odom:=/odom</remapping>
-    </ros>
-    <robotNamespace>/my_robot</robotNamespace>
-    <left_joint>base_left_wheel_joint</left_joint>
-    <right_joint>base_right_wheel_joint</right_joint>
-    <wheel_separation>0.155</wheel_separation>
-    <wheel_diameter>0.066</wheel_diameter>
-    <update_rate>100.0</update_rate>
-    <max_velocity>1.0</max_velocity>
-  </plugin>
-
-
-  <!-- <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-      <namespace>/my_robot</namespace>
-      <joint_name>base_left_wheel_joint</joint_name>
-      <joint_name>base_right_wheel_joint</joint_name>
-      <remapping>joint_states:=/joint_states</remapping>
-      <joint_state_source>sensor</joint_state_source>
+    
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so"> 
+      <ros>
+        <namespace>/my_robot</namespace>
+        <remapping>cmd_vel:=/cmd_vel_out</remapping>
+        <remapping>odom:=/odom</remapping>
+      </ros>
+      <robotNamespace>/my_robot</robotNamespace>
+      <left_joint>base_left_wheel_joint</left_joint>
+      <right_joint>base_right_wheel_joint</right_joint>
+      <wheel_separation>0.155</wheel_separation>
+      <wheel_diameter>0.066</wheel_diameter>
       <update_rate>100.0</update_rate>
-      <alwaysOn>true</alwaysOn>
-  </plugin> -->
-
+      <max_velocity>1.0</max_velocity>
+    </plugin>
+  
+  
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+        <namespace>/my_robot</namespace>
+        <joint_name>base_left_wheel_joint</joint_name>
+        <joint_name>base_right_wheel_joint</joint_name>
+        <remapping>joint_states:=/joint_states</remapping>
+        <joint_state_source>sensor</joint_state_source>
+        <update_rate>100.0</update_rate>
+        <alwaysOn>true</alwaysOn>
+    </plugin>
 
 
   </model>
