@@ -124,5 +124,5 @@ ros2 run my_robot_sensors bno055
 
 ## License
 - This repository contains code under multiple licenses. See the [LICENSE](./LICENSE) file for details.
-- The file `bno055_node.py` and the file `bno055_params.yaml` are licensed under the BSD License. See the files for details.
-- Other files in this Package are licensed under the Apache 2.0 License.
+- The file `bno055_node.py` and the file `bno055_params.yaml` are licensed under the [BSD](https://opensource.org/license/BSD-3-Clause) License. See the files for details.
+- Other files in this Package are licensed under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) License.
