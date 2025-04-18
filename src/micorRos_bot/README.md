@@ -1,7 +1,22 @@
 # MicroROS Bot Projekt
 
-Dieses Projekt implementiert die Steuerung eines zweirädrigen Roboters unter Verwendung von MicroROS auf einer Arduino-Plattform. Die Hauptkomponenten umfassen die Motorsteuerung, Encoder-Interrupts, PID-Regelung und die Integration mit ROS für die Kommunikation und Steuerung.
+Dieses Projekt implementiert die Steuerung eines zweirädrigen Roboters unter Verwendung von MicroROS auf 'PlatformIO' als Entwicklungsplattform. Die Hauptkomponenten umfassen die Motorsteuerung, Encoder-Interrupts, PID-Regelung und die Integration mit ROS für die Kommunikation und Steuerung.
 
+## Usage
+
+1. **Einrichtung**
+Befolge das offizielle MicroROS-Tutorial [creating a first application with FreeRTOS](https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/). Dieses Tutorial umfasst die Installation aller notwendigen Abhängigkeiten und die Einrichtung des MicroROS-Agenten auf dem Hostsystem. 
+
+2. **Hinweis**
+    - Dieses Projekt basiert auf **MicroROS**, das auf einem **ESP32** mit **PlatformIO** als Entwicklungsplattform läuft.
+    - Es wird **keine klassische Firmware** benötigt, da MicroROS direkt auf dem ESP32 läuft.
+
+3. **Starten das micro-ROS Projekt**
+```bash
+cd microros_ws/
+source install/local_setup.bash
+ros2 run micro_ros_agent micro_ros_agent serial --dev [device]
+```
 
 ## Hauptkomponenten
 
