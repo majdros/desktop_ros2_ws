@@ -13,7 +13,6 @@ A ROS2 workspace that includes multiple packages for controlling, simulating, lo
     - [3. my\_robot\_control](#3-my_robot_control)
     - [4. my\_robot\_sensors](#4-my_robot_sensors)
     - [5. my\_robot\_localization](#5-my_robot_localization)
-    - [6. my\_robot\_navigation](#6-my_robot_navigation)
     - [7. Hand Gesture Control](#7-hand-gesture-control)
     - [8. web\_based\_control](#8-web_based_control)
   - [Future Work](#future-work)
@@ -134,16 +133,16 @@ A package for localizing a mobile robot using Kalman Filters (KF) and Extended K
 
 
 
-### 6. [my_robot_navigation](src/my_robot_navigation/README.md)
+~~### 6. [my_robot_navigation](src/my_robot_navigation/README.md)~~
 
-A ROS2 package for robot navigation using Nav2. 
-This package is currently under development
+~~A ROS2 package for robot navigation using Nav2.~~ 
+~~This package is currently under development~~
 
-**Key Features:**
-- Integration with the Nav2 framework
-- Map creation using the SLAM toolbox
-- Setting and following navigation goals
-- Use of 2D-LiDAR data for navigation
+~~**Key Features:**~~
+~~- Integration with the Nav2 framework~~
+~~- Map creation using the SLAM toolbox~~
+~~- Setting and following navigation goals~~
+~~- Use of 2D-LiDAR data for navigation~~
 
 
 

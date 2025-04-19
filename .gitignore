@@ -20,5 +20,8 @@ src/my_robot_localization/doc/
 src/my_robot_localization/images/
 src/my_robot_localization/bag_files/
 
+# my_robot_description
+src/my_robot_navigation/
+
 # microRos_bot
 main_alt.cpp
