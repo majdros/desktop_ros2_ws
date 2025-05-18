@@ -13,12 +13,14 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(nav2_amcl REQUIRED)
+find_package(nav2_lifecycle_manager REQUIRED)
+find_package(nav2_map_server REQUIRED)
 
 include_directories(include)
 
 ament_python_install_package(${PROJECT_NAME})
 
-# Installation der Python-Skripte
 install(PROGRAMS
   ${PROJECT_NAME}/kalman_filter.py
   ${PROJECT_NAME}/velocity_comparison_node.py
@@ -27,13 +29,11 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# Installation des Include-Ordners
 install(
   DIRECTORY include
   DESTINATION include
 )
 
-# Installation der Launch- und Config-Dateien
 install(DIRECTORY
   launch 
   config

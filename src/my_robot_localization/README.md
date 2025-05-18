@@ -1,7 +1,10 @@
 # Localization ROS2 Package
-A ROS2 package that implements robot localization systems using a custom implementation of Kalman Filter (KF) and the robot_localization package for the Extended Kalman Filter (EKF) on a custom-built physical mobile robot platform with real hardware sensors.
+A ROS2 package that implements robot localization systems using both local (using a custom implementation of Kalman Filter and the robot_localization package for the Extended Kalman Filter) and global (AMCL) methods on a custom-built physical mobile robot platform with real hardware sensors.
 
-## Overview
+## 1. Local Localization
+This part of the package focuses on local state estimation using sensor fusion with Kalman Filter (KF) and Extended Kalman Filter (EKF).
+
+### Overview
 
 This package was developed and tested on a custom-built physical robot with the following hardware:
 - Differential drive base with DC motors
@@ -9,7 +12,7 @@ This package was developed and tested on a custom-built physical robot with the 
 - BNO055 IMU sensor for orientation and angular velocity
 
 
-All tests and evaluations were conducted on real hardware, not in simulation, providing practical insights into performance under real-world conditions.
+All tests and evaluations were conducted on real hardware providing practical insights into performance under real-world conditions.
 
 This package provides:
 
@@ -27,7 +30,7 @@ This package provides:
   <em>Disturbance test: Robot maintains localization accuracy while being lifted and manipulated, demonstrating the robustness of EKF-based sensor fusion</em>
 </p>
 
-## Usage
+### Usage
 1. **Launch the Extended Kalman Filter**
 ```bash
 ros2 launch my_robot_localization local_localization.launch.py
@@ -46,7 +49,7 @@ ros2 run my_robot_localization innovation_evaluator.py
 ```
 
 
-## Evaluation
+### Evaluation
 This package provides comparison tools for different localization methods:
 - `velocity_comparison_node.py`: Compares velocity estimates from different sources
 - `innovation_evaluator.py`: Analyzes filter innovation for performance assessment
@@ -57,7 +60,7 @@ This package provides comparison tools for different localization methods:
     - `Störungstest`: Robot being lifted during a curved movement (disturbance test)
 
 
-## Package Structure
+### Package Structure
 ```yaml
 └── 📁my_robot_localization
     └── 📁config
@@ -81,9 +84,9 @@ This package provides comparison tools for different localization methods:
     └── 📁include
 ```
 
-## Components
+### Components
 
-### Nodes
+#### Nodes
 1. **KF**
    - Implements a custom Kalman Filter for sensor fusion
    - Fuses wheel odometry with IMU data for improved state estimation
@@ -153,7 +156,7 @@ $$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
 5. **bno055_node**
     - The node is included from the custom ROS2-pkg `my_robot_sensors` and launched using the `bno055.launch.py`
 
-### Topics
+#### Topics
 
 **Inputs:**
 - **/wheel_odom** (nav_msgs/Odometry)
@@ -166,7 +169,7 @@ $$P_{k|k} = (I - K_k \cdot H) \cdot P_{k|k-1}$$
 - **/tf** (tf2_msgs/TFMessage)
 
 
-## Dependencies
+### Dependencies
 This package relies on:
 - [robot_localization](https://github.com/cra-ros-pkg/robot_localization) for EKF implementation
 - [my_robot_sensors](https://github.com/majdros/desktop_ros2_ws/blob/main/src/my_robot_sensors/launch/bno055.launch.py) for IMU sensor integration
@@ -177,3 +180,54 @@ This package relies on:
 - [tf_transformations](https://docs.ros.org/en/humble/Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html) for quaternion operations
 - [matplotlib](https://matplotlib.org/) for data visualization
 - [numpy](https://numpy.org/) for numerical operations 
+
+---
+
+## 2. Global Localization (AMCL)
+
+This part of the package provides global localization using the Adaptive Monte Carlo Localization (AMCL) algorithm, which allows the robot to globally localize itself on a known map.
+
+### Overview
+
+AMCL is a probabilistic localization system for a robot moving in 2D. It uses a particle filter to track the pose of a robot against a known map. This is especially useful for global localization and recovery from localization failures.
+
+![Pipeline of amcl](figures/Pipeline_AMCL.png)
+
+### Usage
+
+1. **Launch global localization with AMCL:**
+    ```bash
+    ros2 launch my_robot_localization global_localization.launch.py
+    ```
+    - This launch file starts the RPLIDAR node, the map server, the AMCL node, and the lifecycle manager.
+    - You can specify the map file by passing the `map_name` argument (default: `office`):
+
+      ```bash
+    ros2 launch my_robot_localization global_localization.launch.py map_name:=your_map_name
+      ```
+
+2. **AMCL Configuration:**
+    - The AMCL node is configured via the [`amcl.yaml`](./config/amcl.yaml) file.
+    - Key parameters include particle filter settings, motion and sensor models, and initial pose.
+
+### Files
+
+- [`global_localization.launch.py`](./launch/global_localization.launch.py): Launches the global localization stack (RPLIDAR, map server, AMCL, lifecycle manager).
+- [`amcl.yaml`](./config/amcl.yaml): Configuration file for AMCL parameters.
+
+
+### Dependencies
+
+This part relies on:
+- [nav2_amcl](https://github.com/ros-planning/navigation2/tree/main/nav2_amcl) for AMCL
+- [nav2_map_server](https://github.com/ros-planning/navigation2/tree/main/nav2_map_server) for map serving
+- [my_robot_sensors](https://github.com/majdros/desktop_ros2_ws/blob/main/src/my_robot_sensors/launch/rplidar.launch.py) for LiDAR integration
+
+---
+
+## Summary
+
+This package provides both local and global localization solutions for mobile robots:
+- **Local localization**: Accurate, real-time state estimation using sensor fusion (KF, EKF).
+- **Global localization**: Robust pose tracking and recovery using AMCL and a known map.
+

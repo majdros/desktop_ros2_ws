@@ -1,0 +1,72 @@
+# source: https://docs.nav2.org/configuration/packages/configuring-amcl.html
+# source: https://automaticaddison.com/ros-2-navigation-tuning-guide-nav2/
+
+amcl:
+  ros__parameters:
+
+    # Grundparameter
+    use_sim_time: True
+    base_frame_id: "base_footprint"
+    global_frame_id: "map"
+    odom_frame_id: "odom"
+    scan_topic: scan
+
+    # Partikelfilter-Parameter
+    max_particles: 2000             # Maximale Anzahl von Partikeln im Filter
+    min_particles: 500              # Minimale Anzahl von Partikeln im Filter
+    pf_z: 0.99                      # Populationsdichte (Bei erhöhten Werten bleiben mehr Partikel länger erhalten)
+    pf_err: 0.05                    # Durch Erhöhen dieses Werts reduziert das System die Partikel aggressiver. Dies spart Rechenleistung, kann aber die Genauigkeit verringern.
+                                    # Durch Verringern des pf_err-Werts bleiben mehr Partikel erhalten, was zwar mehr Rechenleistung erfordert, aber die Genauigkeit verbessert.
+    resample_interval: 1            # Anzahl der Filteraktualisierungen bis zum erneuten Sampling 
+                                    # Ein Wert von 1 bedeutet, dass die Aktualisierung nach jeder Bewegung erfolgt
+
+    # Bewegungsmodell-Parameter
+    robot_model_type: "nav2_amcl::DifferentialMotionModel"
+    alpha1: 0.2                      # wie stark die Rotation die Rotationsschätzung des Roboters beeinflusst.
+    alpha2: 0.2                      # wie sich Vorwärtsbewegungen auf die Rotationsschätzungen auswirken.
+    alpha3: 0.2                      # wie sich Vorwärtsbewegungen auf Positionsschätzungen auswirken. 
+    alpha4: 0.2                      # wie stark die Rotation auf Positionsschätzungen des Roboters beeinflusst.
+    update_min_a: 0.2                # Minimale Winkelbewegung in rad vor einer Filteraktualisierung (0.2 ~=  11.5 Grad) 
+    update_min_d: 0.25               # Minimale Translationsbewegung in Meter vor einer Filteraktualisierung 
+
+    # Lasermodell-Parameter
+    laser_model_type: "likelihood_field"
+    laser_max_range: 100.0           # gemeldete maximale Reichweite des LiDARs in Meter verwenden 
+    laser_min_range: -1.0            # gemeldete minimale Reichweite des LiDARs in Meter verwenden
+    max_beams: 60                    # Anzahl der Laserstrahlen für die Filteraktualisierung
+    laser_likelihood_max_dist: 2.0   # Maximale Distanz zu Erfassung von Hindernissen in Meter
+
+    # Parameter für Wahrscheinlichkeitsfeld-Modell
+    sigma_hit: 0.2                   # Standardabweichung für das Gaußmodell des Laserscanners
+    z_hit: 0.5                       # Wie sehr Sensorwerte, die perfekt mit der Karte übereinstimmen, vertrauenswürdig sind.
+    z_max: 0.05                      # Legt fest, wie sehr den Messwerten der maximalen Reichweite vertraut wird 
+    z_rand: 0.5                      # Gibt an, in welchem ​​Ausmaß mit zufälligen, unerklärlichen Sensorwerten zu rechnen ist
+    lambda_short: 0.1                # Parameter für exponentieller Zerfallsparameter für den z_short-Teil des Modells
+    z_short: 0.05                    # Gewichtung der unerwarteten ObjekteKomponente. Hohe Werte, wenn der Roboter häufig auf Objekte trifft, 
+                                      # die kurze Messwerte verursachen, wie z. B. kleine Hindernisse oder reflektierende Oberflächen. 
+
+    # Parameter für das Überspringen von Strahlen
+    do_beamskip: false              # Prozentsatz der Strahlen, die übersprungen werden können, bevor eine vollständige Aktualisierung erzwungen wird
+    beam_skip_threshold: 0.3        # Durch Erhöhen dieses Werts können mehr Strahlen übersprungen werden, bevor eine vollständige Aktualisierung erforderlich ist (irrelevant bei do_beamskip: false)
+    beam_skip_distance: 0.5         # Gibt an, wie stark sich ein Laserwert vom erwarteten Kartenwert unterscheiden darf, bevor er übersprungen wird
+    beam_skip_error_threshold: 0.9  # Prozentsatz an Strahlen, die übersprungen werden können, bevor aufgrund schlechter Konvergenz eine vollständige Aktualisierung erzwungen wird
+
+    # Transformationsparameter
+    tf_broadcast: true
+    transform_tolerance: 1.0        # Dauer in Sekunden dafür, wie lange die veröffentlichte Transformation als gültig angesehen werden soll.
+
+    # Erholungsparameter
+    # Bei einem Wert von 0,0 (Standardwerte) werden normale Lokalisierungsmethoden verwendet
+    recovery_alpha_fast: 0.1        # Exponentieller Zerfallsrate für den schnellen Durchschnittsgewichtsfilter bei Erholungssituationen
+    recovery_alpha_slow: 0.1        # Exponentieller Zerfallsrate für den langsamen Durchschnittsgewichtsfilter bei Erholungssituationen
+
+    # Initialisierungsparameter
+    set_initial_pose: true
+    initial_pose:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        yaw: 0.0
+
+    # Ausgabeparameter
+    save_pose_rate: 0.5             # Häufigkeit, mit der die geschätzte Roboterpose gespeichert wird (0.5 Hz)
