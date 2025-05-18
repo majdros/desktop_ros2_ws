@@ -13,6 +13,7 @@ A ROS2 workspace that includes multiple packages for controlling, simulating, lo
     - [3. my\_robot\_control](#3-my_robot_control)
     - [4. my\_robot\_sensors](#4-my_robot_sensors)
     - [5. my\_robot\_localization](#5-my_robot_localization)
+    - [6. my\_robot\_slam\_core](#6-my_robot_slam_core)
     - [7. Hand Gesture Control](#7-hand-gesture-control)
     - [8. web\_based\_control](#8-web_based_control)
   - [Future Work](#future-work)
@@ -132,6 +133,19 @@ A package for localizing a mobile robot local using Kalman Filters (KF) & Extend
 - Real-time processing of sensor data
 
 
+### 6. [my_robot_slam_core](src/my_robot_slam_core/README.md)
+A ROS2 package for implementing SLAM (Simultaneous Localization and Mapping) using [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox)
+
+**Key Features:**
+- Mapping: Create maps of the environment using LiDAR data
+- Localization: Localize the robot in a pre-built map
+- Integration with the Nav2 stack for autonomous navigation
+- Configurable mapping and localization modes via launch parameters
+
+<p align="center"> 
+<img src="src/my_robot_slam_core/images/rosgraph.png" alt="ROS2 Topic Graph"> 
+</p>
+
 
 ~~### 6. [my_robot_navigation](src/my_robot_navigation/README.md)~~
 
@@ -192,11 +206,6 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
   ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 ```
 
-1. Start the React app in the browser:
-```bash
-  cd src/web_based_control
-  NODE_OPTIONS=--openssl-legacy-provider npm start
-```
 
 ## Future Work
 
