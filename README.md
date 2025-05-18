@@ -117,7 +117,7 @@ A ROS2 package that provides several sensors as ROS2 nodes, including support fo
 
 ### 5. [my_robot_localization](src/my_robot_localization/README.md)
 
-A package for localizing a mobile robot using Kalman Filters (KF) and Extended Kalman Filters (EKF).
+A package for localizing a mobile robot local using Kalman Filters (KF) & Extended Kalman Filters (EKF) and global using Adaptive Monte Carlo Localization (AMCL)
 
 <p align="center">
   <img src="src/my_robot_localization/figures/disturbance_test.gif" alt="disturbance test of EKF">
@@ -203,8 +203,9 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
 1. [] **PCB Design for the Robot's Hardware**  
   Currently, the robot's hardware is based on a prototype wiring and 3D-printed frame. A custom PCB design (Printed Circuit Board) will simplify maintenance and optimize component integration.
 
-2. [] **Object Detection with YOLO**  
-  Plan to integrate object detection capabilities using the YOLO (You Only Look Once) algorithm. This will enable the robot to identify and track objects in its environment.
-
-3. [X] **Web-Based Teleoperation**
+2. [X] **Web-Based Teleoperation**
   Develop a web-based interface for remote control and monitoring of the robot. This will include real-time video streaming from the robot's camera and the ability to control the robot's movement remotely.
+
+3. [] **Object Tracker & Follower**
+  Develop an object tracker that allows the robot to follow a specific object in real-time using both YOLO and  color segmentation.
+  This feature will use computer vision to detect and track the object and integrate it with the robot's motion control system.
