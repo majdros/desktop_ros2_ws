@@ -11,7 +11,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
 
     slam_params_file_path = os.path.join(get_package_share_directory('my_robot_slam_core'),
-                        'config', 'localization_params_online_async.yaml')
+                        'config', 'mapping_params_online_async.yaml')
 
     rplidar_launch_path = os.path.join(get_package_share_directory('my_robot_sensors'),
                         'launch','rplidar.launch.py')

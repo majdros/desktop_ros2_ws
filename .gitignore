@@ -23,5 +23,8 @@ src/my_robot_localization/bag_files/
 # my_robot_description
 src/my_robot_navigation/
 
+# my_robot_interfaces
+src/my_robot_interfaces/
+
 # microRos_bot
 main_alt.cpp

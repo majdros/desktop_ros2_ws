@@ -137,10 +137,9 @@ A package for localizing a mobile robot local using Kalman Filters (KF) & Extend
 A ROS2 package for implementing SLAM (Simultaneous Localization and Mapping) using [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox)
 
 **Key Features:**
-- Mapping: Create maps of the environment using LiDAR data
+- SLAM: Create maps of the environment while simultaneously localizing the robot using LiDAR data
 - Localization: Localize the robot in a pre-built map
-- Integration with the Nav2 stack for autonomous navigation
-- Configurable mapping and localization modes via launch parameters
+
 
 <p align="center"> 
 <img src="src/my_robot_slam_core/images/rosgraph.png" alt="ROS2 Topic Graph"> 
