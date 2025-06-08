@@ -1,0 +1,32 @@
+# ROS2 Build- und Installationsverzeichnisse
+build/
+log/
+install/
+
+# Python/Pip/Node/Editor-Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.swp
+*.swo
+*.bak
+
+# Modell- und Datendateien (z.B. YOLO)
+*.pt
+
+# VSCode/Devcontainer/sonstige IDE-Dateien
+.vscode/
+*.code-workspace
+
+# ROS2-pkgs
+src/bno055
+
+# Sonstiges
+*.DS_Store
+*.env
+*.log
+*.tmp
+*.out
+test.py

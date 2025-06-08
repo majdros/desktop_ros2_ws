@@ -1,0 +1,103 @@
+FROM ros:humble-perception AS base_stage
+
+LABEL maintainer="M. Shahrour"
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    lsb-release \
+    sudo \
+    python3-pip \
+    python3-rosdep \
+    software-properties-common \
+    libboost-system-dev \
+    ros-humble-rcutils \
+    --fix-missing ros-humble-nav2-bringup \
+    && rm -rf /var/lib/apt/lists/*
+
+# Repair any faulty or incomplete package installations and configures all packages
+RUN apt-get update && apt-get --fix-broken install -y || true && \
+    dpkg --configure -a || true \
+    && rm -rf /var/lib/apt/lists/*
+
+# Lite dependencies & packages
+COPY docker/dependencies_lite.bash /tmp/dependencies_lite.bash
+COPY docker/requirement_lite.txt /tmp/requirement_lite.txt
+
+# Install Python packages and remove it
+RUN apt-get update && \
+    pip3 install --no-cache-dir -r /tmp/requirement_lite.txt \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install lite dependencies and remove it
+RUN chmod +x /tmp/dependencies_lite.bash && \
+    /tmp/dependencies_lite.bash 
+
+# Create a non root user
+ARG USERNAME=ros
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && apt-get update && apt-get install -y \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    && rm -rf /var/lib/apt/lists/*
+
+
+######################
+# Stage 1: Builder
+######################
+FROM base_stage AS builder
+
+SHELL ["/bin/bash", "-c"]
+
+RUN rosdep update
+
+WORKDIR /ros2_ws
+
+# ros2_ws-symlink for devcontainer
+RUN ln -s /home/${USERNAME}/ros2_ws  /workspaces/ros2_ws || true
+
+COPY src/ ./src/
+
+# Build dependencies via rosdep install as root
+RUN apt-get update && \
+    . /opt/ros/humble/setup.sh && \
+    rosdep install --from-paths src --ignore-src -r -y --skip-keys="pynput ultralytics opencv-python mediapipe" || true && \
+    rm -rf /var/lib/apt/lists/*
+
+# Build workspace as root
+RUN . /opt/ros/humble/setup.sh && \
+    colcon build --packages-ignore my_custom_message__py my_custom_message yolo_msgs
+
+
+######################
+# Stage 2: Runtime
+######################
+FROM base_stage AS runtime
+
+WORKDIR /home/${USERNAME}/ros2_ws
+
+# ros2_ws-symlink for devcontainer
+RUN ln -s /home/${USERNAME}/ros2_ws  /workspaces/ros2_ws || true
+
+COPY --from=builder /ros2_ws/install ./install
+COPY --from=builder /ros2_ws/src ./src
+COPY docker/bashrc /home/${USERNAME}/.bashrc
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh \
+    && chown $USER_UID:$USER_GID /entrypoint.sh \
+    && chown $USER_UID:$USER_GID /home/${USERNAME}/.bashrc
+
+RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/ros2_ws
+
+# Switch to non-root user (ros)
+USER ${USERNAME}
+
+ENTRYPOINT [ "/bin/bash", "/entrypoint.sh" ]
+CMD [ "bash", "-i"]
+
+# zum Builden: docker buildx build --platform linux/arm64 -t mshahrour/ros2-lite:arm64 -f docker/Dockerfile.lite . --push

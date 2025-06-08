@@ -1,0 +1,73 @@
+# source: https://roboticseabass.com/2023/07/09/updated-guide-docker-and-ros2/
+services:
+  ros2-cuda:
+    # profiles: ["cuda"]    # dosent work with devcontainer
+    image: ros2_ws:humble_cuda
+    container_name: ros2_ws_cuda_container
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.cuda
+      platforms:
+        - linux/amd64
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    user: "1000:1000" # ros user
+    volumes:
+      - /dev:/dev
+      - ./docker/bashrc:/home/ros/.bashrc:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/home/ros/.Xauthority
+      - /dev/dri:/dev/dri:rw
+      # - ./src:/ros2_ws/src:rw
+    devices:
+      - /dev/dri:/dev/dri
+    network_mode: host
+    environment:
+      # ROS2 Core
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      # GUI/Display
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    ipc: host
+    gpus: all
+    privileged: true
+    # GPU access
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+
+
+  ros2-cpu:
+    # profiles: ["cpu"]   # dosent work with devcontainer
+    image: ros2_ws:humble_cpu
+    container_name: ros2_ws_cpu_container
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.cpu
+      platforms:
+        - linux/amd64
+
+    stdin_open: true
+    tty: true
+    user: "1000:1000"
+    volumes:
+      - /dev:/dev
+      - ./docker/bashrc:/home/ros/.bashrc:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/home/ros/.Xauthority
+      # - ./src:/ros2_ws/src:rw
+    network_mode: host
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    ipc: host
+    privileged: true

@@ -1,0 +1,126 @@
+# Source: https://roboticseabass.com/2023/07/09/updated-guide-docker-and-ros2/
+
+# Stage 0: Base_stage nvidia_cuda, ROS Humble & non root user
+FROM nvidia/cuda:12.4.0-runtime-ubuntu22.04 AS base_stage
+
+LABEL maintainer="M. Shahrour"
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Berlin
+
+# Install system-Pkgs
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    lsb-release \
+    sudo \
+    wget \
+    build-essential \
+    python3-pip \
+    && ln -s /usr/bin/python3 /usr/bin/python \
+    && rm -rf /var/lib/apt/lists/*
+
+# Repair any faulty or incomplete package installations and configures all packages
+RUN apt-get update && apt-get --fix-broken install -y || true && \
+    dpkg --configure -a || true \
+    && rm -rf /var/lib/apt/lists/*
+
+# ROS2-Repo and ROS-Humble-Base
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+    -o /usr/share/keyrings/ros-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+    http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" \
+    > /etc/apt/sources.list.d/ros2.list 
+
+RUN apt-get update && apt-get install -y \
+    ros-humble-ros-base \
+    python3-rosdep \
+    software-properties-common \
+    python3-colcon-common-extensions \
+    --fix-missing ros-humble-nav2-bringup \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sudo rosdep init
+
+
+# Dependencies & packages
+COPY docker/dependencies.bash /tmp/dependencies.bash
+COPY docker/requirement.txt /tmp/requirement.txt
+
+## Install dependencies and remove it
+RUN chmod +x /tmp/dependencies.bash && \
+    /tmp/dependencies.bash && rm -rf /tmp/dependencies.bashrc || true 
+
+## Install Python packages and remove it
+RUN apt-get update && \
+    pip3 install --no-cache-dir -r /tmp/requirement.txt \
+    && rm -rf /var/lib/apt/lists/* /tmp/requirement.txt
+
+# Create a non root user
+ARG USER_UID=1000
+ARG USER_GID=1000
+ARG USERNAME=ros
+
+RUN groupadd --gid $USER_GID $USERNAME \
+        && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID --create-home $USERNAME \
+        && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config \
+        && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
+        && chmod 0440 /etc/sudoers.d/${USERNAME} \
+        && usermod -aG dialout ${USERNAME}
+
+
+######################
+# Stage 1: Builder
+######################
+FROM base_stage AS builder
+
+SHELL ["/bin/bash", "-c"]
+
+RUN rosdep update
+
+WORKDIR /ros2_ws
+
+# ros2_ws-symlink for devcontainer
+RUN ln -s /home/${USERNAME}/ros2_ws  /workspaces/ros2_ws || true
+
+COPY src/ ./src/
+COPY README.md/ ./
+
+# Build dependencies via rosdep install as root
+RUN apt-get update && \
+    . /opt/ros/humble/setup.sh && \
+    rosdep install --from-paths src --ignore-src -r -y --skip-keys="pynput ultralytics opencv-python mediapipe" || true && \
+    rm -rf /var/lib/apt/lists/*
+
+# Build workspace as root
+RUN . /opt/ros/humble/setup.sh && \
+    colcon build --packages-ignore my_custom_message__py my_custom_message
+
+
+######################
+# Stage 2: Runtime
+######################
+FROM base_stage AS runtime
+
+WORKDIR /home/${USERNAME}/ros2_ws
+
+# ros2_ws-symlink for devcontainer
+RUN ln -s /home/${USERNAME}/ros2_ws  /workspaces/ros2_ws || true
+
+COPY --from=builder /ros2_ws/install ./install
+COPY --from=builder /ros2_ws/src ./src
+COPY --from=builder /ros2_ws/README.md ./README.md
+COPY docker/bashrc /home/${USERNAME}/.bashrc
+COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh \
+    && chown $USER_UID:$USER_GID /entrypoint.sh \
+    && chown $USER_UID:$USER_GID /home/${USERNAME}/.bashrc
+
+RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/ros2_ws
+
+# Switch to non-root user (ros)
+USER ${USERNAME}
+
+ENTRYPOINT [ "/bin/bash", "/entrypoint.sh" ]
+CMD [ "bash", "-i"]

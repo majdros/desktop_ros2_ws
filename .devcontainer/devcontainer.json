@@ -1,0 +1,27 @@
+{
+    "name": "ROS2 Devcontainer",
+    "dockerComposeFile": "../docker-compose-devcontainer.yml",
+    "service": "ros2-cuda",
+    // "service": "ros2-cpu", without CUDA
+    "workspaceFolder": "/workspaces/ros2_ws",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                "ms-iot.vscode-ros",
+                "ms-vscode.cpptools",
+                "platformio.platformio-ide",
+                "ms-python.python"
+            ]
+        }
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder}/src,target=/workspaces/ros2_ws/src,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "pip3 install platformio"
+}
+
+

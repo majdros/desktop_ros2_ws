@@ -7,6 +7,7 @@ A ROS2 workspace that includes multiple packages for controlling, simulating, lo
   - [Table of Contents](#table-of-contents)
   - [System Architecture](#system-architecture)
   - [Hardwareplattform](#hardwareplattform)
+  - [Docker](#docker)
   - [Workspace Overview](#workspace-overview)
     - [1. my\_robot\_description](#1-my_robot_description)
     - [2. MicroROS Bot Projekt](#2-microros-bot-projekt)
@@ -46,6 +47,52 @@ This workspace was developed for a real, custom-built robot and tested with actu
 <p align="center">
 <img src="./figures/roboter.png">
 </p>
+
+
+## [Docker](docker/README.md)
+This workspace provides a containerized development environment using Docker and Docker Compose, supporting both GPU (CUDA) and CPU-only configurations. You can use either VS Code Dev Containers or the command line.
+
+**With CUDA (GPU support)**
+
+- **In VSCode**
+  To run the workspace with CUDA support, open the project in VS Code and select “Reopen in Container”. 
+  This will use [`devcontainer.json`](.devcontainer/devcontainer.json) and [docker-compose-devcontainer.yml](/docker-compose-devcontainer.yml) with the default service **ros2-cuda**, which builds from [`docker/Dockerfile.cuda`](docker/Dockerfile.cuda).
+
+- **With Docker Compose:**  
+  To build and run the CUDA container from the command line using the [docker-compose.yml](/docker-compose.yml) with the profile cuda:
+  ```bash
+  docker compose -f docker-compose.yml --profile cuda build --no-cache
+  docker compose -f docker-compose.yml --profile cuda up -d
+  # In another terminal, to access the container:
+  docker exec -it ros2_ws_cuda_container bash
+  ```
+
+**With CPU only**
+
+- **In VSCode**
+  To run the workspace without CUDA, edit [`devcontainer.json`](.devcontainer/devcontainer.json):  
+  Comment out the **ros2-cuda** service and uncomment the **ros2-cpu** service.
+
+<p align="center">
+<img src="/figures/devcontainer.json.png">
+</p>
+
+- **With Docker Compose:**  
+  To build and run the CPU container from the command line using the [docker-compose.yml](/docker-compose.yml) with the profile cpu:
+  ```bash
+  docker compose -f docker-compose.yml --profile cpu build --no-cache
+  docker compose -f docker-compose.yml --profile cpu up -d
+  # In another terminal, to access the container:
+  docker exec -it ros2_ws_cpu_container bash
+  ```
+
+**Notes:**
+- The file [`docker-compose-devcontainer.yml`](docker-compose-devcontainer.yml) is used by VS Code Dev Containers, while [`docker-compose.yml`](docker-compose.yml) is intended for manual use.
+- To select between GPU (CUDA) and CPU, use the corresponding profiles (`cuda` or `cpu`) in `docker-compose.yml`.
+- - For CUDA support, the host must have an NVIDIA GPU and the appropriate drivers installed (tested with NVIDIA-SMI 550.144.03, Driver Version: 550.144.03, CUDA Version: 12.4).
+- The service `ros2-lite` with the `lite` profile in [`docker-compose.yml`](docker-compose.yml) is intended for ARM64 devices such as the Raspberry Pi 4. This service does **not** include a build step, as the container image `mshahrour/ros2-lite:arm64` is pre-built and available on Docker Hub. It is not meant to be built on AMD64 hosts, but rather to be pulled and run directly on ARM64 hardware.
+- For more details, see [`docker/README.md`](docker/README.md).
+
 
 ## Workspace Overview
 Each package in this workspace has its own detailed README file with specific installation instructions, usage examples, and additional documentation. The following is a brief overview of each package.
@@ -129,8 +176,7 @@ A package for localizing a mobile robot local using Kalman Filters (KF) & Extend
 **Key Features:**
 - Sensor fusion with wheel odometry and IMU data
 - Custom implementation of a Kalman Filter and use of the Extended Kalman Filter from the [robot_localization](https://github.com/cra-ros-pkg/robot_localization) package
-- Simple tools for evaluating and visualizing localization performance
-- Real-time processing of sensor data
+- Global localization using Adaptive Monte Carlo Localization (AMCL) that solves the kidnapped robot problem
 
 
 ### 6. [my_robot_slam_core](src/my_robot_slam_core/README.md)
@@ -214,6 +260,6 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
 2. [X] **Web-Based Teleoperation**
   Develop a web-based interface for remote control and monitoring of the robot. This will include real-time video streaming from the robot's camera and the ability to control the robot's movement remotely.
 
-3. [] **Object Tracker & Follower**
-  Develop an object tracker that allows the robot to follow a specific object in real-time using both YOLO and  color segmentation.
+3. [] **Object recognition & following**
+  Develop an object detector that allows the robot to follow a specific object in real-time using both YOLO and color segmentation.
   This feature will use computer vision to detect and track the object and integrate it with the robot's motion control system.

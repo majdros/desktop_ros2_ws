@@ -1,0 +1,11 @@
+export PATH="$HOME/.local/bin:$PATH"
+source /opt/ros/humble/setup.bash
+
+if [ -f "${HOME}/ros2_ws/install/setup.bash" ]; then
+    source ${HOME}/ros2_ws/install/setup.bash
+    echo "Workspace sourced: ROS2 packages are available!"
+else
+    echo "Workspace not built yet. Run 'colcon build --packages-ignore my_custom_message__py my_custom_message' first."
+fi
+
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
