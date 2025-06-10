@@ -11,48 +11,6 @@ This package integrates multiple sensors into a modular ROS2 framework. It provi
 
 The package is designed to be modular, scalable, and easy to integrate into other ROS2 projects.
 
-
-## Usage
-
-1. Launch:
-- Launch the camera with default settings
-```bash
-ros2 launch my_robot_sensors camera.launch.py
-```
-- Launch the camera with custom settings: 
-    Example: Set `frame_rate` to 60, `camera_index` to 1, disable `use_compressed_image_publisher`, and set `jpeg_quality_value` to 100:
-- **Note**: The launch argument `jpeg_quality_value` can also be set to 100, which results in the compressed image being nearly identical to the image from the `raw_image` topic. Therefore, the launch argument `use_raw_image_publisher` typically does not need to be set to `true`.
-```bash
-ros2 launch my_robot_sensors camera.launch.py frame_rate:=60 camera_index:=1 use_compressed_image_publisher:=false jpeg_quality_value:=100
-```
-- Launch the IMU sensor:
-```bash
-ros2 launch my_robot_sensors bno055.launch.py
-```
-- Launch the LiDAR sensor:
-```bash
-ros2 launch my_robot_sensors rplidar.launch.py
-```
-
-2. Available Launch Parameters:
-
-| Parameter                | Description                                      | Default Value     |
-|--------------------------|--------------------------------------------------|-------------------|
-| `camera_index` | sets camera device index | `0` (integer)|
-| `frame_rate` | sets camera frame rate | `30.0` (float)|
-| `use_raw_image_publisher` | Enables/disables the publisher for raw images         | `False` |
-| `use_compressed_image_publisher` | Enables/disables the publisher for compressed images | `true` |
-| `jpeg_quality_value`      | sets the quality value of JPEG for encoding the Image | `70` (integer)|
-
-
-3. Run individual nodes:
-
-```bash
-ros2 run my_robot_sensors camera_node
-ros2 run my_robot_sensors bno055
-```
-
-
 ## Package Structure
 
 ```bash
@@ -76,12 +34,52 @@ ros2 run my_robot_sensors bno055
 ```
 
 
+## Usage
+
+1. Launch:
+- Launch the camera with default settings
+```bash
+ros2 launch my_robot_sensors camera.launch.py
+```
+- Launch the camera with custom settings: 
+    Example: Set `frame_rate` to 60, `camera_index` to 1 and set `jpeg_quality_value` to 100:
+
+```bash
+ros2 launch my_robot_sensors camera.launch.py frame_rate:=60 camera_index:=1 jpeg_quality_value:=100
+```
+- Launch the IMU sensor:
+```bash
+ros2 launch my_robot_sensors bno055.launch.py
+```
+- Launch the LiDAR sensor:
+```bash
+ros2 launch my_robot_sensors rplidar.launch.py
+```
+
+1. Available Launch Parameters:
+
+| Parameter                | Description                                      | Default Value     |
+|--------------------------|--------------------------------------------------|-------------------|
+| `camera_index` | sets camera device index | `0` (integer)|
+| `frame_rate` | sets camera frame rate | `30.0` (float)|
+| `use_raw_image_publisher` | Enables/disables the publisher for raw images         | `true` |
+| `use_compressed_image_publisher` | Enables/disables the publisher for compressed images | `true` |
+| `jpeg_quality_value`      | sets the quality value of JPEG for encoding the Image | `70` (integer)|
+
+
+3. Run individual nodes:
+
+```bash
+ros2 run my_robot_sensors camera_node
+ros2 run my_robot_sensors bno055
+```
+
 ## Components
 
 ### Topics
 1. **Camera Node**
-- `/image_raw` (sensor_msgs/Image)
-- `/image_raw/compressed` (sensor_msgs/CompressedImage)
+- `/rgb_camera/image_raw` (sensor_msgs/Image)
+- `/rgb_camera/image_raw/compressed` (sensor_msgs/CompressedImage)
 
 2. **BNO055 Node**
 - `/bno055/imu` (sensor_msgs/Imu)
@@ -95,12 +93,12 @@ ros2 run my_robot_sensors bno055
 
 1. **camera_node**
     - Captures video feed from the camera.
-    - Publishes image data to `/image_raw` and `/image_raw/compressed`.
+    - Publishes image data to `/rgb_camera/image_raw` and `/rgb_camera/image_raw/compressed`.
     - Parameters:
         - `camera_index` (int, default: 0)
         - `frame_rate` (float, default: 30.0)
         - `jpeg_quality_value` (int, default: 70)
-        - `use_raw_image_publisher` (bool, default: False)
+        - `use_raw_image_publisher` (bool, default: True)
         - `use_compressed_image_publisher` (bool, default: True)
 
 2. **bno055_node** 
@@ -109,7 +107,7 @@ ros2 run my_robot_sensors bno055
     - some Parameters:
         - `uart_port` (string, default: `/dev/imu`)
         - `connection_type` (string, default: `uart`): uart or i2c
-   - **Note**: The parameters for this node are not defined as launch parameters and can be modified in the corresponding YAML file: [bno055_params](./config/bno055_params.yaml)
+   - **Note**: The parameters for this node such as `uart_port` can be modified in the corresponding YAML file: [bno055_params](./config/bno055_params.yaml)
 
 3. **rplidar_node** 
     - interface with the RPLIDAR sensor
@@ -118,7 +116,7 @@ ros2 run my_robot_sensors bno055
         - serial_port (string, default: `/dev/rplidar`): Serial port for the RPLIDAR
         - frame_id (string, default: `laser`): Frame ID for the laser scan
         - flip_x_axis: (bool, default: `True`): True if the LIDAR Data is flipped in X axis
-   - **Note**: The parameters for this node are not defined as launch parameters and can be modified in the corresponding YAML file: [rplidar_params](./config/rplidar_params.yaml) 
+   - **Note**: The parameters for this node such as `serial_port` can be modified in the corresponding YAML file: [rplidar_params](./config/rplidar_params.yaml) 
 
 
 

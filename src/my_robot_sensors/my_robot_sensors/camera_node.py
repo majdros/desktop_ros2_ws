@@ -17,7 +17,7 @@ class ImagePublisher(Node):
         # Params
         self.declare_parameter(name = 'camera_index', value = 0)
         self.declare_parameter(name = 'frame_rate', value = 30.0)
-        self.declare_parameter(name = 'use_raw_image_publisher', value = False)
+        self.declare_parameter(name = 'use_raw_image_publisher', value = True)
         self.declare_parameter(name = 'use_compressed_image_publisher', value = True)
         self.declare_parameter(name = 'jpeg_quality_value',
                             value = 70,       # (0 to 100)
@@ -30,8 +30,8 @@ class ImagePublisher(Node):
         self.frame_rate = self.get_parameter('frame_rate').get_parameter_value().double_value
 
 
-        self.raw_image_pub = self.create_publisher(Image, '/image_raw', 10)
-        self.compressed_image_pub = self.create_publisher(CompressedImage, '/image_raw/compressed', 10)
+        self.raw_image_pub = self.create_publisher(Image, 'image_raw', 10)
+        self.compressed_image_pub = self.create_publisher(CompressedImage, 'image_raw/compressed', 10)
 
         self.bridge = CvBridge()
         self.cap = cv.VideoCapture(self.camera_index, cv.CAP_V4L2)
@@ -56,7 +56,7 @@ class ImagePublisher(Node):
 
                 msg.header = Header()
                 msg.header.stamp = self.get_clock().now().to_msg()
-                msg.header.frame_id = "camera_frame"
+                msg.header.frame_id = "camera_optical"
                 self.raw_image_pub.publish(msg)
 
         except Exception as e:
@@ -77,7 +77,7 @@ class ImagePublisher(Node):
                 # Create a CompressedImage message
                 header = Header()
                 header.stamp = self.get_clock().now().to_msg()
-                header.frame_id = "camera_frame"
+                header.frame_id = "camera_optical"
 
                 Compressed_img = CompressedImage()
                 Compressed_img.header = header

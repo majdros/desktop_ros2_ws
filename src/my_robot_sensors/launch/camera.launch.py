@@ -10,7 +10,7 @@ def generate_launch_description():
     camera_index = DeclareLaunchArgument(name = 'camera_index', default_value = '0')
     frame_rate = DeclareLaunchArgument(name = 'frame_rate', default_value = '30.0')
     jpeg_quality_value = DeclareLaunchArgument(name = 'jpeg_quality_value', default_value = '70')
-    use_raw_image_publisher = DeclareLaunchArgument(name = 'use_raw_image_publisher', default_value = 'false')
+    use_raw_image_publisher = DeclareLaunchArgument(name = 'use_raw_image_publisher', default_value = 'true')
     use_compressed_image_publisher = DeclareLaunchArgument(name = 'use_compressed_image_publisher', default_value = 'true')
 
     # Launch Configurations
@@ -25,6 +25,7 @@ def generate_launch_description():
     camera_node = Node(
         package = 'my_robot_sensors',
         executable = 'camera_node',
+        namespace = 'rgb_camera',
         parameters = [{
             'camera_index' : camera_index_config,
             'frame_rate' : frame_rate_config,
