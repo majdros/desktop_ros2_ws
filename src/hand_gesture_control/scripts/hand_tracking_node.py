@@ -28,7 +28,7 @@ class HandTrackingNode(Node):
         /hand_landmarks (HandLandmarks): Publishes detected hand landmarks
 
     Subscribers:
-        /image_raw (Image): Subscribes to camera image feed
+        /rgb_camera/image_raw/compressed (CompressedImage): Subscribes to camera image feed
 
     Custom Messages:
         HandLandmark: Single landmark with id, x, y coordinates
@@ -41,9 +41,9 @@ class HandTrackingNode(Node):
 
         self.hand_detector = htm.HandDetector(maxHands=1, detectionCon=0.9, trackingCon=0.9)
 
-        self.landmark_pub = self.create_publisher(HandLandmarks, '/hand_landmarks', 10)
+        self.landmark_pub = self.create_publisher(HandLandmarks, 'hand_landmarks', 10)
     
-        self.image_sub = self.create_subscription(CompressedImage, '/image_raw/compressed', self.image_callback, 10)
+        self.image_sub = self.create_subscription(CompressedImage, '/rgb_camera/image_raw/compressed', self.image_callback, 10)
         self.image_sub
         self.pTime = 0
         self.declare_parameter('draw_enabled', True)        # To show cv2.VideoCapture

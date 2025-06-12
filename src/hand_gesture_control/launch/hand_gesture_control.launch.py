@@ -35,6 +35,7 @@ def generate_launch_description():
     hand_tracking_node = Node(
         package = 'hand_gesture_control',
         executable = 'hand_tracking_node.py',
+        namespace = '/gesture_control',
         parameters=[{
             'draw_enabled': LaunchConfiguration('draw_enabled')
         }]
@@ -42,12 +43,14 @@ def generate_launch_description():
 
     gesture_control_node = Node(
         package = 'hand_gesture_control',
+        namespace = '/gesture_control',
         executable = 'gesture_control_node.py' 
     ) 
 
     twist_stamper = Node(
         package = 'hand_gesture_control',
         executable = 'twist_stamper.py',
+        namespace = '/gesture_control',
         condition = IfCondition(LaunchConfiguration('use_twist_stamper')),
         parameters=[{
             'twist_stamper_frame_id': LaunchConfiguration('twist_stamper_frame_id')

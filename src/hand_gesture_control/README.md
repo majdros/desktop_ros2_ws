@@ -112,7 +112,7 @@ hand_gesture_control/
 ### Nodes
 
 1. **hand_tracking_node**
-   - Subscribes to `/image_raw`
+   - Subscribes to `/rgb_camera/image_raw/compressed`
    - Uses MediaPipe for hand landmark detection
    - Publishes hand landmarks to `/hand_landmarks`
    - Parameters:
