@@ -1,6 +1,31 @@
 # Localization ROS2 Package
 A ROS2 package that implements robot localization systems using both local (using a custom implementation of Kalman Filter and the robot_localization package for the Extended Kalman Filter) and global (AMCL) methods on a custom-built physical mobile robot platform with real hardware sensors.
 
+## Package Structure
+
+```yaml
+└── 📁my_robot_localization
+    └── 📁config
+        └── ekf.yaml
+        └── kf.rviz
+    └── 📁figures
+        └── Pipeline_Kalman_Filter.png
+        └── Pipeline_Extended_Kalman_Filter.png
+        └── Pipeline_Software.png
+        └── disturbance-test.gif
+    └── 📁launch
+        └── local_localization.launch.py
+    └── 📁my_robot_localization
+        └── __init__.py
+        └── innovation_evaluator.py
+        └── kalman_filter.py
+        └── velocity_comparison_node.py
+    └── CMakeLists.txt
+    └── package.xml
+    └── README.md
+    └── 📁include
+```
+
 ## 1. Local Localization
 This part of the package focuses on local state estimation using sensor fusion with Kalman Filter (KF) and Extended Kalman Filter (EKF).
 
@@ -59,30 +84,6 @@ This package provides comparison tools for different localization methods:
     - `kurvenfahrt_test`: Robot rotating in place around its z-axis
     - `Störungstest`: Robot being lifted during a curved movement (disturbance test)
 
-
-### Package Structure
-```yaml
-└── 📁my_robot_localization
-    └── 📁config
-        └── ekf.yaml
-        └── kf.rviz
-    └── 📁figures
-        └── Pipeline_Kalman_Filter.png
-        └── Pipeline_Extended_Kalman_Filter.png
-        └── Pipeline_Software.png
-        └── disturbance-test.gif
-    └── 📁launch
-        └── local_localization.launch.py
-    └── 📁my_robot_localization
-        └── __init__.py
-        └── innovation_evaluator.py
-        └── kalman_filter.py
-        └── velocity_comparison_node.py
-    └── CMakeLists.txt
-    └── package.xml
-    └── README.md
-    └── 📁include
-```
 
 ### Components
 
@@ -185,7 +186,7 @@ This package relies on:
 
 ## 2. Global Localization (AMCL)
 
-This part of the package provides global localization using the Adaptive Monte Carlo Localization (AMCL) algorithm, which allows the robot to globally localize itself on a known map.
+This part of the package provides global localization using the Adaptive Monte Carlo Localization (AMCL) algorithm, which allows the robot to globally localize itself on a known map and solves the kidnapped robot problem
 
 ### Overview
 
@@ -202,7 +203,7 @@ AMCL is a probabilistic localization system for a robot moving in 2D. It uses a 
     - This launch file starts the RPLIDAR node, the map server, the AMCL node, and the lifecycle manager.
     - You can specify the map file by passing the `map_name` argument (default: `office`):
 
-      ```bash
+    ```bash
     ros2 launch my_robot_localization global_localization.launch.py map_name:=your_map_name
       ```
 

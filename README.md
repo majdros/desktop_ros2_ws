@@ -89,8 +89,6 @@ This workspace provides a containerized development environment using Docker and
 **Notes:**
 - The file [`docker-compose-devcontainer.yml`](docker-compose-devcontainer.yml) is used by VS Code Dev Containers, while [`docker-compose.yml`](docker-compose.yml) is intended for manual use.
 - To select between GPU (CUDA) and CPU, use the corresponding profiles (`cuda` or `cpu`) in `docker-compose.yml`.
-- - For CUDA support, the host must have an NVIDIA GPU and the appropriate drivers installed (tested with NVIDIA-SMI 550.144.03, Driver Version: 550.144.03, CUDA Version: 12.4).
-- The service `ros2-lite` with the `lite` profile in [`docker-compose.yml`](docker-compose.yml) is intended for ARM64 devices such as the Raspberry Pi 4. This service does **not** include a build step, as the container image `mshahrour/ros2-lite:arm64` is pre-built and available on Docker Hub. It is not meant to be built on AMD64 hosts, but rather to be pulled and run directly on ARM64 hardware.
 - For more details, see [`docker/README.md`](docker/README.md).
 
 

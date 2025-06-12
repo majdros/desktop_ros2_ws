@@ -28,3 +28,6 @@ src/my_robot_interfaces/
 
 # microRos_bot
 main_alt.cpp
+
+# Modell- und Datendateien (e.g. YOLO)
+*.pt

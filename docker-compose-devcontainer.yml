@@ -14,11 +14,9 @@ services:
     tty: true
     user: "1000:1000" # ros user
     volumes:
-      - /dev:/dev
       - ./docker/bashrc:/home/ros/.bashrc:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/home/ros/.Xauthority
-      - /dev/dri:/dev/dri:rw
       # - ./src:/ros2_ws/src:rw
     devices:
       - /dev/dri:/dev/dri
@@ -58,11 +56,12 @@ services:
     tty: true
     user: "1000:1000"
     volumes:
-      - /dev:/dev
       - ./docker/bashrc:/home/ros/.bashrc:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/home/ros/.Xauthority
       # - ./src:/ros2_ws/src:rw
+    devices:
+      - /dev/dri:/dev/dri
     network_mode: host
     environment:
       - ROS_DOMAIN_ID=0
