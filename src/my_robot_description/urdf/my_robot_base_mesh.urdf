@@ -303,7 +303,7 @@
       </camera>
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
         <alwaysOn>true</alwaysOn>
-        <imageTopicName>image_raw/compressed</imageTopicName>
+        <imageTopicName>/rgb_camera/image_raw</imageTopicName>
         <frame_name>camera_optical</frame_name>
       </plugin>
     </sensor>
