@@ -12,6 +12,7 @@ def generate_launch_description():
     jpeg_quality_value = DeclareLaunchArgument(name = 'jpeg_quality_value', default_value = '70')
     use_raw_image_publisher = DeclareLaunchArgument(name = 'use_raw_image_publisher', default_value = 'true')
     use_compressed_image_publisher = DeclareLaunchArgument(name = 'use_compressed_image_publisher', default_value = 'true')
+    camera_calibration_file = DeclareLaunchArgument(name = 'camera_calibration_file', default_value = 'web_cam.yaml')
 
     # Launch Configurations
     camera_index_config = LaunchConfiguration('camera_index')
@@ -19,7 +20,7 @@ def generate_launch_description():
     jpeg_quality_value_config = LaunchConfiguration('jpeg_quality_value')
     use_raw_image_publisher_config = LaunchConfiguration('use_raw_image_publisher')
     use_compressed_image_publisher_config = LaunchConfiguration('use_compressed_image_publisher')
-
+    camera_calibration_file_config = LaunchConfiguration ('camera_calibration_file')
 
     # Camera Node
     camera_node = Node(
@@ -32,6 +33,7 @@ def generate_launch_description():
             'jpeg_quality_value' : jpeg_quality_value_config,
             'use_raw_image_publisher' : use_raw_image_publisher_config,
             'use_compressed_image_publisher' : use_compressed_image_publisher_config,
+            'camera_calibration_file' : camera_calibration_file_config,
                     }]
     )
 
@@ -42,5 +44,6 @@ def generate_launch_description():
     jpeg_quality_value,
     use_raw_image_publisher,
     use_compressed_image_publisher,
+    camera_calibration_file,
     camera_node,
     ])

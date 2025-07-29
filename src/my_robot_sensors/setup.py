@@ -18,6 +18,7 @@ setup(
         ('share/' + package_name + '/config', [
             'config/rplidar_params.yaml',
             'config/bno055_params.yaml',
+            'config/web_cam.yaml',
         ]),
     ],
     install_requires=['setuptools'],

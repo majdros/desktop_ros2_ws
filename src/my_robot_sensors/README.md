@@ -65,7 +65,7 @@ ros2 launch my_robot_sensors rplidar.launch.py
 | `use_raw_image_publisher` | Enables/disables the publisher for raw images         | `true` |
 | `use_compressed_image_publisher` | Enables/disables the publisher for compressed images | `true` |
 | `jpeg_quality_value`      | sets the quality value of JPEG for encoding the Image | `70` (integer)|
-
+| `camera_calibration_file` | camera calibration yaml file | `web_cam.yaml` (string)|
 
 3. Run individual nodes:
 
