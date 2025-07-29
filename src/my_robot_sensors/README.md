@@ -19,6 +19,7 @@ The package is designed to be modular, scalable, and easy to integrate into othe
     └── 📁config
         └── bno055_params.yaml
         └── rplidar_params.yaml
+        └── web_cam.yaml
     └── 📁launch
         └── bno055.launch.py
         └── camera.launch.py
@@ -27,6 +28,9 @@ The package is designed to be modular, scalable, and easy to integrate into othe
         └── __init__.py
         └── bno055_node.py
         └── camera_node.py
+    └── 📁images
+        ├── camera_node_graph.png
+        ├── image_raw vs image_rect.png
     └── package.xml
     └── README.md
     └── setup.cfg
@@ -79,6 +83,8 @@ ros2 run my_robot_sensors bno055
 ### Topics
 1. **Camera Node**
 - `/rgb_camera/image_raw` (sensor_msgs/Image)
+- `/rgb_camera/image_rect` (sensor_msgs/Image)
+- `/rgb_camera/image_info` (sensor_msgs/CameraInfo)
 - `/rgb_camera/image_raw/compressed` (sensor_msgs/CompressedImage)
 
 2. **BNO055 Node**
@@ -93,15 +99,20 @@ ros2 run my_robot_sensors bno055
 
 1. **camera_node**
     - Captures video feed from the camera.
-    - Publishes image data to `/rgb_camera/image_raw` and `/rgb_camera/image_raw/compressed`.
+    - Publishes image data to `/rgb_camera/image_raw`, `/rgb_camera/image_raw/compressed`, `/rgb_camera/image_info` and `/rgb_camera/image_rect`.
     - Parameters:
         - `camera_index` (int, default: 0)
         - `frame_rate` (float, default: 30.0)
         - `jpeg_quality_value` (int, default: 70)
         - `use_raw_image_publisher` (bool, default: True)
         - `use_compressed_image_publisher` (bool, default: True)
+        - `camera_calibration_file` (string, default: web_cam.yaml)
 
-2. **bno055_node** 
+<p align="center">
+<img src="./images/camera_node_graph.png">
+</p>
+
+1. **bno055_node** 
     - Interfaces with the Bosch BNO055 IMU sensor
     - Publishes IMU, temperature, and calibration status data
     - some Parameters:
@@ -109,7 +120,7 @@ ros2 run my_robot_sensors bno055
         - `connection_type` (string, default: `uart`): uart or i2c
    - **Note**: The parameters for this node such as `uart_port` can be modified in the corresponding YAML file: [bno055_params](./config/bno055_params.yaml)
 
-3. **rplidar_node** 
+2. **rplidar_node** 
     - interface with the RPLIDAR sensor
     - publishes laser scan date to `/scan`
     - some parameter:
