@@ -6,6 +6,8 @@ log/
 .colcon/
 __pycache__/
 test.py
+test.ipynb
+Darstellung.pdf
 
 src/bno055/
 
@@ -16,7 +18,7 @@ src/my_robot_description/models/model.sdf
 src/hand_gesture_control/scripts/camera_node.py
 
 # my_robot_localization
-src/my_robot_localization/doc/
+# src/my_robot_localization/doc/
 src/my_robot_localization/images/
 src/my_robot_localization/bag_files/
 
