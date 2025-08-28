@@ -17,8 +17,12 @@ src/my_robot_description/models/model.sdf
 # my_robot_control
 src/hand_gesture_control/scripts/camera_node.py
 
+# my_robot_sensors
+src/my_robot_sensors/my_robot_sensors/st_servo_controller.py
+
+
 # my_robot_localization
-# src/my_robot_localization/doc/
+src/my_robot_localization/doc/
 src/my_robot_localization/images/
 src/my_robot_localization/bag_files/
 
