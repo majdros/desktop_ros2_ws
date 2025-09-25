@@ -1,7 +1,14 @@
 twist_mux:
   ros__parameters:
-    topics:
+    locks:
+      emergency_stop:
+        name    : emergency_stop
+        topic   : emergency_stop
+        timeout : 0.0
+        priority: 255
 
+
+    topics:
       Web-teleoperation:
         name    : Web-teleoperation
         topic   : cmd_vel_web
@@ -14,6 +21,12 @@ twist_mux:
         timeout : 0.5
         priority: 100
 
+      yolo:
+        name    : yolo
+        topic   : cmd_vel_yolo
+        timeout : 0.5
+        priority: 90
+
       joystick:
         name    : joystick
         topic   : cmd_vel_joy
@@ -22,7 +35,7 @@ twist_mux:
 
       hand_gesture:
         name    : hand_gesture
-        topic   : cmd_vel_gesture
+        topic   : gesture_control/cmd_vel_gesture
         timeout : 0.5
         priority: 60
 
@@ -31,10 +44,3 @@ twist_mux:
         topic   : cmd_vel_nav
         timeout : 0.5
         priority: 40
-
-    locks:
-      emergency_stop:
-        name    : emergency_stop
-        topic   : emergency_stop
-        timeout : 0.0
-        priority: 255

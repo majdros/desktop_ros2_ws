@@ -7,6 +7,7 @@ This package provides:
 - Robot control via keyboard using `teleop_twist_keyboard`
 - Robot control via joystick using `teleop_twist_joy`
 - Emergency stop functionality via the `safety_stop_node`
+- Integration with control command from the custom ros2-pkg `yolo_ros2_following`
 - Integration with control command from the custom ros2-pkg `hand_gesture_control`
 - Integration with control command from the custom ros2-pkg `web_based_control`
 - Integration with navigation command from `nav2`
@@ -62,6 +63,7 @@ The package uses `twist_mux` to prioritize control commands from different sourc
 1. emergency stop - `priority` : `255`
 1. Web teleoperation - `priority` : `150`
 2. Keyboard control - `priority` : `100`
+2. the custom ros2-package yolo - `priority` : `90`
 3. Joystick control - `priority` : `80`
 4. the custom ros2-package hand_gesture_control - `priority` : `60`
 5. nav2 - `priority` : `40`
@@ -90,7 +92,7 @@ Priority levels and timeouts can be configured in `config/twist_mux.yaml`.
         └── my_robot_control
     └── 📁test
     └── package.xml
-    └── README.md
+    └── README.md   # you are here
     └── setup.cfg
     └── setup.py
 ```
@@ -101,9 +103,10 @@ Priority levels and timeouts can be configured in `config/twist_mux.yaml`.
 
 `/cmd_vel_joy` (geometry_msgs/Twist)
 `/cmd_vel_key` (geometry_msgs/Twist)
+`yolo/cmd_vel_yolo` (geometry_msgs/Twist)
 `/cmd_vel_nav` (geometry_msgs/Twist)
 `/cmd_vel_web` (geometry_msgs/Twist)
-`/cmd_vel_gesture` (geometry_msgs/Twist)
+`gesture_control/cmd_vel_gesture` (geometry_msgs/Twist)
 `/cmd_vel_out` (geometry_msgs/Twist) - Output from twist_mux
 `/cmd_vel_stamped` (geometry_msgs/TwistStamped) - Timestamped output
 `/emergency_stop` (std_msgs/Bool)
