@@ -21,7 +21,8 @@ class ImagePublisher(Node):
         self.declare_parameter(name = 'frame_rate', value = 30.0)
         self.declare_parameter(name = 'use_raw_image_publisher', value = True)
         self.declare_parameter(name = 'use_compressed_image_publisher', value = True)
-        self.declare_parameter(name = 'camera_calibration_file', value = 'web_cam.yaml')
+        self.declare_parameter(name = 'web_camera_calibration_file', value = 'web_cam.yaml')
+        self.declare_parameter(name = 'usb_camera_calibration_file', value = 'usb_cam.yaml')
         self.declare_parameter(name = 'jpeg_quality_value',
                             value = 70,       # (0 to 100)
                             descriptor = ParameterDescriptor(description = 'sets the value of the Quality from jpeg for the Encoding the Image as Compressed-Image'))
@@ -31,7 +32,8 @@ class ImagePublisher(Node):
         self.use_compressed_image_publisher = self.get_parameter('use_compressed_image_publisher').get_parameter_value().bool_value
         self.camera_index = self.get_parameter('camera_index').get_parameter_value().integer_value
         self.frame_rate = self.get_parameter('frame_rate').get_parameter_value().double_value
-        self.camera_calibration_file= self.get_parameter('camera_calibration_file').get_parameter_value().string_value
+        self.web_camera_calibration_file= self.get_parameter('web_camera_calibration_file').get_parameter_value().string_value
+        self.usb_camera_calibration_file= self.get_parameter('usb_camera_calibration_file').get_parameter_value().string_value
 
         self.raw_image_pub = self.create_publisher(Image, 'image_raw', 10)
         self.compressed_image_pub = self.create_publisher(CompressedImage, 'image_raw/compressed', 10)
@@ -76,7 +78,7 @@ class ImagePublisher(Node):
         try:
             # Get package share directory
             package_share_directory = get_package_share_directory('my_robot_sensors')
-            calibration_file_path = os.path.join(package_share_directory, 'config', self.camera_calibration_file)
+            calibration_file_path = os.path.join(package_share_directory, 'config', self.usb_camera_calibration_file)
 
             with open(calibration_file_path, 'r') as file:
                 calib_data = yaml.safe_load(file)

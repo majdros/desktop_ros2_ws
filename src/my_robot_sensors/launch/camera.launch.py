@@ -12,7 +12,7 @@ def generate_launch_description():
     jpeg_quality_value = DeclareLaunchArgument(name = 'jpeg_quality_value', default_value = '70')
     use_raw_image_publisher = DeclareLaunchArgument(name = 'use_raw_image_publisher', default_value = 'true')
     use_compressed_image_publisher = DeclareLaunchArgument(name = 'use_compressed_image_publisher', default_value = 'true')
-    camera_calibration_file = DeclareLaunchArgument(name = 'camera_calibration_file', default_value = 'web_cam.yaml')
+    camera_calibration_file = DeclareLaunchArgument(name = 'camera_calibration_file', default_value = 'usb_cam.yaml')
 
     # Launch Configurations
     camera_index_config = LaunchConfiguration('camera_index')

@@ -20,6 +20,7 @@ The package is designed to be modular, scalable, and easy to integrate into othe
         └── bno055_params.yaml
         └── rplidar_params.yaml
         └── web_cam.yaml
+        └── usb_cam.yaml
     └── 📁launch
         └── bno055.launch.py
         └── camera.launch.py
@@ -39,28 +40,37 @@ The package is designed to be modular, scalable, and easy to integrate into othe
 
 
 ## Usage
-
 1. Launch:
+
+<details>
+<summary>Click to expand launch options</summary>
+
 - Launch the camera with default settings
 ```bash
 ros2 launch my_robot_sensors camera.launch.py
 ```
+
 - Launch the camera with custom settings: 
     Example: Set `frame_rate` to 60, `camera_index` to 1 and set `jpeg_quality_value` to 100:
 
 ```bash
 ros2 launch my_robot_sensors camera.launch.py frame_rate:=60 camera_index:=1 jpeg_quality_value:=100
 ```
+
 - Launch the IMU sensor:
 ```bash
 ros2 launch my_robot_sensors bno055.launch.py
 ```
+
 - Launch the LiDAR sensor:
 ```bash
 ros2 launch my_robot_sensors rplidar.launch.py
 ```
+</details>
 
-1. Available Launch Parameters:
+2. Available Launch Parameters:
+<details>
+<summary>Click to expand parameter tables</summary>
 
 | Parameter                | Description                                      | Default Value     |
 |--------------------------|--------------------------------------------------|-------------------|
@@ -70,6 +80,8 @@ ros2 launch my_robot_sensors rplidar.launch.py
 | `use_compressed_image_publisher` | Enables/disables the publisher for compressed images | `true` |
 | `jpeg_quality_value`      | sets the quality value of JPEG for encoding the Image | `70` (integer)|
 | `camera_calibration_file` | camera calibration yaml file | `web_cam.yaml` (string)|
+
+</details>
 
 3. Run individual nodes:
 

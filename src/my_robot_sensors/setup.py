@@ -19,6 +19,7 @@ setup(
             'config/rplidar_params.yaml',
             'config/bno055_params.yaml',
             'config/web_cam.yaml',
+            'config/usb_cam.yaml',
         ]),
     ],
     install_requires=['setuptools'],
@@ -31,7 +32,8 @@ setup(
     entry_points={
         'console_scripts': [
             'camera_node = my_robot_sensors.camera_node:main',
-            'bno055 = my_robot_sensors.bno055_node:main'
+            'bno055 = my_robot_sensors.bno055_node:main',
+            'st_servo_controller = my_robot_sensors.st_servo_controller:main',
         ],
     },
 )
