@@ -11,6 +11,7 @@ ekf_node:
     publish_tf: true
     debug: false
     tf_cache_time: 50.0
+
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
@@ -25,9 +26,12 @@ ekf_node:
                     false, false, false]   # x_accel , y_accel  , z_accel]
     odom0_queue_size: 50
     odom0_nodelay: false
-    odom0_differential: true
-    odom0_relative: false
+    odom0_differential: true               # relative changes not absolute values
+    odom0_relative: false                  # first measurement as reference zero
+
     odom0_twist_rejection_threshold: 0.5    # Reject unrealistic twists
+    # odom0_pose_rejection_threshold: 0.1    # for more translation-accuracy
+
 
     # IMU Configuration
     imu0: bno055/imu
@@ -39,14 +43,14 @@ ekf_node:
     imu0_queue_size: 50
     imu0_nodelay: false
     imu0_differential: false
-    imu0_relative: true
-    imu0_remove_gravitational_acceleration: true
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: false
     imu0_pose_use_child_frame: false
-    imu0_linear_acceleration_rejection_threshold: 0.01
-    imu0_angular_velocity_rejection_threshold: 0.0
-    imu0_orientation_rejection_threshold: 0.0
     imu0_normalize_quaternion: true
 
+    imu0_linear_acceleration_rejection_threshold: 0.1
+    imu0_angular_velocity_rejection_threshold: 0.1
+    imu0_orientation_rejection_threshold: 0.1
 
 
     use_control: false
@@ -57,7 +61,7 @@ ekf_node:
                                   0.0,    0.0,    0.0,    0.03, 0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.03, 0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.06, 0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
-                                  0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.5, 0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                  0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.25, 0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.025, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.04, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                                   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.01, 0.0,    0.0,    0.0,    0.0,    0.0,
