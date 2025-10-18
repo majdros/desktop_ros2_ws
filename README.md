@@ -17,6 +17,7 @@ A ROS2 workspace that includes multiple packages for controlling, simulating, lo
     - [6. my\_robot\_slam\_core](#6-my_robot_slam_core)
     - [7. Hand Gesture Control](#7-hand-gesture-control)
     - [8. web\_based\_control](#8-web_based_control)
+    - [9. yolo\_ros2\_following](#9-yolo_ros2_following)
   - [Future Work](#future-work)
 
 
@@ -250,14 +251,34 @@ A React-based web dashboard for controlling and monitoring ROS2-enabled robots v
 ```
 
 
+
+### 9. [yolo_ros2_following](https://github.com/majdros/yolo_ros2_following/blob/main/README.md)
+
+This repository integrates YOLOv8 (You Only Look Once, version 8) with ROS 2 (Robot Operating System 2) for real-time object detection and autonomous following on a real robot using a fine-tuned **YOLOv8n** model to detect three specific ball classes: `Baseball`, `Tennisball`, and `Football`
+
+> **Note:** This package is included as a Git submodule in the workspace.
+> To initialize and update the submodule after cloning the repository:
+> ```bash
+> git submodule update --init --recursive
+> ```
+
+<p align="center">
+    <img src="src/yolo_ros2_following/figures/follow-demo.gif" width="500px" alt="Demo">
+</p>
+
+
 ## Future Work
 
-1. [] **PCB Design for the Robot's Hardware**  
+1. [X] **PCB Design for the Robot's Hardware**  
   Currently, the robot's hardware is based on a prototype wiring and 3D-printed frame. A custom PCB design (Printed Circuit Board) will simplify maintenance and optimize component integration.
 
 2. [X] **Web-Based Teleoperation**
   Develop a web-based interface for remote control and monitoring of the robot. This will include real-time video streaming from the robot's camera and the ability to control the robot's movement remotely.
 
-3. [] **Object recognition & following**
+3. [X] **Object recognition & following**
   Develop an object detector that allows the robot to follow a specific object in real-time using both YOLO and color segmentation.
   This feature will use computer vision to detect and track the object and integrate it with the robot's motion control system.
+
+4. [ ] **Manipulator**  
+  Integrate a manipulator to extend the robot's capabilities beyond navigation and observation.
+  This will include kinematics modeling, motion planning, and integration with MoveIt2 for advanced manipulation tasks such as object grasping and pick-and-place operations.

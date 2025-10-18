@@ -1,3 +1,6 @@
 [submodule "src/web_based_control"]
 	path = src/web_based_control
 	url = git@github.com:majdros/web_based_control.git
+[submodule "src/yolo_ros2_following"]
+	path = src/yolo_ros2_following
+	url = git@github.com:majdros/yolo_ros2_following.git
