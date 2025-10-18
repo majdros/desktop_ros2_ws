@@ -262,8 +262,9 @@ This repository integrates YOLOv8 (You Only Look Once, version 8) with ROS 2 (Ro
 > git submodule update --init --recursive
 > ```
 
+
 <p align="center">
-    <img src="src/yolo_ros2_following/figures/follow-demo.gif" width="500px" alt="Demo">
+    <img src="https://github.com/majdros/yolo_ros2_following/blob/main/figures/follow-demo.gif" alt="Demo">
 </p>
 
 

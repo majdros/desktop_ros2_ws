@@ -8,8 +8,16 @@ __pycache__/
 test.py
 test.ipynb
 Darstellung.pdf
-
+packages.microsoft.gpg
 src/bno055/
+
+# yolo
+src/yolo_bringup
+src/yolo_ros
+src/yolo_msgs
+*.pt
+!yolo_3balls.pt
+
 
 # my_robot_description
 src/my_robot_description/models/model.sdf
@@ -34,6 +42,3 @@ src/my_robot_interfaces/
 
 # microRos_bot
 main_alt.cpp
-
-# Modell- und Datendateien (e.g. YOLO)
-*.pt
