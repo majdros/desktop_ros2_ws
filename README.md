@@ -262,10 +262,15 @@ This repository integrates YOLOv8 (You Only Look Once, version 8) with ROS 2 (Ro
 > git submodule update --init --recursive
 > ```
 
-
 <p align="center">
     <img src="https://github.com/majdros/yolo_ros2_following/blob/main/figures/follow-demo.gif" alt="Demo">
 </p>
+
+**Usage:**
+1. Launch the pkg:
+```bash
+  ros2 launch yolo_ros2_interaction yolo_ros2_interaction_bringup.launch.py
+```
 
 
 ## Future Work
